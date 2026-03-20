@@ -1,0 +1,14 @@
+slug: ai-tools
+title: AI Tools Track
+short_title: AI Tools
+description: AILT 2026 course materials for the AI Tools track.
+status: active
+order: 1
+
+output:
+  base_url: ai-tools
+
+defaults:
+  shell: default
+  session_format: markdown
+  handbook_format: markdown

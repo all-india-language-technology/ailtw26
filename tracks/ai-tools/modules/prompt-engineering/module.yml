@@ -1,0 +1,26 @@
+slug: prompt-engineering
+legacy_code: 004
+title: Prompt Engineering for Bible Translators
+short_title: Prompt Engineering
+description: Five-session module on prompt engineering for Bible translation teams.
+track: ai-tools
+status: active
+order: 1
+
+source:
+  sessions_dir: sessions
+  handbook_dir: handbook
+  assets_dir: assets
+  facilitator_dir: facilitator
+
+build:
+  render_module_index: true
+  render_handbook_index: true
+
+output:
+  route: prompt-engineering
+
+features:
+  handbook: true
+  facilitator_panel: true
+  presentation_mode: true

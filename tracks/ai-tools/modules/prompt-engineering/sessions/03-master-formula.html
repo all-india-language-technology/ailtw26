@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ch 3: The Master Formula · AILT 2026</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">004 · Prompt Engineering</a>
+      <div class="nav-links">
+        <a href="ch01.html" class="nav-link">Ch 1</a>
+        <a href="ch02.html" class="nav-link">Ch 2</a>
+        <a href="ch03.html" class="nav-link active">Ch 3</a>
+        <a href="ch04.html" class="nav-link">Ch 4</a>
+        <a href="ch05.html" class="nav-link">Ch 5</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="chapter-hero">
+    <div class="container">
+      <div class="ch-eyebrow">
+        <span class="ch-num">Chapter 3</span>
+        <span class="ch-tag-label">Framework</span>
+      </div>
+      <h1>The Master Formula</h1>
+      <p class="hero-key-q">Beyond writing a good prompt, what else shapes the quality of AI output?</p>
+    </div>
+  </header>
+
+  <!-- PHASE BAR -->
+  <div class="phase-bar">
+    <div class="phase-inner">
+      <a class="phase-pip" data-c="1" data-section="c1" href="#c1"><div class="phase-dot">C1</div><span class="phase-name">Connection</span></a>
+      <a class="phase-pip" data-c="2" data-section="c2" href="#c2"><div class="phase-dot">C2</div><span class="phase-name">Content</span></a>
+      <a class="phase-pip" data-c="3" data-section="c3" href="#c3"><div class="phase-dot">C3</div><span class="phase-name">Challenge</span></a>
+      <a class="phase-pip" data-c="4" data-section="c4" href="#c4"><div class="phase-dot">C4</div><span class="phase-name">Change</span></a>
+      <a class="phase-pip" data-c="5" data-section="c5" href="#c5"><div class="phase-dot">C5</div><span class="phase-name">Closure</span></a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C1 · CONNECTION
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c1">
+      <div class="container">
+        <div class="section-badge badge-c1">C1 · Connection</div>
+        <h2>A well-crafted prompt that still failed.</h2>
+        <p class="section-lead">
+          Read this prompt carefully. It has a persona, a guardrail, and a format instruction. By Chapter 2 standards, it is solid. But it produced useless output. Why?
+        </p>
+
+        <div class="prompt-block">
+          <div class="prompt-label strong">A well-built prompt</div>
+          <div class="prompt-display strong" style="border-left-color: var(--c2);">Act as a senior translation consultant.
+
+Review the current draft of Mark 5:1–5 for back-translation accuracy issues. Flag any divergences from the ESV source text.
+
+Do not speculate. Flag uncertain items as NEEDS VERIFICATION.
+
+Return as: Verse | Divergence | Severity (Major / Minor / Flag).</div>
+        </div>
+
+        <div class="callout danger fade-up">
+          <span class="callout-icon">❌</span>
+          <div><strong>The AI's actual response:</strong> "I'd be happy to help review Mark 5:1–5 for back-translation accuracy. However, I don't see any draft text in our conversation. Could you please paste the draft and the ESV source text so I can compare them?"</div>
+        </div>
+
+        <div class="activity-box fade-up">
+          <div class="activity-header">
+            <span class="activity-icon">💬</span>
+            <h3>Discuss before we explain</h3>
+          </div>
+          <ol>
+            <li>What is missing from this setup that no building block could fix?</li>
+            <li>Could you write a "perfect" prompt for this task without having the draft text available to paste in?</li>
+            <li>What else besides the prompt itself do you need to get useful AI output?</li>
+          </ol>
+        </div>
+
+        <div class="callout info fade-up">
+          <span class="callout-icon">💡</span>
+          <div>The prompt is technically correct. The setup is incomplete. The prompt is only one of four things the AI needs to do its job. Chapter 3 maps the other three.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C2 · CONTENT
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c2">
+      <div class="container">
+        <div class="section-badge badge-c2">C2 · Content</div>
+        <h2>The four components of strong AI output</h2>
+        <p class="section-lead">
+          Think of this as the full briefing you would give an expert colleague on their first day. The prompt is the instruction — but without documents, access, and standing references, even the best instruction produces guesswork.
+        </p>
+
+        <!-- FORMULA DISPLAY -->
+        <div class="card fade-up" style="margin-bottom: 1.5rem; background: var(--navy-dim); color: white; border: none; text-align: center; padding: 2rem;">
+          <p style="font-family: var(--mono); font-size: clamp(0.8rem, 2.5vw, 1.05rem); letter-spacing: 0.03em; color: var(--amber); font-weight: 700; margin-bottom: 0.75rem;">Strong AI Output =</p>
+          <p style="font-family: var(--mono); font-size: clamp(0.75rem, 2vw, 0.95rem); color: white; line-height: 2;">
+            [Instruction] + [Materials] + [Tools] + [Additional Info]
+          </p>
+        </div>
+
+        <!-- COMPONENT 1: INSTRUCTION -->
+        <details class="fade-up">
+          <summary>
+            <span style="display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:var(--c2); color:white; font-size:0.72rem; font-weight:700; margin-right:0.5rem; flex-shrink:0;">1</span>
+            Component 1 · Instruction
+            <span class="summary-arrow">›</span>
+          </summary>
+          <div class="details-body">
+            <p><strong>What it is:</strong> The prompt itself — the role, task, constraints, and output format you craft using the techniques in Chapter 2.</p>
+            <p><strong>The most common missing element:</strong> Most practitioners have the task right but omit the format. Specifying output format alone — adding "return as a table" or "return as a numbered checklist" — often doubles the immediate usability of the output.</p>
+            <div class="prompt-block">
+              <div class="prompt-label weak">Weak instruction</div>
+              <div class="prompt-display weak" style="font-size:0.8rem;">Explain Mark 5.</div>
+            </div>
+            <div class="prompt-block">
+              <div class="prompt-label strong">Strong instruction</div>
+              <div class="prompt-display strong" style="font-size:0.8rem;">Act as a translation consultant. Analyse Mark 5:1–20 for a rural translation team in a shame-honour culture. Do not speculate beyond the text. Return a table: Verse | Cultural Insight | Translation Risk.</div>
+            </div>
+          </div>
+        </details>
+
+        <!-- COMPONENT 2: MATERIALS -->
+        <details class="fade-up">
+          <summary>
+            <span style="display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:var(--c2); color:white; font-size:0.72rem; font-weight:700; margin-right:0.5rem; flex-shrink:0;">2</span>
+            Component 2 · Materials
+            <span class="summary-arrow">›</span>
+          </summary>
+          <div class="details-body">
+            <p><strong>What it is:</strong> The material the model can actually see and reason over — pasted text, uploaded files, connected project sources. If the relevant text is not present in the conversation, the model fills the gap with statistical guesses.</p>
+            <p><strong>Rule of thumb:</strong> No source text in the materials = no trustworthy translation output. The model cannot reason accurately over material it cannot see.</p>
+
+            <div class="table-wrap" style="margin: 0.875rem 0;">
+              <table>
+                <thead><tr><th>Source</th><th>How to supply it</th></tr></thead>
+                <tbody>
+                  <tr><td>Current draft passage</td><td>Paste into the chat</td></tr>
+                  <tr><td>Back-translation</td><td>Paste alongside the draft, clearly labelled</td></tr>
+                  <tr><td>ESV / ULT source text</td><td>Paste in, labelled "SOURCE TEXT:"</td></tr>
+                  <tr><td>Team checking notes</td><td>Paste or upload as a text file</td></tr>
+                  <tr><td>Key-term decisions</td><td>Paste or upload your key-terms CSV</td></tr>
+                  <tr><td>Commentary excerpt</td><td>Paste the relevant section with attribution</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <!-- COMPONENT 3: TOOLS -->
+        <details class="fade-up">
+          <summary>
+            <span style="display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:var(--c2); color:white; font-size:0.72rem; font-weight:700; margin-right:0.5rem; flex-shrink:0;">3</span>
+            Component 3 · Tools
+            <span class="summary-arrow">›</span>
+          </summary>
+          <div class="details-body">
+            <p><strong>What it is:</strong> Registered capabilities the AI can call — operations that go beyond generating text: web search, file reading, calculations, and in advanced setups, direct connections to external systems.</p>
+
+            <div class="card-grid cols-2" style="margin:0.875rem 0;">
+              <div class="card">
+                <h3 style="font-size: 0.9rem; margin-bottom: 0.4rem;">Today — Standard chat</h3>
+                <p>In a standard chat window (Claude, ChatGPT, Gemini), AI tools are limited to what it can do with text you supply. You paste; the AI reads, searches, compares, transforms. Powerful but manual — you are the bridge between the AI and your project files.</p>
+              </div>
+              <div class="card" style="border-color: var(--amber);">
+                <h3 style="font-size: 0.9rem; margin-bottom: 0.4rem;">Emerging — Connected environments</h3>
+                <p>When tools are registered via MCP or similar integration, the model gains direct access to external systems. It can <em>fetch</em> data directly, <em>call</em> specialist tools (AQuA, PTXprint, Whisper), and <em>chain</em> multiple operations in a single prompt.</p>
+              </div>
+            </div>
+
+            <div class="callout info">
+              <span class="callout-icon">🔭</span>
+              <div><strong>Imagine a Copilot for Paratext:</strong> One prompt could fetch the current draft from Paratext, submit it to AQuA for quality scoring, generate checking questions for verses below threshold, and return a table — without the user touching a file. This is the direction the field is heading.</div>
+            </div>
+
+            <div class="minority-alert">
+              <span>🔒</span>
+              <div><strong>Data safety:</strong> Offline/local tools (Whisper via LM Studio, PTXprint, XeLaTeX) are safe for unpublished draft text — no data leaves the device. Cloud tools should only receive text covered by your organisation's data agreements. See Chapter 4, §4.5 for the full decision rule.</div>
+            </div>
+          </div>
+        </details>
+
+        <!-- COMPONENT 4: ADDITIONAL INFO -->
+        <details class="fade-up">
+          <summary>
+            <span style="display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:var(--c2); color:white; font-size:0.72rem; font-weight:700; margin-right:0.5rem; flex-shrink:0;">4</span>
+            Component 4 · Additional Info (Standing References)
+            <span class="summary-arrow">›</span>
+          </summary>
+          <div class="details-body">
+            <p><strong>What it is:</strong> Persistent reference documents uploaded or pasted at the start of each new chat — your stable memory layer. Without these, you repeat the same project briefing in every session. Each new chat starts from zero.</p>
+
+            <div class="table-wrap" style="margin: 0.875rem 0;">
+              <table>
+                <thead><tr><th>Document</th><th>Contents</th></tr></thead>
+                <tbody>
+                  <tr><td><code>ai-session-brief.md</code></td><td>Project context, target audience, theological guardrails, standing constraints, key decisions</td></tr>
+                  <tr><td><code>key-terms.csv</code></td><td>Approved renderings for key theological and cultural terms</td></tr>
+                  <tr><td><code>style-guide.md</code></td><td>Tone, register, reading level, what to avoid</td></tr>
+                  <tr><td><code>decision-log.md</code></td><td>Checking-round decisions that should not be revisited</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>How to use it:</strong> At the start of every new chat session, paste or upload these documents before your first prompt. They set the frame for the entire session.</p>
+          </div>
+        </details>
+
+        <!-- ITERATION LOOP -->
+        <div style="margin-top: 2rem;" class="fade-up">
+          <h3 style="margin-bottom: 0.75rem;">The Iteration Loop: Conversational Steering</h3>
+          <p style="font-size: 0.9rem; margin-bottom: 1rem;">A strong first prompt does not always produce a perfect first output. This is normal and expected. The skill of <em>conversational steering</em> — building on the previous response rather than starting over — multiplies the value of every prompt you write.</p>
+
+          <div class="step-list">
+            <li>
+              <span class="step-num">1</span>
+              <div class="step-body">
+                <strong>Initial ask — get the structure right</strong>
+                <em>"Explain the significance of the pigs in Mark 5 for a translation team."</em><br>
+                Result: well-structured but too academic.
+              </div>
+            </li>
+            <li>
+              <span class="step-num">2</span>
+              <div class="step-body">
+                <strong>Refinement — fix what's wrong</strong>
+                <em>"Good start. Now remove the jargon and rewrite in plain language — 3 sentences maximum."</em><br>
+                Result: simpler, but still prose when you need a table.
+              </div>
+            </li>
+            <li>
+              <span class="step-num">3</span>
+              <div class="step-body">
+                <strong>Final transformation — get the format right</strong>
+                <em>"Now format that as a 2-column table: Verse Range | Cultural Insight."</em><br>
+                Result: ready to paste into your checking notes.
+              </div>
+            </li>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Situation</th><th>Steering instruction</th></tr></thead>
+              <tbody>
+                <tr><td>Output is too long</td><td>"Good. Now reduce this to 3 bullet points maximum."</td></tr>
+                <tr><td>Output is too generic</td><td>"This is too general. Add specific examples from Mark 5:1–20."</td></tr>
+                <tr><td>Output used wrong vocabulary</td><td>"Replace all theological jargon with plain English equivalents."</td></tr>
+                <tr><td>Output speculated too freely</td><td>"Remove any speculation. Only state what is supported by the text itself."</td></tr>
+                <tr><td>Output used the wrong format</td><td>"Reformat this as a table: Insight | Verse Reference | Risk."</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C3 · CHALLENGE
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c3">
+      <div class="container">
+        <div class="section-badge badge-c3">C3 · Challenge</div>
+        <h2>Diagnose the broken setup</h2>
+        <p class="section-lead">
+          Three AI session setups. Each is missing at least one component of the Master Formula. Identify which component is absent — before seeing the analysis.
+        </p>
+
+        <!-- SCENARIO A -->
+        <div class="card fade-up" style="margin-bottom: 2rem;">
+          <h3 style="margin-bottom: 0.75rem;">Setup A</h3>
+          <div class="callout" style="background: #f8f9fc; border-left: 3px solid var(--border-dark); margin-bottom: 0.875rem;">
+            <div>
+              <strong>The session:</strong> A translator opens a new chat, types a careful prompt asking the AI to help plan the FIA for Mark 5, and starts working. The AI produces a detailed FIA plan — but it references cultural features from a completely different cultural context, and the suggested resources don't exist in their language.
+            </div>
+          </div>
+          <div class="activity-box">
+            <div class="activity-header"><span class="activity-icon">🤔</span><h3>Which component is missing?</h3></div>
+            <p>The instruction (prompt) was solid. What else was absent from this setup? What would you tell this translator to prepare before their next session?</p>
+          </div>
+          <button class="reveal-btn" data-target="diag-a" data-open-text="Show diagnosis" data-close-text="Hide diagnosis">
+            <span class="reveal-arrow">▼</span><span class="btn-text">Show diagnosis</span>
+          </button>
+          <div class="hidden-reveal" id="diag-a">
+            <div class="callout warn" style="margin-top: 1rem;">
+              <span class="callout-icon">📋</span>
+              <div><strong>Missing: Additional Info (Component 4).</strong> The translator started from zero — no AI session brief, no key-term decisions, no knowledge of the project's target audience or language situation. The AI defaulted to generic assumptions about culture and resources. Pasting an AI session brief (project context, target community, language name, relevant cultural anchors) at the start of every session would have corrected this.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCENARIO B -->
+        <div class="card fade-up" style="margin-bottom: 2rem;">
+          <h3 style="margin-bottom: 0.75rem;">Setup B</h3>
+          <div class="callout" style="background: #f8f9fc; border-left: 3px solid var(--border-dark); margin-bottom: 0.875rem;">
+            <div>
+              <strong>The session:</strong> A consultant has a detailed AI session brief loaded and a strong prompt ready. They ask the AI to review the back-translation of Mark 5:1–5 for implicit information gaps — but they forget to paste the back-translation. The AI produces a generic analysis of "common back-translation gaps in narrative passages."
+            </div>
+          </div>
+          <div class="activity-box">
+            <div class="activity-header"><span class="activity-icon">🤔</span><h3>Which component is missing?</h3></div>
+            <p>The instruction was strong. The standing references were loaded. What did the consultant forget?</p>
+          </div>
+          <button class="reveal-btn" data-target="diag-b" data-open-text="Show diagnosis" data-close-text="Hide diagnosis">
+            <span class="reveal-arrow">▼</span><span class="btn-text">Show diagnosis</span>
+          </button>
+          <div class="hidden-reveal" id="diag-b">
+            <div class="callout warn" style="margin-top: 1rem;">
+              <span class="callout-icon">📄</span>
+              <div><strong>Missing: Materials (Component 2).</strong> Without the actual back-translation text in the conversation, the AI had no real text to reason over. It produced a generic template rather than a focused analysis. The fix is simple: always paste the relevant passage text before writing the analytical prompt. No source text in the materials = no trustworthy translation output.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCENARIO C — Cross-Lane -->
+        <div class="card fade-up" style="margin-bottom: 2rem;">
+          <div class="cross-lane-badge">👥 Cross-lane pair activity</div>
+          <h3 style="margin-bottom: 0.75rem;">Setup C</h3>
+          <div class="callout" style="background: #f8f9fc; border-left: 3px solid var(--border-dark); margin-bottom: 0.875rem;">
+            <div>
+              <strong>The session:</strong> A cluster manager wants to use AI to help triage a backlog of 60 community testing reports — identifying which ones flag significant accuracy issues vs minor naturalness comments. The AI is excellent at reading and summarising, but the reports are in three different file formats (PDF, Word, hand-typed notes) and the manager has to manually copy-paste each one into the AI, one at a time. The session takes four hours to complete something that could take thirty minutes.
+            </div>
+          </div>
+          <div class="activity-box">
+            <div class="activity-header"><span class="activity-icon">🤔</span><h3>Discuss with a cross-lane partner</h3></div>
+            <p>Lane 3 person: What tool setup would have made this faster? Lane 1 or 2 person: what would you want to know about these reports before the AI touched them? What are the governance questions?</p>
+          </div>
+          <button class="reveal-btn" data-target="diag-c" data-open-text="Show diagnosis" data-close-text="Hide diagnosis">
+            <span class="reveal-arrow">▼</span><span class="btn-text">Show diagnosis</span>
+          </button>
+          <div class="hidden-reveal" id="diag-c">
+            <div class="callout warn" style="margin-top: 1rem;">
+              <span class="callout-icon">🔧</span>
+              <div><strong>Missing: Tools (Component 3) and — at a deeper level — system design.</strong> The manager was manually bridging between files and the AI, doing work that a connected environment (batch file upload, structured extraction tool) would handle automatically. The stronger session design: upload all reports as text files in one batch, use a structured extraction prompt with a classification rubric, and return a triage table. The governance question the cross-lane partner should have raised: are these community testing reports considered unpublished data? If so, which tool tier is appropriate?</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C4 · CHANGE
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c4">
+      <div class="container">
+        <div class="section-badge badge-c4">C4 · Change</div>
+        <h2>Map your own workflow</h2>
+        <p class="section-lead">
+          Think of your most common AI task. Which of the four components do you regularly prepare? Which do you skip?
+        </p>
+
+        <div class="commitment-box fade-up">
+          <div class="commitment-header"><span>🗺️</span><h3>My workflow audit</h3></div>
+
+          <p class="commitment-prompt-text">My most common AI task:</p>
+          <textarea class="commitment-input" style="min-height: 60px;" placeholder="e.g. Getting cultural background for FIA, reviewing back-translations, drafting meeting reports..."></textarea>
+
+          <p class="commitment-prompt-text" style="margin-top: 0.875rem;">Which components do I currently prepare? (check all that apply)</p>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.875rem; font-size: 0.9rem;">
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+              <input type="checkbox" style="width:16px; height:16px; flex-shrink:0;">
+              <strong>Instruction</strong> — I craft a specific prompt with building blocks
+            </label>
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+              <input type="checkbox" style="width:16px; height:16px; flex-shrink:0;">
+              <strong>Materials</strong> — I paste the relevant source text before prompting
+            </label>
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+              <input type="checkbox" style="width:16px; height:16px; flex-shrink:0;">
+              <strong>Tools</strong> — I select the right AI tool for the data sensitivity level
+            </label>
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+              <input type="checkbox" style="width:16px; height:16px; flex-shrink:0;">
+              <strong>Additional Info</strong> — I load my AI session brief at the start of each new chat
+            </label>
+          </div>
+
+          <p class="commitment-prompt-text">The one component I will add to my workflow starting tomorrow:</p>
+          <textarea class="commitment-input" placeholder="e.g. I will start pasting my AI session brief at the start of every new chat. I'll write the brief today during the break."></textarea>
+          <div class="commitment-actions"><button class="btn-print">🖨️ Print my audit</button></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C5 · CLOSURE
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c5">
+      <div class="container">
+        <div class="section-badge badge-c5">C5 · Closure</div>
+
+        <div class="big-quote fade-up">
+          <blockquote>
+            "Brief the AI like you'd brief an expert colleague on their first day. They need the project, the context, the constraints, and the actual work — not just the question."
+          </blockquote>
+          <cite>The quality of the briefing determines the quality of the contribution.</cite>
+        </div>
+
+        <div class="callout success fade-up">
+          <span class="callout-icon">✅</span>
+          <div>
+            <strong>What you can now do:</strong> Diagnose which of the four components is missing when a session underperforms. Map your own workflow against the formula. Load materials and standing references before prompting. Chapter 4 addresses the next challenge: what happens to a well-set-up session after 40 or 50 exchanges?
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="chapter-footer-nav">
+    <div class="nav-row">
+      <a href="ch02.html" class="ch-nav-btn">← Ch 2: Anatomy of a Prompt</a>
+      <span class="ch-nav-spacer"></span>
+      <a href="ch04.html" class="ch-nav-btn primary">Ch 4: Advanced Techniques →</a>
+    </div>
+  </nav>
+
+  <script src="script.js"></script>
+</body>
+</html>

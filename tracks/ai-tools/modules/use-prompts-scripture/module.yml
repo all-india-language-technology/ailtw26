@@ -1,0 +1,26 @@
+slug: use-prompts-scripture
+legacy_code: 006
+title: Using Prompts to Understand Scripture
+short_title: Understand Scripture
+description: A practical module on using prompts to deepen Scripture understanding.
+track: ai-tools
+status: active
+order: 2
+
+source:
+  sessions_dir: sessions
+  handbook_dir: handbook
+  assets_dir: assets
+  facilitator_dir: facilitator
+
+build:
+  render_module_index: true
+  render_handbook_index: false
+
+output:
+  route: use-prompts-scripture
+
+features:
+  handbook: false
+  facilitator_panel: false
+  presentation_mode: true

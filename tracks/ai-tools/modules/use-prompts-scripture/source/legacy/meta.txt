@@ -1,0 +1,3 @@
+title: Using Prompts to Understand Scripture · AILT 2026
+tagline: Ask better questions. See more in the text.
+duration: 45

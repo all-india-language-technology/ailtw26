@@ -1,0 +1,26 @@
+# ── WHEN — Slide Timing Plan ─────────────────────────────────────────────
+# Module : 006-use-prompts-scripture
+# Session: 45 min total  (set in meta.txt → duration: 45)
+#
+# Navigation: horizontal (→) for each 5C phase; vertical (↓) for sub-slides.
+# Timer tokens appear ONLY on the first (parent) slide of each horizontal
+# column. Sub-slides carry no __TIMER__ tokens and are NOT listed here.
+#
+# Edit the minutes for each section, then build:
+#   python scripts/build_modules.py 006
+# ─────────────────────────────────────────────────────────────────────────
+
+# ── C1 · Connection  (00:00 – 00:05) ─────────────────────────────────────
+slide-2:   5   # Scenario + prompt-writing task; compare prompts (sub-slide ↓)
+
+# ── C2 · Content  (00:05 – 00:15) ────────────────────────────────────────
+slide-3:  10   # Anatomy recap; demo 1 — file upload; demo 2 — paste link (sub-slides ↓)
+
+# ── C3 · Challenge  (00:15 – 00:35) ─────────────────────────────────────
+slide-4:  20   # Round 1 scenario; live build; debrief; Round 2 scenario; work; share (sub-slides ↓)
+
+# ── C4 · Change  (00:35 – 00:42) ─────────────────────────────────────────
+slide-5:   7   # Your project + passage; share out (sub-slide ↓)
+
+# ── C5 · Closure  (00:42 – 00:45) ────────────────────────────────────────
+slide-6:   3   # One-thing question; closing callback to opening

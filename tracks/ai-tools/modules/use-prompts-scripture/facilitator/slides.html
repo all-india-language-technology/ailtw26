@@ -1,0 +1,626 @@
+<!-- ═══════════════════════════════════════════════════════════════════
+     Module 006 · Using Prompts to Understand Scripture
+     slides.html — content fragment only (no <html>/<head>).
+     Injected into the Reveal.js scaffold by build_modules.py.
+
+     Navigation structure:
+       Horizontal (→) : Title · C1 · C2 · C3 · C4 · C5
+       Vertical   (↓) : Sub-slides within each C
+
+     __TIMER__ tokens appear ONLY on the first (parent) slide of each
+     horizontal column. Sub-slides carry no timer tokens.
+     ═══════════════════════════════════════════════════════════════════ -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     TITLE  (standalone horizontal slide)
+     ══════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="s center">
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+    <p class="title-meta">AILT 2026 · AI Tools Track · All Lanes · 45 min</p>
+    <h1 class="title-hero">Using Prompts to<br>Understand Scripture</h1>
+    <p class="title-sub">Ask better questions. See more in the text.</p>
+    <p class="title-meta" style="margin-top:20px;">Day 3 · Morning · Ben</p>
+  </div>
+  <aside class="notes">
+    Welcome to Day 3. This session is practical — participants prompt, not watch.
+    They already know the anatomy. Today they build the habit of reaching for it
+    when they sit with a difficult passage.
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     C1 · CONNECTION  00:00–00:05
+     Horizontal column 1 — two vertical sub-slides
+     ══════════════════════════════════════════════════════════════════════ -->
+<section>
+
+<!-- C1-A · Scenario + prompt-writing task  [PARENT — has timer] -->
+<section>
+  <div class="s vcenter">
+    <span class="slide-tag tag-hook">Connection</span>
+    <div class="session-progress">
+      <div class="sp-step active amber">1</div>
+      <div class="sp-line"></div>
+      <div class="sp-step">2</div>
+      <div class="sp-line"></div>
+      <div class="sp-step">3</div>
+      <div class="sp-line"></div>
+      <div class="sp-step">4</div>
+      <div class="sp-line"></div>
+      <div class="sp-step">5</div>
+      <span class="sp-time">00:00 – 00:05</span>
+    </div>
+    <h2 class="slide-h amber">A Real Question. <span class="accent">From a Real Team.</span></h2>
+    <div class="callout warn" style="margin-bottom:18px;">
+      <span class="co-icon">📄</span>
+      <span><strong>Scenario:</strong> Our 3-member NE tribal translation team wants to do an exegetical check of an NT book we drafted. We use an SF-generated draft with GNTD as the source, and also refer to NIV, TNN, and other resources. We are MTTs with Bible college training and 6–8 years of experience — but no formal training in meaning-based translation principles. How do we do a systematic exegetical check?</span>
+    </div>
+    <div class="fcard amber">
+      <span class="fc-icon">✏️</span>
+      <div class="fc-body">
+        <div class="fc-title">Write a prompt you would use to explore this. 90 seconds. Silent.</div>
+        <div class="fc-desc">Don't overthink it. Write what you would actually type.</div>
+      </div>
+    </div>
+    <div class="slide-timer">⏱ __TIMER_2__</div>
+  </div>
+  <aside class="notes">
+    No setup, no commentary — just put the scenario on screen.
+    Start the 90-second timer immediately. Stay silent while they write.
+    After time is up, collect 3–4 prompts — typed into chat, called out, or screen-shared.
+    Advance ↓ to the compare slide once you have the prompts.
+  </aside>
+</section>
+
+<!-- C1-B · Compare prompts — hook question  [sub-slide: no timer] -->
+<section>
+  <div class="s vcenter">
+    <span class="slide-tag tag-hook">Connection</span>
+    <h2 class="slide-h amber">Which Prompt <span class="accent">Goes Deeper?</span></h2>
+    <div class="two-col" style="margin-top:16px;">
+      <div>
+        <p class="eyebrow" style="color:var(--amber);">Prompts from the room</p>
+        <ul class="clist" style="gap:10px;">
+          <li><span class="bullet" style="background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);">A</span><span style="color:var(--text-secondary);">[paste prompt A here]</span></li>
+          <li><span class="bullet" style="background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);">B</span><span style="color:var(--text-secondary);">[paste prompt B here]</span></li>
+          <li><span class="bullet" style="background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);">C</span><span style="color:var(--text-secondary);">[paste prompt C here]</span></li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:center;gap:14px;">
+        <div class="fcard amber">
+          <span class="fc-icon">💬</span>
+          <div class="fc-body">
+            <div class="fc-title">Which goes furthest into the text?</div>
+            <div class="fc-desc">What makes the difference?</div>
+          </div>
+        </div>
+        <div class="callout info" style="font-size:0.82em;">
+          <span class="co-icon">→</span>
+          <span>No right answer yet. Hold the tension. The session resolves it.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    Paste in the collected prompts live. Ask the room: "Which gets you furthest? Why?"
+    Take 2–3 observations. Do NOT resolve it yet — the content section answers it.
+    Advance → (not ↓) to move to C2.
+  </aside>
+</section>
+
+</section><!-- end C1 vertical stack -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     C2 · CONTENT  00:05–00:15
+     Horizontal column 2 — three vertical sub-slides
+     ══════════════════════════════════════════════════════════════════════ -->
+<section>
+
+<!-- C2-A · Anatomy of a good prompt — reference card  [PARENT — has timer] -->
+<section>
+  <div class="s vcenter">
+    <span class="slide-tag tag-content">Content</span>
+    <div class="session-progress">
+      <div class="sp-step done">1</div>
+      <div class="sp-line done"></div>
+      <div class="sp-step active sky">2</div>
+      <div class="sp-line"></div>
+      <div class="sp-step">3</div>
+      <div class="sp-line"></div>
+      <div class="sp-step">4</div>
+      <div class="sp-line"></div>
+      <div class="sp-step">5</div>
+      <span class="sp-time">00:05 – 00:15</span>
+    </div>
+    <h2 class="slide-h">Your Reference Card: <span class="accent">Anatomy of a Good Prompt</span></h2>
+    <div class="two-col" style="margin-top:4px;gap:28px;">
+      <ul class="clist" style="gap:14px;">
+        <li>
+          <span class="bullet" style="background:var(--sky-dim);color:var(--sky);border:1px solid var(--sky-border);font-size:0.7em;font-weight:700;">R</span>
+          <span><strong style="color:var(--sky);">Role</strong> — Who is the AI acting as?<br><span style="color:var(--text-muted);font-size:0.82em;">"You are a biblical scholar specialising in…"</span></span>
+        </li>
+        <li>
+          <span class="bullet" style="background:var(--sky-dim);color:var(--sky);border:1px solid var(--sky-border);font-size:0.7em;font-weight:700;">C</span>
+          <span><strong style="color:var(--sky);">Context</strong> — What does it need to know?<br><span style="color:var(--text-muted);font-size:0.82em;">"We are translating [Book] for a Tibeto-Burman language…"</span></span>
+        </li>
+        <li>
+          <span class="bullet" style="background:var(--sky-dim);color:var(--sky);border:1px solid var(--sky-border);font-size:0.7em;font-weight:700;">T</span>
+          <span><strong style="color:var(--sky);">Task</strong> — What exactly are you asking?<br><span style="color:var(--text-muted);font-size:0.82em;">"List the 3–5 key interpretive questions for [verse]…"</span></span>
+        </li>
+        <li>
+          <span class="bullet" style="background:var(--sky-dim);color:var(--sky);border:1px solid var(--sky-border);font-size:0.7em;font-weight:700;">C</span>
+          <span><strong style="color:var(--sky);">Constraints</strong> — Format, length, source?<br><span style="color:var(--text-muted);font-size:0.82em;">"Base your answer only on the uploaded document. Use plain language."</span></span>
+        </li>
+      </ul>
+      <div class="callout info" style="align-self:center;">
+        <span class="co-icon">📌</span>
+        <span>Keep this on screen. You'll use it in the next two rounds.<br><br>
+        <span style="color:var(--text-muted);font-size:0.88em;">↓ Continue for two live demos</span></span>
+      </div>
+    </div>
+    <div class="slide-timer">⏱ __TIMER_3__</div>
+  </div>
+  <aside class="notes">
+    Quick reminder only — 3 minutes. Do not re-teach. Reference module 004.
+    Walk through each element with its example. Leave it visible as a scaffold for C3.
+    Advance ↓ to Demo 1.
+  </aside>
+</section>
+
+<!-- C2-B · Demo 1 — file upload  [sub-slide: no timer] -->
+<section>
+  <div class="s vcenter">
+    <span class="slide-tag tag-content">Content</span>
+    <h2 class="slide-h">New Skill 1: <span class="accent">Upload a Document</span></h2>
+    <div class="two-col" style="margin-top:8px;gap:24px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="fcard" style="flex:0;">
+          <span class="fc-icon">📎</span>
+          <div class="fc-body">
+            <div class="fc-title">Upload a commentary excerpt, lexicon entry, or project notes.</div>
+            <div class="fc-desc">Then ask: "Based <em>only</em> on this document, explain…"</div>
+          </div>
+        </div>
+        <div class="callout info">
+          <span class="co-icon">🔑</span>
+          <span>The AI reasons from <em>your</em> source — not its general training.<br>You control the frame of reference.</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <p class="eyebrow" style="color:var(--sky);">Watch for</p>
+        <ul class="clist" style="gap:10px;">
+          <li><span class="bullet" style="background:var(--sky-dim);color:var(--sky);border:1px solid var(--sky-border);">1</span><span>How the response changes when you ground it in a specific source</span></li>
+          <li><span class="bullet" style="background:var(--sky-dim);color:var(--sky);border:1px solid var(--sky-border);">2</span><span>What happens when you add "only from this document" as a constraint</span></li>
+          <li><span class="bullet" style="background:var(--sky-dim);color:var(--sky);border:1px solid var(--sky-border);">3</span><span>How to verify the answer points back to the document</span></li>
+        </ul>
+        <div class="callout warn" style="font-size:0.82em;">
+          <span class="co-icon">💡</span>
+          <span>Follow along on your own device if you can.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    Open the AI tool live. Upload a prepared document (commentary excerpt works well).
+    Ask a question grounded in that document. Show the output.
+    Narrate: "Notice I added 'based only on this document' — without that, it ignores our source."
+    Advance ↓ to Demo 2.
+  </aside>
+</section>
+
+<!-- C2-C · Demo 2 — paste a link  [sub-slide: no timer] -->
+<section>
+  <div class="s vcenter">
+    <span class="slide-tag tag-content">Content</span>
+    <h2 class="slide-h">New Skill 2: <span class="accent">Paste a Link</span></h2>
+    <div class="two-col" style="margin-top:8px;gap:24px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="fcard" style="flex:0;">
+          <span class="fc-icon">🔗</span>
+          <div class="fc-body">
+            <div class="fc-title">Paste a URL as your reference source.</div>
+            <div class="fc-desc">"Using this article, summarise the background to [passage]…"</div>
+          </div>
+        </div>
+        <div class="callout warn">
+          <span class="co-icon">⚠️</span>
+          <span>Not all tools read links the same way.<br>Some fetch the page; some don't. <strong>Test before the session.</strong></span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <p class="eyebrow" style="color:var(--sky);">When to use each</p>
+        <ul class="clist" style="gap:10px;">
+          <li><span class="bullet" style="background:var(--sky-dim);color:var(--sky);border:1px solid var(--sky-border);">📎</span><span><strong>Upload</strong> — private files, PDFs, project documents, notes</span></li>
+          <li><span class="bullet" style="background:var(--sky-dim);color:var(--sky);border:1px solid var(--sky-border);">🔗</span><span><strong>Link</strong> — public web articles, online lexicons, open commentaries</span></li>
+        </ul>
+        <div class="callout info" style="font-size:0.82em;margin-top:4px;">
+          <span class="co-icon">→</span>
+          <span>You'll choose your method in Round 2. Note which your tool handles reliably.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    Paste a prepared URL live. Show the response — compare briefly with file upload result.
+    Emphasise: link-reading behaviour varies by tool and page accessibility.
+    Participants should note which method their preferred tool supports reliably.
+    Advance → to C3 (Challenge).
+  </aside>
+</section>
+
+</section><!-- end C2 vertical stack -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     C3 · CHALLENGE  00:15–00:35
+     Horizontal column 3 — six vertical sub-slides
+     ══════════════════════════════════════════════════════════════════════ -->
+<section>
+
+<!-- C3-A · Round 1 scenario + watching frame  [PARENT — has timer] -->
+<section>
+  <div class="s vcenter">
+    <span class="slide-tag tag-challenge">Challenge</span>
+    <div class="session-progress">
+      <div class="sp-step done">1</div>
+      <div class="sp-line done"></div>
+      <div class="sp-step done">2</div>
+      <div class="sp-line done"></div>
+      <div class="sp-step active amber">3</div>
+      <div class="sp-line"></div>
+      <div class="sp-step">4</div>
+      <div class="sp-line"></div>
+      <div class="sp-step">5</div>
+      <span class="sp-time">00:15 – 00:35</span>
+    </div>
+    <h2 class="slide-h amber">Round 1: <span class="accent">Watch and Think Along</span></h2>
+    <div class="two-col" style="margin-top:4px;gap:20px;">
+      <div class="callout warn" style="align-self:start;">
+        <span class="co-icon">📄</span>
+        <div>
+          <strong>Scenario (from a participant):</strong><br>
+          <span style="font-size:0.88em;line-height:1.5;">Our 3-member NE tribal translation team wants to do an exegetical check of an NT book we drafted. We use an SF-generated draft with GNTD as the source, and also refer to NIV, TNN, and other resources. We are MTTs with Bible college training and 6–8 years of experience — but no formal training in meaning-based translation principles. How do we do a systematic exegetical check?</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="fcard">
+          <span class="fc-icon">👁️</span>
+          <div class="fc-body">
+            <div class="fc-title">Watch the prompt being built live.</div>
+            <div class="fc-desc">As you watch, ask yourself: what would <em>you</em> do differently?</div>
+          </div>
+        </div>
+        <div class="callout info" style="font-size:0.82em;">
+          <span class="co-icon">↓</span>
+          <span>Follow the three steps on the next slide.</span>
+        </div>
+      </div>
+    </div>
+    <div class="slide-timer">⏱ __TIMER_4__</div>
+  </div>
+  <aside class="notes">
+    Read the scenario aloud briefly. Set the scene — many in the room have been in this team's situation.
+    Advance ↓ to the live build slide.
+  </aside>
+</section>
+
+<!-- C3-B · Round 1 — recipe visible while building live  [sub-slide: no timer] -->
+<section>
+  <div class="s vcenter">
+    <span class="slide-tag tag-challenge">Challenge</span>
+    <h2 class="slide-h amber">Round 1: <span class="accent">Building the Prompt</span></h2>
+    <div class="two-col" style="margin-top:8px;gap:20px;">
+      <div>
+        <p class="eyebrow" style="color:var(--amber);">The prompt sequence</p>
+        <ul class="clist" style="gap:14px;">
+          <li>
+            <span class="bullet" style="background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);">R</span>
+            <span><strong>Role:</strong> "You are an exegetical consultant helping a Bible translation team…"</span>
+          </li>
+          <li>
+            <span class="bullet" style="background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);">C</span>
+            <span><strong>Context:</strong> "The team translates [Book] into a Tibeto-Burman language. They use GNTD as their primary source…"</span>
+          </li>
+          <li>
+            <span class="bullet" style="background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);">T</span>
+            <span><strong>Task:</strong> "List 4–5 key exegetical questions the team should verify for [passage]…"</span>
+          </li>
+          <li>
+            <span class="bullet" style="background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);">C</span>
+            <span><strong>Constraint:</strong> "Base your analysis on the uploaded document only. Use plain, non-technical language."</span>
+          </li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="callout warn">
+          <span class="co-icon">🔨</span>
+          <span>Building live — follow along on your device or watch. Ask questions after.</span>
+        </div>
+        <div class="callout info" style="font-size:0.82em;">
+          <span class="co-icon">💭</span>
+          <span>Note one thing you'd change or add. You'll share it in the debrief.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    Think aloud throughout. Narrate every decision:
+    "I'm giving it a role because the team needs exegetical, not devotional, output."
+    "I'm asking for options, not an answer — because the team needs to decide."
+    "I'm uploading the GNTD notes so it reasons from their source, not a general gloss."
+    Show the output. Let the room see and react before moving to debrief.
+    Advance ↓ to debrief.
+  </aside>
+</section>
+
+<!-- C3-C · Round 1 debrief  [sub-slide: no timer] -->
+<section>
+  <div class="s vcenter">
+    <span class="slide-tag tag-challenge">Challenge</span>
+    <h2 class="slide-h amber">Round 1: <span class="accent">What Did You Notice?</span></h2>
+    <div style="display:flex;flex-direction:column;gap:18px;margin-top:12px;">
+      <div class="fcard amber">
+        <span class="fc-icon">💬</span>
+        <div class="fc-body">
+          <div class="fc-title">"What made the prompt go deeper than what you first wrote?"</div>
+          <div class="fc-desc">"What would <em>you</em> have done differently or added?"</div>
+        </div>
+      </div>
+      <div class="two-col" style="gap:16px;">
+        <div class="callout info">
+          <span class="co-icon">↓</span>
+          <span><strong>Next:</strong> Your turn to build. Round 2 uses a different scenario — and you work in pairs.</span>
+        </div>
+        <div class="callout warn" style="font-size:0.82em;">
+          <span class="co-icon">💡</span>
+          <span>If someone suggests an improvement — try it live before moving on.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    Take 2–3 responses. Affirm what the room noticed.
+    If someone suggests an improvement, run it live — don't just acknowledge it.
+    Transition: "Now it's your turn. Different scenario." Advance ↓.
+  </aside>
+</section>
+
+<!-- C3-D · Round 2 scenario + task  [sub-slide: no timer] -->
+<section>
+  <div class="s vcenter">
+    <span class="slide-tag tag-challenge">Challenge</span>
+    <h2 class="slide-h amber">Round 2: <span class="accent">Your Turn — In Pairs</span></h2>
+    <div class="two-col" style="margin-top:8px;gap:20px;">
+      <div class="callout info" style="align-self:start;">
+        <span class="co-icon">📜</span>
+        <div>
+          <strong>Scenario (from a participant):</strong><br>
+          <span style="font-size:0.88em;line-height:1.5;">In Paratext's RSV+ Enhanced resources, only the word dictionary is linked. We wish there were an Enhanced Resource giving descriptions of Jewish cultural phrases and idioms at a click — material for understanding the text and for footnotes or glossary entries. That resource doesn't exist yet.</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="fcard amber">
+          <span class="fc-icon">👫</span>
+          <div class="fc-body">
+            <div class="fc-title">In pairs: build a prompt that gives you what you need.</div>
+            <div class="fc-desc">Use a document upload <em>or</em> a link. Choose a real passage you're working on.</div>
+          </div>
+        </div>
+        <ul class="clist" style="gap:8px;font-size:0.84em;">
+          <li><span class="bullet" style="background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);">1</span><span>Set your role and context</span></li>
+          <li><span class="bullet" style="background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);">2</span><span>State the task precisely</span></li>
+          <li><span class="bullet" style="background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);">3</span><span>Upload or paste your source — then add your constraint</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    Pairs form quickly. Each pair needs a device and a real passage in mind.
+    Advance ↓ to the working-time slide immediately.
+  </aside>
+</section>
+
+<!-- C3-E · Round 2 working time  [sub-slide: no timer] -->
+<section>
+  <div class="s vcenter">
+    <span class="slide-tag tag-challenge">Challenge</span>
+    <h2 class="slide-h amber">Working Time <span class="accent">— 6 minutes</span></h2>
+    <div class="two-col" style="margin-top:8px;gap:20px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="fcard amber">
+          <span class="fc-icon">⏳</span>
+          <div class="fc-body">
+            <div class="fc-title">Build your prompt. Run it. Note what worked and what you'd change.</div>
+          </div>
+        </div>
+        <div class="callout info">
+          <span class="co-icon">📌</span>
+          <span>Keep the reference card in mind:<br>
+          <strong>Role · Context · Task · Constraints</strong></span>
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow" style="color:var(--amber);">If you're stuck</p>
+        <ul class="clist" style="gap:10px;font-size:0.84em;">
+          <li><span class="bullet" style="background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);">→</span><span>Try: "What is the cultural background of [phrase] in [passage]?"</span></li>
+          <li><span class="bullet" style="background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);">→</span><span>Add a role: "You are a scholar of 1st-century Jewish culture…"</span></li>
+          <li><span class="bullet" style="background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);">→</span><span>Upload a UBS Handbook excerpt or paste an open commentary link</span></li>
+          <li><span class="bullet" style="background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);">→</span><span>Ask for output in a footnote-ready format</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    6 minutes of silent working time. Circulate actively.
+    Ask pairs: "What role did you give it?" "What constraint did you add?"
+    Do not give solutions — ask questions that push them to improve their own prompts.
+    Give a 1-minute warning, then advance ↓.
+  </aside>
+</section>
+
+<!-- C3-F · Round 2 share out  [sub-slide: no timer] -->
+<section>
+  <div class="s vcenter">
+    <span class="slide-tag tag-challenge">Challenge</span>
+    <h2 class="slide-h amber">Round 2: <span class="accent">Share Out</span></h2>
+    <div style="display:flex;flex-direction:column;gap:18px;margin-top:12px;">
+      <div class="fcard amber">
+        <span class="fc-icon">💬</span>
+        <div class="fc-body">
+          <div class="fc-title">"Show us your prompt. What did you get back?"</div>
+          <div class="fc-desc">"Did it go deep enough? What would you change to push it further?"</div>
+        </div>
+      </div>
+      <div class="two-col" style="gap:16px;">
+        <div class="callout info">
+          <span class="co-icon">→</span>
+          <span><strong>Next:</strong> Apply those same skills to something from <em>your own</em> project right now.</span>
+        </div>
+        <div class="callout warn" style="font-size:0.82em;">
+          <span class="co-icon">💡</span>
+          <span>The room responds first — then refine together.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    Take 1–2 pairs. Display their prompt on screen if possible.
+    Let the room respond first before commenting.
+    Affirm what worked; invite the pair to identify what they'd change next time.
+    Advance → to C4 (Change).
+  </aside>
+</section>
+
+</section><!-- end C3 vertical stack -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     C4 · CHANGE  00:35–00:42
+     Horizontal column 4 — two vertical sub-slides
+     ══════════════════════════════════════════════════════════════════════ -->
+<section>
+
+<!-- C4-A · Apply to own project  [PARENT — has timer] -->
+<section>
+  <div class="s vcenter">
+    <span class="slide-tag tag-change">Change</span>
+    <div class="session-progress">
+      <div class="sp-step done">1</div>
+      <div class="sp-line done"></div>
+      <div class="sp-step done">2</div>
+      <div class="sp-line done"></div>
+      <div class="sp-step done">3</div>
+      <div class="sp-line done"></div>
+      <div class="sp-step active pink">4</div>
+      <div class="sp-line"></div>
+      <div class="sp-step">5</div>
+      <span class="sp-time">00:35 – 00:42</span>
+    </div>
+    <h2 class="slide-h">Now: <span class="accent">Your Project. Your Passage.</span></h2>
+    <div class="two-col" style="margin-top:8px;gap:20px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="fcard" style="flex:0;">
+          <span class="fc-icon">🎯</span>
+          <div class="fc-body">
+            <div class="fc-title">Pick one passage or question from your current translation project.</div>
+            <div class="fc-desc">Write a prompt for it. Run it. Keep what's useful.</div>
+          </div>
+        </div>
+        <div class="callout info">
+          <span class="co-icon">💡</span>
+          <span>This is for you — not for the group.<br>Take something real back with you.</span>
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow" style="color:var(--pink);">As you work, ask yourself</p>
+        <ul class="clist" style="gap:10px;font-size:0.86em;">
+          <li><span class="bullet" style="background:var(--pink-dim);color:var(--pink);border:1px solid var(--pink-border);">?</span><span>What role gives me the most useful perspective on this passage?</span></li>
+          <li><span class="bullet" style="background:var(--pink-dim);color:var(--pink);border:1px solid var(--pink-border);">?</span><span>Is there a document I could upload to ground the answer?</span></li>
+          <li><span class="bullet" style="background:var(--pink-dim);color:var(--pink);border:1px solid var(--pink-border);">?</span><span>Am I asking for options or asking for an answer?</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide-timer">⏱ __TIMER_5__</div>
+  </div>
+  <aside class="notes">
+    4 minutes of individual/pair working time. Circulate.
+    Goal: every participant leaves with one real, useful output from their own project.
+    After 4 minutes, advance ↓ to share-out.
+  </aside>
+</section>
+
+<!-- C4-B · Share out  [sub-slide: no timer] -->
+<section>
+  <div class="s vcenter">
+    <span class="slide-tag tag-change">Change</span>
+    <h2 class="slide-h">Would You <span class="accent">Use That?</span></h2>
+    <div style="display:flex;flex-direction:column;gap:18px;margin-top:12px;">
+      <div class="fcard" style="border-color:var(--pink-border);">
+        <span class="fc-icon">💬</span>
+        <div class="fc-body">
+          <div class="fc-title">1–2 volunteers: share your prompt and what you got back.</div>
+          <div class="fc-desc">Room responds: "Would you use that in your own project? What would make it stronger?"</div>
+        </div>
+      </div>
+      <div class="callout info">
+        <span class="co-icon">→</span>
+        <span>One sentence from you, then the room. Keep it moving — this is landing time, not new learning.</span>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    Invite 1–2 volunteers. Display their prompt on screen if possible.
+    Let the room respond first. Keep it brief.
+    Advance → to C5 (Closure).
+  </aside>
+</section>
+
+</section><!-- end C4 vertical stack -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     C5 · CLOSURE  00:42–00:45
+     Horizontal column 5 — standalone slide
+     ══════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="s vcenter">
+    <span class="slide-tag tag-closure">Closure</span>
+    <div class="session-progress">
+      <div class="sp-step done">1</div>
+      <div class="sp-line done"></div>
+      <div class="sp-step done">2</div>
+      <div class="sp-line done"></div>
+      <div class="sp-step done">3</div>
+      <div class="sp-line done"></div>
+      <div class="sp-step done">4</div>
+      <div class="sp-line done"></div>
+      <div class="sp-step active sky">5</div>
+      <span class="sp-time">00:42 – 00:45</span>
+    </div>
+    <h2 class="slide-h">One Thing <span class="accent">You'll Do Differently</span></h2>
+    <div style="display:flex;flex-direction:column;gap:18px;margin-top:8px;">
+      <div class="fcard amber">
+        <span class="fc-icon">💬</span>
+        <div class="fc-body">
+          <div class="fc-title">"What is one thing you will do differently next time you sit with a difficult passage?"</div>
+          <div class="fc-desc">3–4 quick responses. No elaboration needed. Your words, not mine.</div>
+        </div>
+      </div>
+      <div class="big-quote" style="font-size:0.95em;text-align:center;padding:16px 0;color:var(--text-secondary);border-top:1px solid rgba(255,255,255,0.07);">
+        "At the start of this session, you wrote a prompt.<br>
+        <span style="color:var(--sky);">You now write the second kind.</span>"
+      </div>
+    </div>
+    <div class="slide-timer">⏱ __TIMER_6__</div>
+  </div>
+  <aside class="notes">
+    Ask the question. Take 3–4 responses. Do not add commentary after each — just nod and move on.
+    After the last response, deliver the closing line once, clearly, and stop.
+    No summary. No recap. Done.
+  </aside>
+</section>

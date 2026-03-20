@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ch 5: Prompting by Lane · AILT 2026</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">004 · Prompt Engineering</a>
+      <div class="nav-links">
+        <a href="ch01.html" class="nav-link">Ch 1</a>
+        <a href="ch02.html" class="nav-link">Ch 2</a>
+        <a href="ch03.html" class="nav-link">Ch 3</a>
+        <a href="ch04.html" class="nav-link">Ch 4</a>
+        <a href="ch05.html" class="nav-link active">Ch 5</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="chapter-hero">
+    <div class="container">
+      <div class="ch-eyebrow">
+        <span class="ch-num">Chapter 5</span>
+        <span class="ch-tag-label">Application</span>
+      </div>
+      <h1>Prompting by Lane</h1>
+      <p class="hero-key-q">How do I apply everything I've learned to my specific role and real workflow tasks?</p>
+    </div>
+  </header>
+
+  <!-- PHASE BAR -->
+  <div class="phase-bar">
+    <div class="phase-inner">
+      <a class="phase-pip" data-c="1" data-section="c1" href="#c1"><div class="phase-dot">C1</div><span class="phase-name">Connection</span></a>
+      <a class="phase-pip" data-c="2" data-section="c2" href="#c2"><div class="phase-dot">C2</div><span class="phase-name">Content</span></a>
+      <a class="phase-pip" data-c="3" data-section="c3" href="#c3"><div class="phase-dot">C3</div><span class="phase-name">Challenge</span></a>
+      <a class="phase-pip" data-c="4" data-section="c4" href="#c4"><div class="phase-dot">C4</div><span class="phase-name">Change</span></a>
+      <a class="phase-pip" data-c="5" data-section="c5" href="#c5"><div class="phase-dot">C5</div><span class="phase-name">Closure</span></a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C1 · CONNECTION
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c1">
+      <div class="container">
+        <div class="section-badge badge-c1">C1 · Connection</div>
+        <h2>Which of these moments sounds most like your week?</h2>
+        <p class="section-lead">
+          Read the three scenarios below. Don't pick the one you think you should pick — pick the one that actually matches where you are. Then find someone in your group who picked a different one.
+        </p>
+
+        <div class="card-grid cols-3 fade-up">
+          <div class="card lane1">
+            <span class="card-icon">✍️</span>
+            <h3 style="color: var(--lane1);">Scenario A</h3>
+            <p>"I spent two hours searching commentaries for background on the pigs in Mark 5. I needed something specific for our team discussion — not a general overview. I finally found it, but it was in an academic paper I could barely understand."</p>
+          </div>
+          <div class="card lane2">
+            <span class="card-icon">🔍</span>
+            <h3 style="color: var(--lane2);">Scenario B</h3>
+            <p>"I reviewed fifty verses of back-translation last week. I kept finding the same three types of issues. I spent more time re-explaining each one than I did finding them. I wish I had a faster way to document and categorise them."</p>
+          </div>
+          <div class="card lane3">
+            <span class="card-icon">⚙️</span>
+            <h3 style="color: var(--lane3);">Scenario C</h3>
+            <p>"I wrote the same status update three times this month in three different formats for three different audiences. Same information — just different levels of detail and technical language. It takes longer than it should."</p>
+          </div>
+        </div>
+
+        <div class="activity-box fade-up">
+          <div class="activity-header"><span class="activity-icon">💬</span><h3>With the person next to you — across lanes if possible</h3></div>
+          <ol>
+            <li>Which scenario did you pick? Which part of it resonated most?</li>
+            <li>For the scenario you <em>didn't</em> pick: do you see it as a problem worth solving? What would you add?</li>
+            <li>What does AI have to offer here — specifically — for each scenario?</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C2 · CONTENT — Lane-specific scenarios
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c2">
+      <div class="container">
+        <div class="section-badge badge-c2">C2 · Content</div>
+        <h2>Lane scenarios: the same techniques, different applications</h2>
+        <p class="section-lead">
+          Every scenario follows the same structure: weak prompt → discussion → strong prompt (with building blocks visible). Select your lane — or read all three to see how the same technique plays differently across roles.
+        </p>
+
+        <div class="lane-group fade-up">
+          <div class="lane-toggle">
+            <button class="lane-btn" data-lane="1">✍️ Lane 1 · Translators</button>
+            <button class="lane-btn" data-lane="2">🔍 Lane 2 · Consultants</button>
+            <button class="lane-btn" data-lane="3">⚙️ Lane 3 · Tech &amp; Leadership</button>
+          </div>
+
+          <!-- ════ LANE 1 ════ -->
+          <div class="lane-content" data-lane="1">
+            <div class="lane-header">
+              <span class="lane-head-icon">✍️</span>
+              <div class="lane-head-text">
+                <h4>Lane 1 · Translation &amp; Language Practitioners</h4>
+                <p>Mother Tongue Translators · Translators · Linguists · Literacy Workers</p>
+              </div>
+            </div>
+
+            <!-- SCENARIO A: Cultural background -->
+            <div class="card" style="margin-bottom: 1.5rem;">
+              <h3 style="margin-bottom: 0.5rem;">Scenario A — Cultural &amp; Historical Background (FIA Support)</h3>
+              <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.875rem;"><strong>Task:</strong> Before drafting Mark 5:1–20, you need to understand the cultural and historical background of the pigs in the story — specifically for an audience where pigs represent significant household wealth.</p>
+
+              <div class="prompt-label weak">Weak prompt</div>
+              <div class="prompt-display weak">Tell me about pigs in the Bible.</div>
+
+              <div class="activity-box" style="margin: 0.875rem 0;">
+                <div class="activity-header"><span class="activity-icon">🛠️</span><h3>What would you improve?</h3></div>
+                <p>Discuss before seeing the strong version: what is this prompt missing?</p>
+              </div>
+
+              <button class="reveal-btn" data-target="l1-a" data-open-text="Show strong prompt" data-close-text="Hide prompt">
+                <span class="reveal-arrow">▼</span><span class="btn-text">Show strong prompt</span>
+              </button>
+              <div class="hidden-reveal" id="l1-a">
+                <div class="prompt-label strong" style="margin-top:1rem;">Strong prompt</div>
+                <div class="prompt-display strong"><span class="P">Act as a biblical scholar specialised in Second Temple Judaism and Mediterranean economics.</span>
+
+<span class="CX">I am preparing a translation team for drafting Mark 5:1–20. Our target community is a group where pigs represent significant household wealth — comparable to cattle in other agricultural societies.</span>
+
+Explain:
+(1) What the pig herd would have meant to the local economy in first-century Decapolis
+(2) What cultural weight the destruction of 2,000 pigs carries for a landowner
+(3) Why that detail matters for how the passage will be received by a community that prizes pigs
+
+<span class="G">Use plain English. Do not speculate beyond what the text and historical record support. Do not cite specific reference codes — I will verify those independently.</span>
+
+<span class="F">Return as 3 numbered paragraphs, one per focus point above. Maximum 80 words each.</span></div>
+                <div class="bb-legend">
+                  <span class="bb-pill P">P Persona</span>
+                  <span class="bb-pill CX">CX Context</span>
+                  <span class="bb-pill G">G Guardrail</span>
+                  <span class="bb-pill F">F Format</span>
+                </div>
+                <div class="callout success" style="margin-top:0.75rem;">
+                  <span class="callout-icon">✅</span>
+                  <div><strong>What changed:</strong> Persona grounds the language. Three focus points create structure before output is generated. Cultural anchor pulls the response toward the actual translation challenge. Guardrails prevent fabricated citations. Format prevents a sprawling essay.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SCENARIO B: Storyboard -->
+            <div class="card" style="margin-bottom: 1.5rem;">
+              <h3 style="margin-bottom: 0.5rem;">Scenario B — Storyboard Scripting for Oral / Literacy Contexts</h3>
+              <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.875rem;"><strong>Task:</strong> You want to brief a local illustrator on a 6-panel stick-figure series for Mark 5:1–20 for oral community engagement. AI can't draw — but it can write the brief.</p>
+
+              <div class="prompt-label weak">Common mistake</div>
+              <div class="prompt-display weak">Draw me a storyboard for Mark 5:1–20.</div>
+
+              <button class="reveal-btn" data-target="l1-b" data-open-text="Show strong prompt" data-close-text="Hide prompt">
+                <span class="reveal-arrow">▼</span><span class="btn-text">Show strong prompt</span>
+              </button>
+              <div class="hidden-reveal" id="l1-b">
+                <div class="prompt-label strong" style="margin-top:1rem;">Strong prompt</div>
+                <div class="prompt-display strong"><span class="CX">For Mark 5:1–20, create a detailed storyboard script for a local artist to use as a brief for a 6-panel stick-figure illustration series.</span>
+
+<span class="F">For each panel provide:
+(1) The setting
+(2) The key characters present
+(3) The main action
+(4) One short caption in plain language (maximum 10 words)</span>
+
+<span class="CT">Capture the key narrative movements in sequence: arrival by boat, encounter at the tombs, dialogue with Legion, the pigs, the healed man, and the sending.</span>
+
+<span class="G">Do not add theological interpretation to the captions — describe only what can be seen.</span></div>
+                <div class="bb-legend">
+                  <span class="bb-pill CX">CX Context</span>
+                  <span class="bb-pill F">F Format</span>
+                  <span class="bb-pill CT">CT Chain of Thought</span>
+                  <span class="bb-pill G">G Guardrail</span>
+                </div>
+                <div class="callout success" style="margin-top:0.75rem;">
+                  <span class="callout-icon">✅</span>
+                  <div><strong>What changed:</strong> The task is correctly scoped as scripting, not drawing. The 6-panel structure and 4-part per-panel format are defined before the model begins. The guardrail keeps captions visual rather than interpretive.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="minority-alert">
+              <span>🌐</span>
+              <div><strong>Low-resource language note for Lane 1:</strong> When asking for illustrative examples or idioms <em>in</em> your target language, treat AI output as a first draft only. Ask a fluent mother-tongue speaker to verify before using. AI knowledge of your language community's oral patterns may be thin or absent.</div>
+            </div>
+          </div>
+
+          <!-- ════ LANE 2 ════ -->
+          <div class="lane-content" data-lane="2">
+            <div class="lane-header">
+              <span class="lane-head-icon">🔍</span>
+              <div class="lane-head-text">
+                <h4>Lane 2 · Consultants &amp; Advisors</h4>
+                <p>Translation Consultants · Consultants in Training · Exegetes · Advisors</p>
+              </div>
+            </div>
+
+            <!-- SCENARIO A: Key-term CoT -->
+            <div class="card" style="margin-bottom: 1.5rem;">
+              <h3 style="margin-bottom: 0.5rem;">Scenario A — Key-Term Analysis with Chain of Thought</h3>
+              <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.875rem;"><strong>Task:</strong> Identifying key terms in Mark 5:1–20 that carry significant translation risk — with traceable reasoning you can audit.</p>
+
+              <div class="prompt-label weak">Weak prompt</div>
+              <div class="prompt-display weak">What are the key theological terms in Mark 5 that might be hard to translate?</div>
+
+              <div class="activity-box" style="margin: 0.875rem 0;">
+                <div class="activity-header"><span class="activity-icon">🛠️</span><h3>What's missing?</h3></div>
+                <p>How would the AI define "hard to translate" on its own? What four-step reasoning would produce a usable output?</p>
+              </div>
+
+              <button class="reveal-btn" data-target="l2-a" data-open-text="Show strong prompt" data-close-text="Hide prompt">
+                <span class="reveal-arrow">▼</span><span class="btn-text">Show strong prompt</span>
+              </button>
+              <div class="hidden-reveal" id="l2-a">
+                <div class="prompt-label strong" style="margin-top:1rem;">Strong prompt</div>
+                <div class="prompt-display strong"><span class="P">Act as a translation consultant with expertise in New Testament Greek semantics.</span>
+
+<span class="CX">I am reviewing key terms in Mark 5:1–20 for a translation team working in a shame-honour culture in South Asia. We are at checking stage 2.</span>
+
+From the ESV text below, <span class="CT">work through the following steps:
+
+Step 1 — Identify all theologically significant terms: words whose precise rendering will significantly affect doctrinal understanding.
+
+Step 2 — For each term: describe its semantic range in plain language. Do not fabricate Greek dictionary codes.
+
+Step 3 — For each term: identify the translation risk if rendered too narrowly vs too broadly.
+
+Step 4 — Suggest one checking question the translation team could use to verify the rendering.</span>
+
+[paste ESV text of Mark 5:1–20]
+
+<span class="G">Do not speculate. Flag uncertain items as NEEDS VERIFICATION.</span>
+
+<span class="F">Return as: Term | Semantic Range | Narrowing Risk | Broadening Risk | Checking Question.</span></div>
+                <div class="bb-legend">
+                  <span class="bb-pill P">P Persona</span>
+                  <span class="bb-pill CX">CX Context</span>
+                  <span class="bb-pill CT">CT Chain of Thought</span>
+                  <span class="bb-pill G">G Guardrail</span>
+                  <span class="bb-pill F">F Format</span>
+                </div>
+                <div class="callout success" style="margin-top:0.75rem;">
+                  <span class="callout-icon">✅</span>
+                  <div><strong>What changed:</strong> The four-step CoT forces the model through all analytical layers before producing any output. The checking-question column transforms the output into a directly usable tool — not just a report to read but a rubric to apply.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SCENARIO B: Back-translation review -->
+            <div class="card" style="margin-bottom: 1.5rem;">
+              <h3 style="margin-bottom: 0.5rem;">Scenario B — Back-Translation Review for Implicit Information</h3>
+              <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.875rem;"><strong>Task:</strong> Reviewing a back-translation to identify where meaning present in the source has been weakened or lost.</p>
+
+              <div class="prompt-label weak">Weak prompt</div>
+              <div class="prompt-display weak">Compare this back-translation with the source text and tell me if there are any issues.</div>
+
+              <button class="reveal-btn" data-target="l2-b" data-open-text="Show strong prompt" data-close-text="Hide prompt">
+                <span class="reveal-arrow">▼</span><span class="btn-text">Show strong prompt</span>
+              </button>
+              <div class="hidden-reveal" id="l2-b">
+                <div class="prompt-label strong" style="margin-top:1rem;">Strong prompt</div>
+                <div class="prompt-display strong"><span class="P">Act as a senior translation consultant.</span>
+
+Below are three texts for Mark 5:1–20: the ESV source text, the current draft, and the back-translation. [paste all three, clearly labelled]
+
+<span class="CT">Step 1 — Compare the back-translation to the ESV source. Identify any place where information present in the ESV is absent from or weakened in the back-translation.
+
+Step 2 — For each gap: assess whether it is (a) an implicit-information issue in the draft, (b) a back-translation accuracy issue, or (c) both.
+
+Step 3 — For each gap: suggest a specific checking question the consultant could use with the translation team to surface the issue.</span>
+
+<span class="G">Do not flag minor stylistic variations. Focus only on meaning gaps. Do not speculate about intent.</span>
+
+<span class="F">Return as: Verse | Gap Description | Type (a/b/both) | Checking Question.</span></div>
+                <div class="bb-legend">
+                  <span class="bb-pill P">P Persona</span>
+                  <span class="bb-pill CT">CT Chain of Thought</span>
+                  <span class="bb-pill G">G Guardrail</span>
+                  <span class="bb-pill F">F Format</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════ LANE 3 ════ -->
+          <div class="lane-content" data-lane="3">
+            <div class="lane-header">
+              <span class="lane-head-icon">⚙️</span>
+              <div class="lane-head-text">
+                <h4>Lane 3 · Technical &amp; Leadership</h4>
+                <p>Cluster Managers · Senior Executives · IT &amp; Language Tech · Project Facilitators · QA</p>
+              </div>
+            </div>
+
+            <!-- SCENARIO A: Meeting notes -->
+            <div class="card" style="margin-bottom: 1.5rem;">
+              <h3 style="margin-bottom: 0.5rem;">Scenario A — Meeting Notes → Action List</h3>
+              <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.875rem;"><strong>Task:</strong> Extract structured action items from five emails from this week.</p>
+
+              <div class="prompt-label weak">Weak prompt</div>
+              <div class="prompt-display weak">Look through my emails and prepare a to-do list for me.</div>
+
+              <div class="callout danger" style="margin: 0.625rem 0; font-size: 0.85rem;">
+                <span class="callout-icon">❌</span>
+                <div>The AI has no access to your inbox. This produces a confused refusal or a generic template — because the materials (the emails themselves) are not in the conversation.</div>
+              </div>
+
+              <button class="reveal-btn" data-target="l3-a" data-open-text="Show strong prompt" data-close-text="Hide prompt">
+                <span class="reveal-arrow">▼</span><span class="btn-text">Show strong prompt</span>
+              </button>
+              <div class="hidden-reveal" id="l3-a">
+                <div class="prompt-label strong" style="margin-top:1rem;">Strong prompt</div>
+                <div class="prompt-display strong"><span class="CX">I am pasting 5 emails from this week below.</span>
+
+<span class="CT">For each email, identify:
+(1) Any action required from me
+(2) The deadline if mentioned
+(3) Who else is involved</span>
+
+<span class="G">Ignore greetings, signatures, and social pleasantries — extract only actionable content.</span>
+
+<span class="F">Return as a markdown checklist table: Action | Owner | Deadline | Waiting On.</span>
+
+[paste all 5 emails, each clearly labelled with its sender and date]</div>
+                <div class="bb-legend">
+                  <span class="bb-pill CX">CX Context</span>
+                  <span class="bb-pill CT">CT Chain of Thought</span>
+                  <span class="bb-pill G">G Guardrail</span>
+                  <span class="bb-pill F">F Format</span>
+                </div>
+                <div class="callout success" style="margin-top:0.75rem;">
+                  <span class="callout-icon">✅</span>
+                  <div><strong>What changed:</strong> The data is supplied. The extraction categories are defined. The guardrail prevents over-processing social content. The table format produces a deliverable that can be pasted into any project management tool immediately.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SCENARIO B: Rollout checklist -->
+            <div class="card" style="margin-bottom: 1.5rem;">
+              <h3 style="margin-bottom: 0.5rem;">Scenario B — AI Tool Rollout Readiness Checklist</h3>
+              <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.875rem;"><strong>Task:</strong> You are preparing to introduce a new AI tool to a field translation team and need a readiness checklist.</p>
+
+              <div class="prompt-label weak">Weak prompt</div>
+              <div class="prompt-display weak">Give me a checklist for rolling out an AI tool.</div>
+
+              <button class="reveal-btn" data-target="l3-b" data-open-text="Show strong prompt" data-close-text="Hide prompt">
+                <span class="reveal-arrow">▼</span><span class="btn-text">Show strong prompt</span>
+              </button>
+              <div class="hidden-reveal" id="l3-b">
+                <div class="prompt-label strong" style="margin-top:1rem;">Strong prompt</div>
+                <div class="prompt-display strong"><span class="P">Act as a deployment project manager in a field technology context.</span>
+
+<span class="CX">I am preparing to introduce LM Studio (local AI tool) to a translation team of 12 people in a low-bandwidth environment.
+Hardware: i5 laptops, 16GB RAM, no dedicated GPU.
+Internet: intermittent 3G.
+Team profile: experienced with Paratext, new to AI tools.</span>
+
+Generate a rollout readiness checklist covering:
+(1) Pre-deployment infrastructure checks
+(2) Team training requirements
+(3) First-session facilitation plan
+(4) Risk flags specific to low-bandwidth deployment
+(5) Success criteria for a 30-day pilot
+
+<span class="G">Do not recommend steps that require dedicated GPU or stable broadband — all suggestions must be feasible within the hardware constraints above.</span>
+
+<span class="F">Return as a numbered checklist grouped by the 5 sections above.</span></div>
+                <div class="bb-legend">
+                  <span class="bb-pill P">P Persona</span>
+                  <span class="bb-pill CX">CX Context</span>
+                  <span class="bb-pill G">G Guardrail</span>
+                  <span class="bb-pill F">F Format</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /lane-group -->
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C3 · CHALLENGE — Cross-lane exercises
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c3">
+      <div class="container">
+        <div class="section-badge badge-c3">C3 · Challenge</div>
+        <h2>Cross-lane exercises</h2>
+        <p class="section-lead">
+          These three exercises are designed for cross-lane pairs. Find someone from a different lane.
+        </p>
+
+        <div class="cross-lane-badge" style="margin-bottom: 1.25rem;">👥 Pair with someone in a different lane for all three exercises</div>
+
+        <!-- EXERCISE 1 -->
+        <div class="card fade-up" style="margin-bottom: 1.25rem;">
+          <h3 style="margin-bottom: 0.75rem;">Exercise 1 — Prompt Swap</h3>
+          <p style="font-size: 0.9rem;">Each person shows their strongest prompt from today's sessions to their cross-lane partner.</p>
+          <div class="activity-box" style="margin-top: 0.75rem;">
+            <div class="activity-header"><span class="activity-icon">🔄</span><h3>Discussion questions</h3></div>
+            <ul>
+              <li>Can your partner understand what the prompt is trying to accomplish — without explanation?</li>
+              <li>What is unclear? What would your partner change?</li>
+              <li>What does your lane need from a prompt that their lane doesn't? What do you have in common?</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- EXERCISE 2 -->
+        <div class="card fade-up" style="margin-bottom: 1.25rem;">
+          <h3 style="margin-bottom: 0.75rem;">Exercise 2 — Translate the Output</h3>
+          <p style="font-size: 0.9rem;">Take a Lane 2 checking output — a formatted table of translation issues from the key-term analysis scenario above. Now ask Lane 3: "How would you present this to a project executive who is not a translation specialist?"</p>
+          <div class="activity-box" style="margin-top: 0.75rem;">
+            <div class="activity-header"><span class="activity-icon">🔄</span><h3>Build a new prompt together</h3></div>
+            <p>Lane 2 person: explain what needs to be preserved. Lane 3 person: explain what the executive audience needs instead. Together: write a prompt that transforms the checking table into an executive summary.</p>
+            <p><em>Try it. What did the output look like? What would you change?</em></p>
+          </div>
+        </div>
+
+        <!-- EXERCISE 3 -->
+        <div class="card fade-up" style="margin-bottom: 1.25rem;">
+          <h3 style="margin-bottom: 0.75rem;">Exercise 3 — Build a Shared AI Session Brief</h3>
+          <p style="font-size: 0.9rem;">What would an <code>ai-session-brief.md</code> look like that is genuinely useful to both a translator and a project manager working on the same project?</p>
+          <div class="activity-box" style="margin-top: 0.75rem;">
+            <div class="activity-header"><span class="activity-icon">🛠️</span><h3>Draft one together — 10 minutes</h3></div>
+            <ul>
+              <li>What sections does the translator need? What does the project manager need?</li>
+              <li>Where do the guardrails overlap? Where are they different?</li>
+              <li>What would a section called "Non-negotiables" include that applies to every role on the team?</li>
+            </ul>
+          </div>
+          <textarea style="width:100%; margin-top:0.875rem; min-height:120px; font-family:var(--mono); font-size:0.82rem; border:1px solid var(--border); border-radius:var(--radius-sm); padding:0.875rem; resize:vertical; line-height:1.65;" placeholder="Draft your shared AI session brief here — the sections that work for all lanes on your team..."></textarea>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C4 · CHANGE — First-week plan
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c4">
+      <div class="container">
+        <div class="section-badge badge-c4">C4 · Change</div>
+        <h2>My first-week plan</h2>
+        <p class="section-lead">
+          You leave this workshop with five chapters of technique. This section is about one thing: what will you actually do next Tuesday?
+        </p>
+
+        <div class="lane-group fade-up">
+          <div class="lane-toggle">
+            <button class="lane-btn" data-lane="1">✍️ Lane 1</button>
+            <button class="lane-btn" data-lane="2">🔍 Lane 2</button>
+            <button class="lane-btn" data-lane="3">⚙️ Lane 3</button>
+          </div>
+
+          <!-- LANE 1 PLAN -->
+          <div class="lane-content" data-lane="1">
+            <div class="lane-header">
+              <span class="lane-head-icon">✍️</span>
+              <div class="lane-head-text">
+                <h4>Lane 1 · Translators &amp; Language Practitioners</h4>
+                <p>Your first-week AI habits</p>
+              </div>
+            </div>
+            <div class="commitment-box">
+              <div class="commitment-header"><span>📅</span><h3>My first-week plan</h3></div>
+
+              <p class="commitment-prompt-text">The first real AI task I will try in my drafting or FIA work:</p>
+              <textarea class="commitment-input" placeholder="e.g. I will use AI to get cultural background for the key scenes in my next passage before drafting begins..."></textarea>
+
+              <p class="commitment-prompt-text" style="margin-top: 0.875rem;">The building blocks I will include every time (circle your 3 non-negotiables):</p>
+              <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.875rem;">
+                <span class="bb-pill P" style="cursor:pointer; font-size:0.82rem; padding:0.3rem 0.8rem;">P Persona</span>
+                <span class="bb-pill CX" style="cursor:pointer; font-size:0.82rem; padding:0.3rem 0.8rem;">CX Context</span>
+                <span class="bb-pill G" style="cursor:pointer; font-size:0.82rem; padding:0.3rem 0.8rem;">G Guardrail</span>
+                <span class="bb-pill F" style="cursor:pointer; font-size:0.82rem; padding:0.3rem 0.8rem;">F Format</span>
+                <span class="bb-pill FS" style="cursor:pointer; font-size:0.82rem; padding:0.3rem 0.8rem;">FS Few-Shot</span>
+                <span class="bb-pill CT" style="cursor:pointer; font-size:0.82rem; padding:0.3rem 0.8rem;">CT Chain of Thought</span>
+              </div>
+
+              <p class="commitment-prompt-text">The one failure mode I will watch for and how I will verify:</p>
+              <textarea class="commitment-input" placeholder="e.g. Hallucination: I will not use any Louw-Nida code the AI gives me without checking it in the printed lexicon first..."></textarea>
+
+              <p class="commitment-prompt-text" style="margin-top: 0.875rem;">Who on my team I will share this with:</p>
+              <textarea class="commitment-input" style="min-height:60px;" placeholder="e.g. I will show my checking partner one prompt I've built and ask them to give feedback on whether the guardrails are strong enough..."></textarea>
+
+              <div class="commitment-actions"><button class="btn-print">🖨️ Print my plan</button></div>
+            </div>
+          </div>
+
+          <!-- LANE 2 PLAN -->
+          <div class="lane-content" data-lane="2">
+            <div class="lane-header">
+              <span class="lane-head-icon">🔍</span>
+              <div class="lane-head-text">
+                <h4>Lane 2 · Consultants &amp; Advisors</h4>
+                <p>Your first-week AI habits</p>
+              </div>
+            </div>
+            <div class="commitment-box">
+              <div class="commitment-header"><span>📅</span><h3>My first-week plan</h3></div>
+
+              <p class="commitment-prompt-text">The first real AI task I will try in my reviewing or mentoring work:</p>
+              <textarea class="commitment-input" placeholder="e.g. I will use AI to generate a first pass of checking questions for the next passage I review, then compare them to my own list..."></textarea>
+
+              <p class="commitment-prompt-text" style="margin-top: 0.875rem;">The Chain of Thought step structure I will use for my next exegetical task:</p>
+              <textarea class="commitment-input" placeholder="e.g. Step 1 — Semantic range. Step 2 — Translation risk directions. Step 3 — Checking question. Then I verify Step 1 against primary sources before trusting Step 3..."></textarea>
+
+              <p class="commitment-prompt-text" style="margin-top: 0.875rem;">One change I will make to how I mentor translation teams about AI:</p>
+              <textarea class="commitment-input" placeholder="e.g. I will share the Risk Radar (Ch 1) summary with my team and ask them which failure modes they've already experienced without realising it..."></textarea>
+
+              <div class="commitment-actions"><button class="btn-print">🖨️ Print my plan</button></div>
+            </div>
+          </div>
+
+          <!-- LANE 3 PLAN -->
+          <div class="lane-content" data-lane="3">
+            <div class="lane-header">
+              <span class="lane-head-icon">⚙️</span>
+              <div class="lane-head-text">
+                <h4>Lane 3 · Tech &amp; Leadership</h4>
+                <p>Your first-week AI habits</p>
+              </div>
+            </div>
+            <div class="commitment-box">
+              <div class="commitment-header"><span>📅</span><h3>My first-week plan</h3></div>
+
+              <p class="commitment-prompt-text">The first administrative or governance task I will handle with AI:</p>
+              <textarea class="commitment-input" placeholder="e.g. I will use AI to extract and format the action items from this week's cluster meeting notes before I send the follow-up email..."></textarea>
+
+              <p class="commitment-prompt-text" style="margin-top: 0.875rem;">The data safety decision I have made for my team's context:</p>
+              <textarea class="commitment-input" placeholder="e.g. All draft text in our project is unpublished. I will use LM Studio locally for any task involving draft passages, and record which tool was used in our session log..."></textarea>
+
+              <p class="commitment-prompt-text" style="margin-top: 0.875rem;">One governance item I will add to our team's AI guidelines this month:</p>
+              <textarea class="commitment-input" placeholder="e.g. I will document the data sensitivity decision rule (published vs unpublished) and share it with all team members who have been asking to use AI tools..."></textarea>
+
+              <div class="commitment-actions"><button class="btn-print">🖨️ Print my plan</button></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C5 · CLOSURE
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c5">
+      <div class="container">
+        <div class="section-badge badge-c5">C5 · Closure</div>
+
+        <div class="big-quote fade-up">
+          <blockquote>
+            "Translators, consultants, and tech leads all touch the same draft. AI is most powerful when it connects what role boundaries sometimes divide."
+          </blockquote>
+          <cite>The best prompt any of us can write is incomplete without the other roles. That is the real lesson of this chapter.</cite>
+        </div>
+
+        <div class="card-grid cols-3 fade-up" style="margin-top: 1.5rem;">
+          <div class="card lane1">
+            <h3 style="font-size: 0.875rem; color: var(--lane1); margin-bottom: 0.5rem;">Lane 1 leaves with</h3>
+            <p>FIA acceleration, better first-draft quality, skills to assess and improve any draft using AI as a structured research assistant — not an oracle.</p>
+          </div>
+          <div class="card lane2">
+            <h3 style="font-size: 0.875rem; color: var(--lane2); margin-bottom: 0.5rem;">Lane 2 leaves with</h3>
+            <p>Faster issue discovery, repeatable review rubrics, Chain of Thought prompts that produce auditable reasoning — not verdicts without evidence.</p>
+          </div>
+          <div class="card lane3">
+            <h3 style="font-size: 0.875rem; color: var(--lane3); margin-bottom: 0.5rem;">Lane 3 leaves with</h3>
+            <p>Tool selection confidence, governance clarity, a data safety decision rule, and a team-level deployment model that doesn't depend on individual best-practice.</p>
+          </div>
+        </div>
+
+        <div class="callout success fade-up" style="margin-top: 1.5rem;">
+          <span class="callout-icon">✅</span>
+          <div>
+            <strong>Five chapters done.</strong> You can name the six failure modes, build prompts with all six building blocks, apply the Master Formula, defend your sessions against context drift, and apply everything to your lane. The handbook appendices are your reference for every task after today. Go do the work.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="chapter-footer-nav">
+    <div class="nav-row">
+      <a href="ch04.html" class="ch-nav-btn">← Ch 4: Advanced Techniques</a>
+      <span class="ch-nav-spacer"></span>
+      <a href="index.html" class="ch-nav-btn primary">Back to all chapters ↑</a>
+    </div>
+  </nav>
+
+  <script src="script.js"></script>
+</body>
+</html>

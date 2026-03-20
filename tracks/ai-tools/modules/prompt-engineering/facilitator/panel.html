@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facilitator Panel · AILT 2026</title>
+  <style>
+    /* ── Reset & Base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0f172a;
+      --surface:     #1e293b;
+      --surface2:    #273347;
+      --border:      #334155;
+      --text:        #e2e8f0;
+      --text-muted:  #94a3b8;
+      --amber:       #f4a020;
+      --amber-dim:   #92400e;
+      --green:       #4ade80;
+      --red:         #f87171;
+      --blue:        #60a5fa;
+      --purple:      #a78bfa;
+      --teal:        #2dd4bf;
+
+      --c1: #f97316; --c2: #3b82f6; --c3: #8b5cf6;
+      --c4: #10b981; --c5: #ec4899;
+
+      --lane1: #38bdf8; --lane2: #c084fc; --lane3: #34d399;
+
+      --radius: 8px;
+      --font: 'Inter', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 13px;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ── Top Bar ──────────────────────────────────────────── */
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .topbar-brand {
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+      color: var(--amber);
+    }
+
+    .topbar-brand span {
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .sync-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.2rem 0.7rem;
+    }
+
+    .sync-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .sync-dot.connected { background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .sync-dot.disconnected { background: var(--red); }
+
+    /* ── Main Grid ────────────────────────────────────────── */
+    .main-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 220px 1fr 200px;
+      grid-template-rows: auto 1fr;
+      gap: 0;
+      overflow: hidden;
+    }
+
+    @media (max-width: 800px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        overflow: auto;
+      }
+    }
+
+    /* ── Sidebar ──────────────────────────────────────────── */
+    .sidebar {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 0.875rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* ── Main Content ─────────────────────────────────────── */
+    .main-content {
+      padding: 0.875rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    /* ── Right Panel ──────────────────────────────────────── */
+    .right-panel {
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      padding: 0.875rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* ── Panel Cards ──────────────────────────────────────── */
+    .panel-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.75rem;
+    }
+
+    .panel-card h2 {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.625rem;
+    }
+
+    .panel-card h3 {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      margin-top: 0.625rem;
+    }
+
+    /* ── Buttons ──────────────────────────────────────────── */
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    button {
+      font-family: var(--font);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.3rem 0.6rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.12s, border-color 0.12s, color 0.12s;
+      line-height: 1.3;
+    }
+
+    button:hover { background: var(--border); }
+    button:active { transform: scale(0.97); }
+
+    button.btn-primary {
+      background: var(--amber);
+      border-color: var(--amber);
+      color: #000;
+    }
+    button.btn-primary:hover { background: #e09010; border-color: #e09010; }
+
+    button.btn-danger {
+      background: transparent;
+      border-color: var(--red);
+      color: var(--red);
+    }
+    button.btn-danger:hover { background: rgba(248,113,113,0.12); }
+
+    button.btn-full {
+      width: 100%;
+      justify-content: flex-start;
+      text-align: left;
+      margin-bottom: 0.25rem;
+    }
+    button.btn-full:last-child { margin-bottom: 0; }
+
+    /* Chapter nav buttons */
+    .ch-btn { font-size: 0.72rem; font-weight: 700; padding: 0.3rem 0.5rem; }
+    .ch-btn.active { background: var(--amber); border-color: var(--amber); color: #000; }
+
+    /* Phase buttons */
+    .phase-btn {
+      padding: 0.25rem 0.55rem;
+      font-weight: 700;
+      font-size: 0.7rem;
+    }
+    .phase-btn[data-phase="1"] { border-color: var(--c1); color: var(--c1); }
+    .phase-btn[data-phase="2"] { border-color: var(--c2); color: var(--c2); }
+    .phase-btn[data-phase="3"] { border-color: var(--c3); color: var(--c3); }
+    .phase-btn[data-phase="4"] { border-color: var(--c4); color: var(--c4); }
+    .phase-btn[data-phase="5"] { border-color: var(--c5); color: var(--c5); }
+    .phase-btn:hover { opacity: 0.8; background: transparent; }
+
+    /* Lane buttons */
+    .lane-btn-f[data-lane="1"] { border-color: var(--lane1); color: var(--lane1); }
+    .lane-btn-f[data-lane="2"] { border-color: var(--lane2); color: var(--lane2); }
+    .lane-btn-f[data-lane="3"] { border-color: var(--lane3); color: var(--lane3); }
+    .lane-btn-f.active[data-lane="1"] { background: var(--lane1); color: #000; }
+    .lane-btn-f.active[data-lane="2"] { background: var(--lane2); color: #000; }
+    .lane-btn-f.active[data-lane="3"] { background: var(--lane3); color: #000; }
+
+    /* Reveal action buttons */
+    .reveal-action-btn {
+      background: transparent;
+      border-color: var(--amber-dim);
+      color: var(--amber);
+      width: 100%;
+      text-align: left;
+      margin-bottom: 0.25rem;
+      padding: 0.35rem 0.6rem;
+    }
+    .reveal-action-btn:hover { background: rgba(244,160,32,0.1); border-color: var(--amber); }
+    .reveal-action-btn.fired {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    /* ── Timer ────────────────────────────────────────────── */
+    .timer-display {
+      font-family: var(--mono);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text);
+      text-align: center;
+      padding: 0.4rem 0;
+      letter-spacing: 0.05em;
+    }
+
+    .timer-display.running { color: var(--green); }
+    .timer-display.alert   { color: var(--amber); }
+
+    /* ── Notes ────────────────────────────────────────────── */
+    textarea.notes-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 0.75rem;
+      padding: 0.5rem;
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    textarea.notes-input:focus { outline: none; border-color: var(--amber); }
+
+    /* ── Chapter Action Panel ────────────────────────────── */
+    .chapter-panel { display: none; }
+    .chapter-panel.visible { display: block; }
+
+    .action-phase-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+      margin: 0.6rem 0 0.3rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Status Log ───────────────────────────────────────── */
+    .status-log {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      min-height: 80px;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+
+    .log-line { padding: 0.1rem 0; border-bottom: 1px solid var(--surface); }
+    .log-line:last-child { border-bottom: none; }
+    .log-time { color: var(--text-muted); margin-right: 0.4rem; }
+    .log-msg  { color: var(--text); }
+    .log-line.sent .log-msg  { color: var(--amber); }
+    .log-line.recv .log-msg  { color: var(--green); }
+
+    /* ── Divider ──────────────────────────────────────────── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0.5rem 0;
+    }
+
+    /* ── Custom Reveal Input ─────────────────────────────── */
+    .custom-reveal-row {
+      display: flex;
+      gap: 0.3rem;
+      margin-top: 0.4rem;
+    }
+
+    input.reveal-id-input {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 0.28rem 0.5rem;
+    }
+    input.reveal-id-input:focus { outline: none; border-color: var(--amber); }
+    input.reveal-id-input::placeholder { color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-brand">AILT 2026 · Facilitator Panel <span>— Prompt Engineering Module</span></div>
+    <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+      <div id="current-page-label" style="font-size:0.72rem; color:var(--text-muted);">No participant connected</div>
+      <div class="sync-pill">
+        <div class="sync-dot disconnected" id="sync-dot"></div>
+        <span id="sync-label">Waiting…</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- LEFT SIDEBAR: Navigation -->
+    <aside class="sidebar">
+
+      <!-- Chapter Quick Nav -->
+      <div class="panel-card">
+        <h2>Chapter</h2>
+        <div class="btn-group" style="flex-direction:column; gap:0.3rem;">
+          <button class="ch-btn" data-ch="index" onclick="navTo('index.html')">🏠 Hub</button>
+          <button class="ch-btn" data-ch="ch01" onclick="navTo('ch01.html')">Ch 1 · How LLMs Work</button>
+          <button class="ch-btn" data-ch="ch02" onclick="navTo('ch02.html')">Ch 2 · Anatomy of a Prompt</button>
+          <button class="ch-btn" data-ch="ch03" onclick="navTo('ch03.html')">Ch 3 · Master Formula</button>
+          <button class="ch-btn" data-ch="ch04" onclick="navTo('ch04.html')">Ch 4 · Advanced Techniques</button>
+          <button class="ch-btn" data-ch="ch05" onclick="navTo('ch05.html')">Ch 5 · Prompting by Lane</button>
+        </div>
+      </div>
+
+      <!-- Phase Jump -->
+      <div class="panel-card">
+        <h2>Phase</h2>
+        <div class="btn-group">
+          <button class="phase-btn" data-phase="1" onclick="scrollTo_('c1')">C1 Connection</button>
+          <button class="phase-btn" data-phase="2" onclick="scrollTo_('c2')">C2 Content</button>
+          <button class="phase-btn" data-phase="3" onclick="scrollTo_('c3')">C3 Challenge</button>
+          <button class="phase-btn" data-phase="4" onclick="scrollTo_('c4')">C4 Change</button>
+          <button class="phase-btn" data-phase="5" onclick="scrollTo_('c5')">C5 Closure</button>
+        </div>
+      </div>
+
+      <!-- Lane -->
+      <div class="panel-card">
+        <h2>Lane</h2>
+        <div class="btn-group" style="flex-direction:column; gap:0.3rem;">
+          <button class="lane-btn-f" data-lane="1" onclick="setLane('1')">✍️ Lane 1 — Translators</button>
+          <button class="lane-btn-f" data-lane="2" onclick="setLane('2')">🔍 Lane 2 — Consultants</button>
+          <button class="lane-btn-f" data-lane="3" onclick="setLane('3')">⚙️ Lane 3 — Tech &amp; Leadership</button>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- MAIN: Chapter-specific actions -->
+    <main class="main-content">
+
+      <!-- CH 01 -->
+      <div class="panel-card chapter-panel" data-ch="ch01" id="panel-ch01">
+        <h2>Ch 1 Actions — How LLMs Work</h2>
+
+        <div class="action-phase-label">C1 · Connection</div>
+        <button class="reveal-action-btn" data-target="c1-reveal" onclick="doReveal(this)">
+          ▼ Reveal — "What went wrong" (hallucination hook)
+        </button>
+
+        <div class="action-phase-label">C3 · Challenge — Spot the Failure Mode</div>
+        <button class="reveal-action-btn" data-target="reveal-a" onclick="doReveal(this)">
+          ▼ Show Response A analysis (Knowledge Cutoff)
+        </button>
+        <button class="reveal-action-btn" data-target="reveal-b" onclick="doReveal(this)">
+          ▼ Show Response B analysis (Bias &amp; Worldview)
+        </button>
+        <button class="reveal-action-btn" data-target="reveal-c" onclick="doReveal(this)">
+          ▼ Show Response C analysis (Math &amp; Counting)
+        </button>
+      </div>
+
+      <!-- CH 02 -->
+      <div class="panel-card chapter-panel" data-ch="ch02" id="panel-ch02">
+        <h2>Ch 2 Actions — Anatomy of a Prompt</h2>
+
+        <div class="action-phase-label">C3 · Challenge — Repair the Prompt</div>
+        <button class="reveal-action-btn" data-target="repair-1" onclick="doReveal(this)">
+          ▼ Show Repair 1 — strong prompt
+        </button>
+        <button class="reveal-action-btn" data-target="repair-2" onclick="doReveal(this)">
+          ▼ Show Repair 2 — strong prompt
+        </button>
+        <button class="reveal-action-btn" data-target="repair-3" onclick="doReveal(this)">
+          ▼ Show Repair 3 — strong prompt
+        </button>
+      </div>
+
+      <!-- CH 03 -->
+      <div class="panel-card chapter-panel" data-ch="ch03" id="panel-ch03">
+        <h2>Ch 3 Actions — Master Formula</h2>
+
+        <div class="action-phase-label">C3 · Challenge — Diagnose the Prompt</div>
+        <button class="reveal-action-btn" data-target="diag-a" onclick="doReveal(this)">
+          ▼ Show Diagnosis A
+        </button>
+        <button class="reveal-action-btn" data-target="diag-b" onclick="doReveal(this)">
+          ▼ Show Diagnosis B
+        </button>
+        <button class="reveal-action-btn" data-target="diag-c" onclick="doReveal(this)">
+          ▼ Show Diagnosis C
+        </button>
+      </div>
+
+      <!-- CH 04 -->
+      <div class="panel-card chapter-panel" data-ch="ch04" id="panel-ch04">
+        <h2>Ch 4 Actions — Advanced Techniques</h2>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.25rem;">This chapter uses the Session Brief builder (interactive form) rather than reveal buttons. Use Phase navigation to guide participants through sections.</p>
+      </div>
+
+      <!-- CH 05 -->
+      <div class="panel-card chapter-panel" data-ch="ch05" id="panel-ch05">
+        <h2>Ch 5 Actions — Prompting by Lane</h2>
+
+        <div class="action-phase-label">C2/C3 · Lane 1 (Translators)</div>
+        <button class="reveal-action-btn" data-target="l1-a" onclick="doReveal(this)">
+          ▼ Lane 1 · Reveal strong prompt A
+        </button>
+        <button class="reveal-action-btn" data-target="l1-b" onclick="doReveal(this)">
+          ▼ Lane 1 · Reveal strong prompt B
+        </button>
+
+        <div class="action-phase-label">Lane 2 (Consultants)</div>
+        <button class="reveal-action-btn" data-target="l2-a" onclick="doReveal(this)">
+          ▼ Lane 2 · Reveal strong prompt A
+        </button>
+        <button class="reveal-action-btn" data-target="l2-b" onclick="doReveal(this)">
+          ▼ Lane 2 · Reveal strong prompt B
+        </button>
+
+        <div class="action-phase-label">Lane 3 (Tech &amp; Leadership)</div>
+        <button class="reveal-action-btn" data-target="l3-a" onclick="doReveal(this)">
+          ▼ Lane 3 · Reveal strong prompt A
+        </button>
+        <button class="reveal-action-btn" data-target="l3-b" onclick="doReveal(this)">
+          ▼ Lane 3 · Reveal strong prompt B
+        </button>
+      </div>
+
+      <!-- Index -->
+      <div class="panel-card chapter-panel" data-ch="index" id="panel-index">
+        <h2>Workshop Hub</h2>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.25rem;">Hub page — use Chapter buttons to navigate participants to a chapter to begin.</p>
+      </div>
+
+      <!-- Custom reveal -->
+      <div class="panel-card">
+        <h2>Custom reveal</h2>
+        <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:0.4rem;">Type any element ID and trigger it remotely.</p>
+        <div class="custom-reveal-row">
+          <input type="text" class="reveal-id-input" id="custom-reveal-input" placeholder="e.g. reveal-a">
+          <button onclick="doCustomReveal()">▼ Reveal</button>
+        </div>
+      </div>
+
+      <!-- Status log -->
+      <div class="panel-card">
+        <h2>Activity log</h2>
+        <div class="status-log" id="status-log">
+          <div class="log-line"><span class="log-time">--:--:--</span><span class="log-msg">Panel loaded. Pinging participant pages…</span></div>
+        </div>
+        <button style="margin-top:0.4rem; font-size:0.65rem;" onclick="clearLog()">Clear log</button>
+      </div>
+
+    </main>
+
+    <!-- RIGHT PANEL: Timer + Notes -->
+    <aside class="right-panel">
+
+      <div class="panel-card">
+        <h2>Timer</h2>
+        <div class="timer-display" id="timer-display">00:00</div>
+        <div class="btn-group" style="justify-content:center; margin-top:0.4rem;">
+          <button onclick="startTimer()">▶ Start</button>
+          <button onclick="pauseTimer()">⏸ Pause</button>
+          <button class="btn-danger" onclick="resetTimer()">↺ Reset</button>
+        </div>
+        <hr class="divider">
+        <h3>Presets</h3>
+        <div class="btn-group">
+          <button onclick="setTimerPreset(2)">2 m</button>
+          <button onclick="setTimerPreset(5)">5 m</button>
+          <button onclick="setTimerPreset(10)">10 m</button>
+          <button onclick="setTimerPreset(15)">15 m</button>
+        </div>
+      </div>
+
+      <div class="panel-card" style="flex:1;">
+        <h2>Notes</h2>
+        <textarea class="notes-input" id="notes-input" placeholder="Facilitator notes… (auto-saved to local storage)"></textarea>
+        <button style="margin-top:0.4rem; font-size:0.65rem;" onclick="clearNotes()">Clear notes</button>
+      </div>
+
+    </aside>
+  </div>
+
+  <script>
+    'use strict';
+
+    /* ── BroadcastChannel ──────────────────────────────── */
+    var bc = null;
+    var connected = false;
+    var connectedPage = '';
+
+    if (window.BroadcastChannel) {
+      bc = new BroadcastChannel('ailt-2026-facilitator');
+
+      bc.onmessage = function (e) {
+        var msg = e.data;
+        if (!msg) return;
+
+        if (msg.action === 'pong') {
+          connected = true;
+          connectedPage = msg.page || '';
+          updateSyncStatus();
+          showPanelForPage(msg.page);
+          log('recv', 'Connected: ' + (msg.title || msg.page));
+        }
+      };
+
+      // Ping on load
+      setTimeout(function () { bc.postMessage({ action: 'ping' }); }, 300);
+
+      // Re-ping every 10 s to detect reconnection
+      setInterval(function () {
+        if (!connected) { bc.postMessage({ action: 'ping' }); }
+      }, 10000);
+    } else {
+      log('recv', '⚠ BroadcastChannel not supported in this browser.');
+    }
+
+    function send(msg) {
+      if (!bc) return;
+      bc.postMessage(msg);
+    }
+
+    /* ── Navigation ─────────────────────────────────────── */
+    function navTo(url) {
+      send({ action: 'navigate', url: url });
+      var ch = url.replace('.html', '');
+      log('sent', 'Navigate → ' + url);
+      showPanelForPage(ch);
+      updateChButtons(ch);
+    }
+
+    function scrollTo_(section) {
+      send({ action: 'scroll', section: section });
+      log('sent', 'Scroll → #' + section);
+    }
+
+    /* ── Lane ───────────────────────────────────────────── */
+    var activeLane = null;
+
+    function setLane(laneNum) {
+      send({ action: 'lane', lane: laneNum });
+      log('sent', 'Lane → ' + laneNum);
+      activeLane = laneNum;
+      document.querySelectorAll('.lane-btn-f').forEach(function (b) {
+        b.classList.toggle('active', b.getAttribute('data-lane') === laneNum);
+      });
+    }
+
+    /* ── Reveals ────────────────────────────────────────── */
+    function doReveal(btn) {
+      var target = btn.getAttribute('data-target');
+      send({ action: 'reveal', target: target });
+      btn.classList.add('fired');
+      log('sent', 'Reveal → #' + target);
+    }
+
+    function doCustomReveal() {
+      var val = document.getElementById('custom-reveal-input').value.trim();
+      if (!val) return;
+      send({ action: 'reveal', target: val });
+      log('sent', 'Custom reveal → #' + val);
+    }
+
+    /* ── Chapter panels ─────────────────────────────────── */
+    function showPanelForPage(page) {
+      var key = page ? page.replace('.html', '') : '';
+      document.querySelectorAll('.chapter-panel').forEach(function (p) {
+        p.classList.toggle('visible', p.getAttribute('data-ch') === key);
+      });
+      updateChButtons(key);
+
+      // Reset fired states when navigating away
+      document.querySelectorAll('.reveal-action-btn').forEach(function (b) {
+        b.classList.remove('fired');
+      });
+    }
+
+    function updateChButtons(ch) {
+      document.querySelectorAll('.ch-btn').forEach(function (b) {
+        b.classList.toggle('active', b.getAttribute('data-ch') === ch);
+      });
+    }
+
+    /* ── Sync status ────────────────────────────────────── */
+    function updateSyncStatus() {
+      var dot   = document.getElementById('sync-dot');
+      var label = document.getElementById('sync-label');
+      var page  = document.getElementById('current-page-label');
+
+      if (connected) {
+        dot.className   = 'sync-dot connected';
+        label.textContent = 'Synced';
+        page.textContent  = 'Showing: ' + (connectedPage || 'unknown');
+        page.style.color  = 'var(--green)';
+      } else {
+        dot.className   = 'sync-dot disconnected';
+        label.textContent = 'Waiting…';
+        page.textContent  = 'No participant connected';
+        page.style.color  = 'var(--text-muted)';
+      }
+    }
+
+    /* ── Activity log ───────────────────────────────────── */
+    function log(type, msg) {
+      var logEl = document.getElementById('status-log');
+      var now   = new Date();
+      var time  = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+      var line  = document.createElement('div');
+      line.className = 'log-line ' + type;
+      line.innerHTML = '<span class="log-time">' + time + '</span><span class="log-msg">' + escapeHtml(msg) + '</span>';
+      logEl.insertBefore(line, logEl.firstChild);
+      // Keep last 50 lines
+      while (logEl.children.length > 50) { logEl.removeChild(logEl.lastChild); }
+    }
+
+    function clearLog() {
+      document.getElementById('status-log').innerHTML = '';
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    /* ── Timer ──────────────────────────────────────────── */
+    var timerInterval  = null;
+    var timerSeconds   = 0;
+    var timerRunning   = false;
+    var timerPreset    = 0; // 0 = count up; >0 = count down from preset
+
+    function startTimer() {
+      if (timerRunning) return;
+      timerRunning = true;
+      var display = document.getElementById('timer-display');
+      display.classList.add('running');
+      display.classList.remove('alert');
+      timerInterval = setInterval(function () {
+        if (timerPreset > 0) {
+          timerSeconds = Math.max(0, timerSeconds - 1);
+          if (timerSeconds === 0) {
+            display.classList.remove('running');
+            display.classList.add('alert');
+          }
+        } else {
+          timerSeconds++;
+        }
+        updateTimerDisplay();
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      timerRunning = false;
+      clearInterval(timerInterval);
+      timerInterval = null;
+      document.getElementById('timer-display').classList.remove('running');
+    }
+
+    function resetTimer() {
+      pauseTimer();
+      timerSeconds = 0;
+      timerPreset  = 0;
+      var display = document.getElementById('timer-display');
+      display.classList.remove('alert', 'running');
+      updateTimerDisplay();
+    }
+
+    function setTimerPreset(minutes) {
+      resetTimer();
+      timerPreset  = minutes * 60;
+      timerSeconds = timerPreset;
+      updateTimerDisplay();
+      startTimer();
+    }
+
+    function updateTimerDisplay() {
+      var total = Math.abs(timerSeconds);
+      var m = Math.floor(total / 60);
+      var s = total % 60;
+      // Show hours if needed
+      if (m >= 60) {
+        var h = Math.floor(m / 60);
+        m = m % 60;
+        document.getElementById('timer-display').textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+      } else {
+        document.getElementById('timer-display').textContent = pad(m) + ':' + pad(s);
+      }
+    }
+
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+    /* ── Notes (localStorage) ───────────────────────────── */
+    var notesKey = 'ailt-facilitator-notes';
+
+    function loadNotes() {
+      var saved = localStorage.getItem(notesKey);
+      if (saved) document.getElementById('notes-input').value = saved;
+    }
+
+    function clearNotes() {
+      document.getElementById('notes-input').value = '';
+      localStorage.removeItem(notesKey);
+    }
+
+    document.getElementById('notes-input').addEventListener('input', function () {
+      localStorage.setItem(notesKey, this.value);
+    });
+
+    /* ── Init ───────────────────────────────────────────── */
+    loadNotes();
+    updateSyncStatus();
+    updateTimerDisplay();
+
+    // Show hub panel by default
+    document.getElementById('panel-index').classList.add('visible');
+  </script>
+</body>
+</html>

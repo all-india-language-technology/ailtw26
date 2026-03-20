@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using Prompts to Understand Scripture · AILT 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #080e1c;
+      --surface:   #111827;
+      --raised:    #1a2235;
+      --card:      #1e2a40;
+      --sky:       #38bdf8;
+      --sky-dim:   rgba(56,189,248,0.12);
+      --sky-b:     rgba(56,189,248,0.3);
+      --amber:     #fbbf24;
+      --amber-dim: rgba(251,191,36,0.12);
+      --amber-b:   rgba(251,191,36,0.3);
+      --emerald:   #34d399;
+      --emr-dim:   rgba(52,211,153,0.12);
+      --emr-b:     rgba(52,211,153,0.3);
+      --violet:    #a78bfa;
+      --vio-dim:   rgba(167,139,250,0.12);
+      --vio-b:     rgba(167,139,250,0.3);
+      --pink:      #f472b6;
+      --pink-dim:  rgba(244,114,182,0.12);
+      --pink-b:    rgba(244,114,182,0.3);
+      --red:       #f87171;
+      --red-dim:   rgba(248,113,113,0.12);
+      --red-b:     rgba(248,113,113,0.3);
+      --t1:  #f1f5f9;
+      --t2:  #94a3b8;
+      --t3:  #64748b;
+      --r:   14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--t1);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+
+    a { color: var(--sky); text-decoration: none; }
+
+    /* ── HERO ─────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(160deg, #0b1526 0%, #0d1f3c 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 64px 24px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(56,189,248,0.08) 0%, transparent 70%);
+    }
+    .hero-meta {
+      font-size: 0.72em; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--t3); margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(2em, 5vw, 3.2em);
+      font-weight: 900; letter-spacing: -0.03em; line-height: 1.1;
+      background: linear-gradient(135deg, #e0f2fe 0%, var(--sky) 35%, var(--violet) 70%, var(--emerald) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 16px;
+    }
+    .hero-sub {
+      font-size: 1.1em; color: var(--t2); font-weight: 400; margin-bottom: 32px;
+    }
+    .hero-pills {
+      display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+    }
+    .pill {
+      font-size: 0.72em; font-weight: 600; letter-spacing: 0.08em;
+      padding: 5px 14px; border-radius: 20px;
+    }
+    .pill.sky    { background: var(--sky-dim);   color: var(--sky);   border: 1px solid var(--sky-b); }
+    .pill.amber  { background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber-b); }
+    .pill.emerald{ background: var(--emr-dim);   color: var(--emerald); border: 1px solid var(--emr-b); }
+
+    /* ── SESSION MAP ──────────────────────────────────────────── */
+    .map-bar {
+      background: var(--surface);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 18px 24px;
+      display: flex; justify-content: center;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .map-inner {
+      display: flex; align-items: center; gap: 0;
+      max-width: 900px; width: 100%;
+    }
+    .map-step {
+      flex: 1; text-align: center; padding: 6px 4px;
+      font-size: 0.68em; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--t3);
+      border-radius: 8px; transition: all 0.2s; cursor: pointer;
+    }
+    .map-step:hover { background: rgba(255,255,255,0.05); color: var(--t1); }
+    .map-step .mtime { font-weight: 400; color: var(--t3); display: block; margin-top: 2px; }
+    .map-step.c1 { color: var(--amber); }
+    .map-step.c2 { color: var(--sky); }
+    .map-step.c3 { color: var(--amber); }
+    .map-step.c4 { color: var(--pink); }
+    .map-step.c5 { color: var(--sky); }
+    .map-line { flex: 0 0 1px; height: 24px; background: rgba(255,255,255,0.08); }
+
+    /* ── LAYOUT ───────────────────────────────────────────────── */
+    .page { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+    /* ── SECTION ──────────────────────────────────────────────── */
+    .c-section {
+      padding: 56px 0 16px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      scroll-margin-top: 72px;
+    }
+    .c-section:first-of-type { border-top: none; }
+
+    .c-header {
+      display: flex; align-items: flex-start; gap: 20px; margin-bottom: 28px;
+    }
+    .c-badge {
+      flex-shrink: 0;
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3em; font-weight: 900;
+    }
+    .badge-amber  { background: var(--amber-dim); color: var(--amber); border: 1.5px solid var(--amber-b); }
+    .badge-sky    { background: var(--sky-dim);   color: var(--sky);   border: 1.5px solid var(--sky-b); }
+    .badge-violet { background: var(--vio-dim);   color: var(--violet);border: 1.5px solid var(--vio-b); }
+    .badge-pink   { background: var(--pink-dim);  color: var(--pink);  border: 1.5px solid var(--pink-b); }
+    .badge-emr    { background: var(--emr-dim);   color: var(--emerald);border: 1.5px solid var(--emr-b); }
+
+    .c-title-area { flex: 1; }
+    .c-label {
+      font-size: 0.7em; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--t3); margin-bottom: 4px;
+    }
+    .c-title {
+      font-size: 1.6em; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2;
+    }
+    .c-timing {
+      font-size: 0.72em; font-weight: 500; color: var(--t3);
+      margin-top: 4px;
+    }
+
+    /* ── CARDS GRID ───────────────────────────────────────────── */
+    .cards { display: flex; flex-direction: column; gap: 16px; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+
+    /* ── CARD ─────────────────────────────────────────────────── */
+    .card {
+      background: var(--raised);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--r);
+      padding: 20px 22px;
+    }
+    .card.amber  { border-color: var(--amber-b); background: linear-gradient(135deg, var(--amber-dim) 0%, var(--raised) 60%); }
+    .card.sky    { border-color: var(--sky-b);   background: linear-gradient(135deg, var(--sky-dim) 0%, var(--raised) 60%); }
+    .card.violet { border-color: var(--vio-b);   background: linear-gradient(135deg, var(--vio-dim) 0%, var(--raised) 60%); }
+    .card.pink   { border-color: var(--pink-b);  background: linear-gradient(135deg, var(--pink-dim) 0%, var(--raised) 60%); }
+    .card.emr    { border-color: var(--emr-b);   background: linear-gradient(135deg, var(--emr-dim) 0%, var(--raised) 60%); }
+    .card.danger { border-color: var(--red-b);   background: linear-gradient(135deg, var(--red-dim) 0%, var(--raised) 60%); }
+    .card.neutral{ border-color: rgba(255,255,255,0.08); }
+
+    .card-icon { font-size: 1.4em; margin-bottom: 8px; }
+    .card-title {
+      font-size: 0.95em; font-weight: 700; color: var(--t1);
+      margin-bottom: 6px; line-height: 1.3;
+    }
+    .card-body { font-size: 0.88em; color: var(--t2); line-height: 1.55; }
+    .card-body strong { color: var(--t1); }
+
+    /* ── SCENARIO BOX ─────────────────────────────────────────── */
+    .scenario {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-left: 4px solid var(--amber);
+      border-radius: var(--r);
+      padding: 20px 22px;
+      font-size: 0.92em; line-height: 1.65; color: var(--t2);
+    }
+    .scenario strong { color: var(--amber); font-size: 0.78em; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 8px; }
+    .scenario.sky { border-left-color: var(--sky); }
+    .scenario.sky strong { color: var(--sky); }
+
+    /* ── REFERENCE CARD ───────────────────────────────────────── */
+    .ref-card {
+      background: var(--surface);
+      border: 1px solid var(--sky-b);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+    .ref-header {
+      background: var(--sky-dim);
+      padding: 12px 20px;
+      font-size: 0.72em; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--sky);
+    }
+    .ref-rows { display: flex; flex-direction: column; }
+    .ref-row {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 14px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .ref-row:last-child { border-bottom: none; }
+    .ref-key {
+      flex-shrink: 0;
+      width: 28px; height: 28px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72em; font-weight: 800;
+      background: var(--sky-dim); color: var(--sky); border: 1px solid var(--sky-b);
+    }
+    .ref-label { font-weight: 700; color: var(--t1); font-size: 0.9em; }
+    .ref-desc { font-size: 0.82em; color: var(--t2); margin-top: 2px; }
+    .ref-example {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78em; color: var(--t3);
+      background: rgba(0,0,0,0.2);
+      padding: 6px 10px; border-radius: 6px;
+      margin-top: 6px; line-height: 1.5;
+    }
+
+    /* ── TASK BOX ─────────────────────────────────────────────── */
+    .task-box {
+      background: var(--raised);
+      border: 2px solid var(--amber-b);
+      border-radius: var(--r);
+      padding: 20px 22px;
+    }
+    .task-box.sky { border-color: var(--sky-b); }
+    .task-box.pink { border-color: var(--pink-b); }
+    .task-label {
+      font-size: 0.68em; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 8px;
+    }
+    .task-box.sky  .task-label { color: var(--sky); }
+    .task-box.pink .task-label { color: var(--pink); }
+    .task-title { font-size: 1em; font-weight: 700; color: var(--t1); line-height: 1.4; }
+    .task-desc { font-size: 0.88em; color: var(--t2); margin-top: 6px; line-height: 1.5; }
+
+    /* ── STEP LIST ────────────────────────────────────────────── */
+    .step-list { display: flex; flex-direction: column; gap: 10px; }
+    .step {
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 24px; height: 24px; border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.68em; font-weight: 800;
+    }
+    .num-amber { background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber-b); }
+    .num-sky   { background: var(--sky-dim);   color: var(--sky);   border: 1px solid var(--sky-b); }
+    .num-pink  { background: var(--pink-dim);  color: var(--pink);  border: 1px solid var(--pink-b); }
+    .step-text { font-size: 0.9em; color: var(--t2); line-height: 1.5; padding-top: 2px; }
+    .step-text strong { color: var(--t1); }
+
+    /* ── TIP BOX ──────────────────────────────────────────────── */
+    .tip {
+      display: flex; align-items: flex-start; gap: 12px;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; padding: 14px 16px;
+      font-size: 0.86em; color: var(--t2);
+    }
+    .tip .tip-icon { font-size: 1em; flex-shrink: 0; margin-top: 1px; }
+    .tip.warn { border-color: var(--amber-b); background: var(--amber-dim); color: var(--t1); }
+    .tip.info { border-color: var(--sky-b); }
+    .tip.success { border-color: var(--emr-b); }
+
+    /* ── DIVIDER ──────────────────────────────────────────────── */
+    .divider { height: 1px; background: rgba(255,255,255,0.06); margin: 24px 0; }
+
+    /* ── CLOSING QUOTE ────────────────────────────────────────── */
+    .closing-quote {
+      text-align: center;
+      font-size: 1.4em; font-weight: 700; letter-spacing: -0.02em; line-height: 1.4;
+      color: var(--t2); padding: 48px 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin-top: 40px;
+    }
+    .closing-quote span { color: var(--sky); }
+
+    /* ── PROMPT BLOCK ──────────────────────────────────────────── */
+    .prompt-block {
+      background: #07101f;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--r);
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .pb-header {
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 9px 18px;
+      font-size: 0.65em; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--t3);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .pb-header .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--t3); }
+    .pb-rows { padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; }
+    .pb-line { display: flex; align-items: flex-start; gap: 10px; }
+    .pb-tag {
+      flex-shrink: 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68em; font-weight: 700; letter-spacing: 0.06em;
+      padding: 2px 7px; border-radius: 5px; margin-top: 2px;
+      text-transform: uppercase;
+    }
+    .pb-tag.p    { background: var(--amber-dim); color: var(--amber);   border: 1px solid var(--amber-b); }
+    .pb-tag.cx   { background: var(--vio-dim);   color: var(--violet);  border: 1px solid var(--vio-b); }
+    .pb-tag.task { background: var(--emr-dim);   color: var(--emerald); border: 1px solid var(--emr-b); }
+    .pb-tag.g    { background: var(--red-dim);   color: var(--red);     border: 1px solid var(--red-b); }
+    .pb-tag.f    { background: var(--sky-dim);   color: var(--sky);     border: 1px solid var(--sky-b); }
+    .pb-tag.fs   { background: rgba(99,102,241,0.12); color: #818cf8;  border: 1px solid rgba(99,102,241,0.3); }
+    .pb-tag.ct   { background: rgba(20,184,166,0.12); color: #2dd4bf;  border: 1px solid rgba(20,184,166,0.3); }
+    .pb-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8em; color: #c8d8f0; line-height: 1.6;
+    }
+    .pb-assembled {
+      margin: 0 18px 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 9px; padding: 14px 16px;
+    }
+    .pb-assembled-label {
+      font-size: 0.62em; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--t3); margin-bottom: 8px;
+    }
+    .pb-assembled-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78em; color: #94b4d4; line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    /* ── PRINT ────────────────────────────────────────────────── */
+    @media print {
+      body { background: #fff; color: #111; font-size: 14px; }
+      .map-bar { display: none; }
+      .hero { background: #f8fafc; border: none; padding: 40px 0 32px; }
+      .hero h1 { -webkit-text-fill-color: #111; background: none; color: #111; }
+      .hero-sub, .hero-meta { color: #555; }
+      .pill { border: 1px solid #ccc; color: #333; background: #f1f5f9; }
+      .c-section { page-break-inside: avoid; }
+      .card, .scenario, .ref-card, .task-box, .tip {
+        background: #f8fafc; border-color: #ddd; color: #111;
+      }
+      .card-body, .ref-desc, .step-text, .tip, .task-desc { color: #444; }
+      .closing-quote { color: #333; border-color: #ddd; }
+      .closing-quote span { color: #0369a1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ──────────────────────────────────────────────────────────── -->
+<div class="hero">
+  <p class="hero-meta">AILT 2026 · AI Tools Track · All Lanes</p>
+  <h1>Using Prompts to<br>Understand Scripture</h1>
+  <p class="hero-sub">Ask better questions. See more in the text.</p>
+  <div class="hero-pills">
+    <span class="pill sky">Day 3 · Morning</span>
+    <span class="pill amber">45 minutes</span>
+    <span class="pill emerald">Practical — you will be prompting</span>
+  </div>
+</div>
+
+<!-- ── SESSION MAP ────────────────────────────────────────────────────── -->
+<div class="map-bar">
+  <div class="map-inner">
+    <a class="map-step c1" href="#c1">Connection<span class="mtime">00:00–00:05</span></a>
+    <div class="map-line"></div>
+    <a class="map-step c2" href="#c2">Content<span class="mtime">00:05–00:15</span></a>
+    <div class="map-line"></div>
+    <a class="map-step c3" href="#c3">Challenge<span class="mtime">00:15–00:35</span></a>
+    <div class="map-line"></div>
+    <a class="map-step c4" href="#c4">Change<span class="mtime">00:35–00:42</span></a>
+    <div class="map-line"></div>
+    <a class="map-step c5" href="#c5">Closure<span class="mtime">00:42–00:45</span></a>
+  </div>
+</div>
+
+
+<div class="page">
+
+  <!-- ══════════════════════════════════════════════════════════════
+       C1 · CONNECTION
+       ══════════════════════════════════════════════════════════════ -->
+  <section class="c-section" id="c1">
+    <div class="c-header">
+      <div class="c-badge badge-amber">1</div>
+      <div class="c-title-area">
+        <div class="c-label">C1 · Connection</div>
+        <div class="c-title">A Real Question. From a Real Team.</div>
+        <div class="c-timing">⏱ 00:00 – 00:05 · 5 minutes</div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="scenario">
+        <strong>Scenario · submitted by a participant</strong>
+        Our 3-member NE tribal translation team wants to do an exegetical check of an NT book we drafted. We use an SF-generated draft with GNTD as the source, and also refer to NIV, TNN, and other resources. We are MTTs with Bible college training and 6–8 years of experience — but no formal training in meaning-based translation principles. How do we do a systematic exegetical check?
+      </div>
+
+      <div class="task-box">
+        <div class="task-label">✏️ Your task — 90 seconds</div>
+        <div class="task-title">Write a prompt you would use to explore this scenario.</div>
+        <div class="task-desc">Don't overthink it. Write what you would actually type into the AI tool.</div>
+      </div>
+
+      <div class="tip info">
+        <span class="tip-icon">💬</span>
+        <span>After 90 seconds: share your prompt with the group. Which prompt goes furthest into the text? What makes the difference?</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       C2 · CONTENT
+       ══════════════════════════════════════════════════════════════ -->
+  <section class="c-section" id="c2">
+    <div class="c-header">
+      <div class="c-badge badge-sky">2</div>
+      <div class="c-title-area">
+        <div class="c-label">C2 · Content</div>
+        <div class="c-title">Your Reference Card + Two New Skills</div>
+        <div class="c-timing">⏱ 00:05 – 00:15 · 10 minutes</div>
+      </div>
+    </div>
+
+    <div class="cards">
+
+      <!-- Anatomy reference card -->
+      <div class="ref-card">
+        <div class="ref-header">📌 Six Building Blocks — the anatomy of a strong prompt</div>
+        <div class="ref-rows">
+          <div class="ref-row">
+            <div class="ref-key" style="background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-b);">P</div>
+            <div>
+              <div class="ref-label">Persona — Who is the AI acting as?</div>
+              <div class="ref-desc">Sets the vocabulary, expertise, and depth of the response. Be specific — not just "an expert."</div>
+              <div class="ref-example">"You are a biblical scholar specialising in 1st-century Jewish culture…"</div>
+            </div>
+          </div>
+          <div class="ref-row">
+            <div class="ref-key" style="width:auto;min-width:28px;padding:0 5px;background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">CX</div>
+            <div>
+              <div class="ref-label">Context — What is your situation?</div>
+              <div class="ref-desc">Who you are, your project, your target audience. Overrides the model's generic assumptions.</div>
+              <div class="ref-example">"We are translating the Gospel of Mark into a Tibeto-Burman language. We use GNTD as our primary source…"</div>
+            </div>
+          </div>
+          <div class="ref-row" style="border-left:3px solid rgba(52,211,153,0.25);">
+            <div class="ref-key" style="background:var(--emr-dim);color:var(--emerald);border:1px solid var(--emr-b);">→</div>
+            <div>
+              <div class="ref-label">Task — the core of every prompt</div>
+              <div class="ref-desc">The specific thing you are asking. Be precise about scope, subject, and deliverable.</div>
+              <div class="ref-example">"List the 5 most important exegetical issues to check in this passage, with 2–3 checking questions each…"</div>
+            </div>
+          </div>
+          <div class="ref-row">
+            <div class="ref-key" style="background:var(--red-dim);color:var(--red);border:1px solid var(--red-b);">G</div>
+            <div>
+              <div class="ref-label">Guardrails — What should the AI NOT do?</div>
+              <div class="ref-desc">Prevents speculation, hallucination, jargon, and theological overreach. Essential for BT work.</div>
+              <div class="ref-example">"Do not speculate beyond the text. Flag anything uncertain as NEEDS VERIFICATION."</div>
+            </div>
+          </div>
+          <div class="ref-row">
+            <div class="ref-key" style="background:var(--sky-dim);color:var(--sky);border:1px solid var(--sky-b);">F</div>
+            <div>
+              <div class="ref-label">Format — How should the response be structured?</div>
+              <div class="ref-desc">Table, checklist, sections, word limit. Saves reformatting and makes output directly usable.</div>
+              <div class="ref-example">"Write in two labelled sections: (1) Cultural background and (2) Footnote draft — under 60 words."</div>
+            </div>
+          </div>
+          <div class="ref-row">
+            <div class="ref-key" style="width:auto;min-width:28px;padding:0 4px;background:rgba(99,102,241,0.12);color:#818cf8;border:1px solid rgba(99,102,241,0.3);">FS</div>
+            <div>
+              <div class="ref-label">Few-Shot — Show one perfect example</div>
+              <div class="ref-desc">One well-chosen example teaches style and format more precisely than a paragraph of description.</div>
+              <div class="ref-example">"Here is a good checking question: '…' — write one for the next verse in exactly this pattern."</div>
+            </div>
+          </div>
+          <div class="ref-row">
+            <div class="ref-key" style="width:auto;min-width:28px;padding:0 4px;background:rgba(20,184,166,0.12);color:#2dd4bf;border:1px solid rgba(20,184,166,0.3);">CT</div>
+            <div>
+              <div class="ref-label">Chain of Thought — Make it reason step-by-step</div>
+              <div class="ref-desc">Forces the model to show its reasoning — so you can catch an error before it corrupts the conclusion.</div>
+              <div class="ref-example">"Work through this step by step. Step 1 — … Step 2 — … Only then, make your recommendation."</div>
+            </div>
+          </div>
+        </div>
+        <div style="padding:10px 20px 14px;font-size:0.78em;color:var(--t3);border-top:1px solid rgba(255,255,255,0.05);">
+          Not every prompt needs all six. A simple task may need only a Persona and a Guardrail. In this session we focus on: <strong style="color:var(--t2);">Persona · Context · Guardrails · Format</strong>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="card sky">
+          <div class="card-icon">📎</div>
+          <div class="card-title">New Skill 1: Upload a Document</div>
+          <div class="card-body">
+            Upload a commentary excerpt, lexicon entry, or project notes. Then ask:<br><br>
+            <strong>"Based <em>only</em> on this document, explain…"</strong><br><br>
+            The AI reasons from <em>your</em> source — not its general training. You control the frame of reference.
+          </div>
+        </div>
+        <div class="card sky">
+          <div class="card-icon">🔗</div>
+          <div class="card-title">New Skill 2: Paste a Link</div>
+          <div class="card-body">
+            Paste a URL as your reference source:<br><br>
+            <strong>"Using this article, summarise the background to [passage]…"</strong><br><br>
+            ⚠️ Not all tools read links the same way. Some fetch the page; some don't. Test before you rely on it.
+          </div>
+        </div>
+      </div>
+
+      <div class="tip info">
+        <span class="tip-icon">📎 vs 🔗</span>
+        <span>&nbsp;<strong>Upload</strong> — private files, PDFs, project documents. &nbsp;|&nbsp; <strong>Link</strong> — public web articles, online lexicons, open commentaries. Note which your tool handles reliably.</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       C3 · CHALLENGE
+       ══════════════════════════════════════════════════════════════ -->
+  <section class="c-section" id="c3">
+    <div class="c-header">
+      <div class="c-badge badge-amber">3</div>
+      <div class="c-title-area">
+        <div class="c-label">C3 · Challenge</div>
+        <div class="c-title">Two Rounds — Watch, Then Build</div>
+        <div class="c-timing">⏱ 00:15 – 00:35 · 20 minutes</div>
+      </div>
+    </div>
+
+    <div class="cards">
+
+      <!-- Round 1 -->
+      <div class="card amber">
+        <div class="card-icon">👁️ Round 1 — Watch and Think Along &nbsp;·&nbsp; <span style="font-weight:400;font-size:0.9em;">00:15–00:25</span></div>
+        <div class="card-body" style="margin-top:10px;">
+          <div class="scenario" style="margin-bottom:16px;">
+            <strong>Scenario · submitted by a participant</strong>
+            Our 3-member NE tribal translation team wants to do an exegetical check of an NT book we drafted. We use an SF-generated draft with GNTD as the source, and also refer to NIV, TNN, and other resources. We are MTTs with Bible college training and 6–8 years of experience — but no formal training in meaning-based translation principles. How do we do a systematic exegetical check?
+          </div>
+          <p style="color:var(--t2);font-size:0.9em;margin-bottom:14px;">Watch the facilitator build this prompt live — one layer at a time. As you watch, ask yourself: <strong>what would <em>you</em> have added or changed?</strong></p>
+          <div class="prompt-block">
+            <div class="pb-header"><span class="dot"></span> Prompt — built using the 6 building blocks</div>
+            <div class="pb-rows">
+              <div class="pb-line">
+                <span class="pb-tag p">Persona</span>
+                <span class="pb-text">You are an experienced exegetical consultant who has supported Bible translation teams working in Asian minority languages.</span>
+              </div>
+              <div class="pb-line">
+                <span class="pb-tag cx">Context</span>
+                <span class="pb-text">We are a 3-member translation team working in a NE tribal (Tibeto-Burman) language. We produced an NT draft using a Scripture Forge-generated text, with GNTD as our primary source. We also consult NIV, TNN, and other versions. Our team has Bible college training and 6–8 years of translation experience, but we have not had formal training in meaning-based translation principles.</span>
+              </div>
+              <div class="pb-line">
+                <span class="pb-tag task">Task</span>
+                <span class="pb-text">Help us design a systematic process for checking our translation draft exegetically. Give us the 5–6 most important categories of exegetical issues to examine in each passage, and for each category, provide 2–3 specific checking questions our team can work through together.</span>
+              </div>
+              <div class="pb-line">
+                <span class="pb-tag g">Guardrails</span>
+                <span class="pb-text">Use plain, practical language — no academic technical terms our team would not know. If any category is especially important given our use of GNTD as the source text, flag it clearly.</span>
+              </div>
+              <div class="pb-line">
+                <span class="pb-tag f">Format</span>
+                <span class="pb-text">Present the output as a reusable checking guide — each category as a clear heading, with checking questions listed beneath it.</span>
+              </div>
+            </div>
+            <div class="pb-assembled">
+              <div class="pb-assembled-label">▶ Assembled — ready to paste into the AI tool</div>
+              <div class="pb-assembled-text">You are an experienced exegetical consultant who has supported Bible translation teams working in Asian minority languages.
+
+We are a 3-member translation team working in a NE tribal (Tibeto-Burman) language. We produced an NT draft using a Scripture Forge-generated text, with GNTD as our primary source. We also consult NIV, TNN, and other versions. Our team has Bible college training and 6–8 years of translation experience, but we have not had formal training in meaning-based translation principles.
+
+Help us design a systematic process for checking our translation draft exegetically. Give us the 5–6 most important categories of exegetical issues to examine in each passage, and for each category, provide 2–3 specific checking questions our team can work through together.
+
+Use plain, practical language — no academic technical terms our team would not know. Format the output as a reusable checking guide. If any category is especially important given our use of GNTD as the source text, flag it clearly.</div>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="tip warn" style="margin-top:0;">
+            <span class="tip-icon">💬</span>
+            <span><strong>Debrief:</strong> What made the prompt go deeper than what you first wrote? What would you have done differently?</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Round 2 -->
+      <div class="card violet" style="border-color:var(--vio-b);">
+        <div class="card-icon">👫 Round 2 — Your Turn, In Pairs &nbsp;·&nbsp; <span style="font-weight:400;font-size:0.9em;">00:25–00:35</span></div>
+        <div class="card-body" style="margin-top:10px;">
+          <div class="scenario sky" style="margin-bottom:16px;border-left-color:var(--violet);">
+            <strong style="color:var(--violet);">Scenario · submitted by a participant</strong>
+            In Paratext's RSV+ Enhanced resources, only the word dictionary is linked — it won't explain the cultural weight behind phrases and idioms. In Mark 5:9, the demon names itself <em>"Legion, for we are many."</em> We know Legion is a Roman military term, but what did that word carry for a Jewish audience living under occupation? And how do we write a footnote that brings that weight across into our language?
+          </div>
+
+          <div class="task-box" style="margin-bottom:16px;border-color:var(--vio-b);">
+            <div class="task-label" style="color:var(--violet);">👫 In pairs — 6 minutes</div>
+            <div class="task-title">Build a prompt that gives you what you need for a real passage you're working on.</div>
+            <div class="task-desc">Use a document upload <em>or</em> a link. Use the building blocks from the reference card — you don't need all six.</div>
+          </div>
+
+          <details class="spoiler">
+            <summary><span class="arrow">▶</span>&nbsp; Facilitator — click to reveal example prompt after teams share</summary>
+            <div class="spoiler-inner">
+              <div class="prompt-block">
+                <div class="pb-header"><span class="dot"></span> Example prompt — Mark 5:9 · "Legion" · 6 building blocks</div>
+                <div class="pb-rows">
+                  <div class="pb-line">
+                    <span class="pb-tag p">Persona</span>
+                    <span class="pb-text">You are a scholar of 1st-century Jewish culture and New Testament background, with expertise in how Roman political realities shaped the language and imagery of the Gospels.</span>
+                  </div>
+                  <div class="pb-line">
+                    <span class="pb-tag cx">Context</span>
+                    <span class="pb-text">We are translating the Gospel of Mark into [our language]. In Mark 5:9, the unclean spirit identifies itself as "Legion, for we are many." "Legion" is a Latin loanword for a Roman military unit of approximately 6,000 soldiers. Our readers may be unfamiliar with Roman occupation. We need to understand what this word meant to a 1st-century Jewish audience in order to make a good translation decision and to write a useful footnote.</span>
+                  </div>
+                  <div class="pb-line">
+                    <span class="pb-tag task">Task</span>
+                    <span class="pb-text">Explain the cultural and political significance of "Legion" in Mark 5:9: (1) what did this word mean to a Jewish person living under Roman occupation, and why does the demon's self-identification as "Legion" carry more weight than simply meaning "many"? (2) What are the main translation options — transliterate, use a native equivalent, or explain in the text — and what are the trade-offs of each?</span>
+                  </div>
+                  <div class="pb-line">
+                    <span class="pb-tag g">Guardrails</span>
+                    <span class="pb-text">Avoid academic jargon. Base your answer on widely accepted biblical scholarship. If scholars interpret this term differently, note that briefly.</span>
+                  </div>
+                  <div class="pb-line">
+                    <span class="pb-tag f">Format</span>
+                    <span class="pb-text">Write in two clearly labelled sections: (1) Cultural background — for the translator's reference, and (2) Footnote draft — under 60 words, in plain language suitable for general Bible readers.</span>
+                  </div>
+                </div>
+                <div class="pb-assembled">
+                  <div class="pb-assembled-label">▶ Assembled — ready to paste into the AI tool</div>
+                  <div class="pb-assembled-text">You are a scholar of 1st-century Jewish culture and New Testament background, with expertise in how Roman political realities shaped the language and imagery of the Gospels.
+
+We are translating the Gospel of Mark into [our language]. In Mark 5:9, the unclean spirit identifies itself as "Legion, for we are many." "Legion" is a Latin loanword for a Roman military unit of approximately 6,000 soldiers. Our readers may be unfamiliar with Roman occupation. We need to understand what this word meant to a 1st-century Jewish audience in order to make a good translation decision and to write a useful footnote.
+
+Explain the cultural and political significance of "Legion" in Mark 5:9: (1) what did this word mean to a Jewish person living under Roman occupation, and why does the demon's self-identification as "Legion" carry more weight than simply meaning "many"? (2) What are the main translation options — transliterate, use a native equivalent, or explain in the text — and what are the trade-offs of each?
+
+Write in two clearly labelled sections: (1) Cultural background — for the translator's reference, and (2) Footnote draft — under 60 words, in plain language suitable for general Bible readers. Avoid academic jargon. If scholars interpret this term differently, note that briefly.</div>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <div class="step-list">
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">1</div>
+              <div class="step-text"><strong>Persona</strong> — who should the AI be for this task?</div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">2</div>
+              <div class="step-text"><strong>Context</strong> — your project, your passage, your team's situation</div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">3</div>
+              <div class="step-text"><strong>Task</strong> — state exactly what you need (be specific about scope and deliverable)</div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">4</div>
+              <div class="step-text"><strong>Guardrails</strong> — what should it NOT do? Upload or paste your source document here too</div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">5</div>
+              <div class="step-text"><strong>Format</strong> — how should the response be structured?</div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <p style="font-size:0.82em;color:var(--t3);margin-bottom:10px;">If you're stuck — try one of these starting points:</p>
+          <div class="step-list">
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">→</div>
+              <div class="step-text">"What is the cultural background of [phrase] in [passage]?"</div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">→</div>
+              <div class="step-text">Add a Persona: "You are a scholar of 1st-century Jewish culture…"</div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">→</div>
+              <div class="step-text">Upload a UBS Handbook excerpt or paste an open commentary link</div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">→</div>
+              <div class="step-text">Ask for output in a footnote-ready format</div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <div class="tip warn" style="margin-top:0;">
+            <span class="tip-icon">💬</span>
+            <span><strong>Share out:</strong> Show us your prompt. What did you get back? Did it go deep enough? What would you change?</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       C4 · CHANGE
+       ══════════════════════════════════════════════════════════════ -->
+  <section class="c-section" id="c4">
+    <div class="c-header">
+      <div class="c-badge badge-pink">4</div>
+      <div class="c-title-area">
+        <div class="c-label">C4 · Change</div>
+        <div class="c-title">Your Project. Your Passage.</div>
+        <div class="c-timing">⏱ 00:35 – 00:42 · 7 minutes</div>
+      </div>
+    </div>
+
+    <div class="cards">
+
+      <div class="task-box pink">
+        <div class="task-label" style="color:var(--pink);">🎯 Individual — 4 minutes</div>
+        <div class="task-title">Pick one passage or question from your current translation project. Write a prompt for it. Run it. Keep what's useful.</div>
+        <div class="task-desc">This is for you — not for the group. Take something real back with you.</div>
+      </div>
+
+      <div class="card neutral">
+        <div class="card-title" style="color:var(--pink);">As you work, ask yourself</div>
+        <div class="card-body" style="margin-top:10px;">
+          <div class="step-list">
+            <div class="step">
+              <div class="step-num num-pink">?</div>
+              <div class="step-text">What Persona gives me the most useful perspective on this passage?</div>
+            </div>
+            <div class="step">
+              <div class="step-num num-pink">?</div>
+              <div class="step-text">Is there a document I could upload to ground the answer?</div>
+            </div>
+            <div class="step">
+              <div class="step-num num-pink">?</div>
+              <div class="step-text">Am I asking for interpretive <em>options</em> — or just asking for an answer?</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip warn">
+        <span class="tip-icon">💬</span>
+        <span><strong>Share out (1–2 volunteers):</strong> Share your prompt and what you got back. Room responds: "Would you use that? What would make it stronger?"</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       C5 · CLOSURE
+       ══════════════════════════════════════════════════════════════ -->
+  <section class="c-section" id="c5">
+    <div class="c-header">
+      <div class="c-badge badge-sky">5</div>
+      <div class="c-title-area">
+        <div class="c-label">C5 · Closure</div>
+        <div class="c-title">One Thing You'll Do Differently</div>
+        <div class="c-timing">⏱ 00:42 – 00:45 · 3 minutes</div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="task-box sky">
+        <div class="task-label" style="color:var(--sky);">💬 Quick round</div>
+        <div class="task-title">"What is one thing you will do differently next time you sit with a difficult passage?"</div>
+        <div class="task-desc">3–4 quick responses. No elaboration needed. Your words.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CLOSING QUOTE ──────────────────────────────────────────── -->
+  <div class="closing-quote">
+    "At the start of this session, you wrote a prompt.<br>
+    <span>You now write the second kind.</span>"
+  </div>
+
+</div><!-- /.page -->
+
+</body>
+</html>
