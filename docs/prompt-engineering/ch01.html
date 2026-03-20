@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ch 1 — How LLMs Work · Prompt Engineering</title>
+  <meta name="description" content="Prompt Engineering for Bible Translators · AILT 2026 AI Tools Workshop">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+</head>
+<body>
+
+  <!-- ── SITE NAV ──────────────────────────────────────────── -->
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="../" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="../" class="shell-nav-link">Home</a>
+        <a href="../prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="../handbook/" class="shell-nav-link">Handbook</a>
+        <a href="../about.html" class="shell-nav-link">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── PAGE LAYOUT ─────────────────────────────────────────────── -->
+  <div class="shell-page">
+    <main class="shell-main" id="main-content">
+      <!-- NAV -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">004 · Prompt Engineering</a>
+      <div class="nav-links">
+        <a href="ch01.html" class="nav-link active">Ch 1</a>
+        <a href="ch02.html" class="nav-link">Ch 2</a>
+        <a href="ch03.html" class="nav-link">Ch 3</a>
+        <a href="ch04.html" class="nav-link">Ch 4</a>
+        <a href="ch05.html" class="nav-link">Ch 5</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="chapter-hero">
+    <div class="container">
+      <div class="ch-eyebrow">
+        <span class="ch-num">Chapter 1</span>
+        <span class="ch-tag-label">Foundations</span>
+      </div>
+      <h1>How LLMs Work — and Why It Matters for Prompting</h1>
+      <p class="hero-key-q">Why does the exact wording of my prompt change the output so dramatically?</p>
+    </div>
+  </header>
+
+  <!-- PHASE BAR -->
+  <div class="phase-bar" aria-label="Session progress">
+    <div class="phase-inner">
+      <a class="phase-pip" data-c="1" data-section="c1" href="#c1">
+        <div class="phase-dot">C1</div>
+        <span class="phase-name">Connection</span>
+      </a>
+      <a class="phase-pip" data-c="2" data-section="c2" href="#c2">
+        <div class="phase-dot">C2</div>
+        <span class="phase-name">Content</span>
+      </a>
+      <a class="phase-pip" data-c="3" data-section="c3" href="#c3">
+        <div class="phase-dot">C3</div>
+        <span class="phase-name">Challenge</span>
+      </a>
+      <a class="phase-pip" data-c="4" data-section="c4" href="#c4">
+        <div class="phase-dot">C4</div>
+        <span class="phase-name">Change</span>
+      </a>
+      <a class="phase-pip" data-c="5" data-section="c5" href="#c5">
+        <div class="phase-dot">C5</div>
+        <span class="phase-name">Closure</span>
+      </a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C1 · CONNECTION · Hook
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c1">
+      <div class="container">
+        <div class="section-badge badge-c1">C1 · Connection</div>
+        <h2 id="a-translator-tried-thisread-the-response-carefully">A translator tried this.<br>Read the response carefully.</h2>
+        <p class="section-lead">
+          She pasted a reference question into ChatGPT and got an answer that looked ready to use in checking notes. Read the prompt first, then the response. Notice what makes it feel trustworthy.
+        </p>
+
+        <div class="prompt-block">
+          <div class="prompt-label weak">The prompt typed</div>
+          <div class="prompt-display weak">What does Louw-Nida say about the Greek word <em>akathartos</em> in Mark 5:2? What semantic domain code should I use in my checking notes?</div>
+        </div>
+
+        <div class="prompt-block">
+          <div class="prompt-label" style="background:#e0f2fe; color:#075985;">The AI response</div>
+          <div class="prompt-display" style="border-left: 4px solid #0284c7;">According to Louw and Nida's Greek-English Lexicon (1988), the word <em>akathartos</em> (ἀκάθαρτος) in Mark 5:2 falls under semantic domain 88 (Moral and Ethical Qualities and Related Behaviour), subdomain 88.24, defined as "pertaining to being ritually or morally unclean or impure." The code is <strong>88.24</strong>.
+
+In the context of Mark 5, this domain captures both the ritual impurity of the demonised man (unclean by contact with tombs) and the spiritual impurity of the unclean spirit itself. For your checking notes, domain 88.24 accurately anchors the theological weight of the term.</div>
+        </div>
+
+        <div class="callout info fade-up">
+          <span class="callout-icon">🔎</span>
+          <div>
+            <strong>Pause before you trust it.</strong> This answer sounds specific, scholarly, and confident. That is exactly why this example matters. AI can produce responses that look authoritative even when some details may be inaccurate, invented, or based on assumptions you did not notice. Before you rely on an answer like this, ask which claims would need to be verified.
+          </div>
+        </div>
+
+        <div class="activity-box fade-up">
+          <div class="activity-header">
+            <span class="activity-icon">💬</span>
+            <h3 id="discuss-with-your-group-before-we-go-further">Discuss with your group — before we go further</h3>
+          </div>
+          <ol>
+            <li>Does this response look trustworthy to you? What signals make it feel authoritative?</li>
+            <li>What would you do with this information if you were writing checking notes?</li>
+            <li>Is there anything in the response that makes you pause?</li>
+          </ol>
+        </div>
+
+        <button class="reveal-btn" data-target="c1-reveal" data-open-text="Show what went wrong" data-close-text="Hide explanation">
+          <span class="reveal-arrow">▼</span>
+          <span class="btn-text">Show what went wrong</span>
+        </button>
+        <div class="hidden-reveal" id="c1-reveal">
+          <div class="callout warn">
+            <span class="callout-icon">⚠️</span>
+            <div>
+              <strong>The problem:</strong> The domain code 88.24 in this response may be entirely fabricated. The model generated a plausible-looking scholarly reference — with confidence, precision, and contextual explanation — that could be partially or wholly invented. The danger is not only that the answer may be wrong; it is that it feels ready to trust before it has been checked against the real source.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C2 · CONTENT · Examine Resource
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c2">
+      <div class="container">
+        <div class="section-badge badge-c2">C2 · Content</div>
+        <h2 id="what-the-machine-is-actually-doing">What the machine is actually doing</h2>
+        <p class="section-lead">
+          Understanding the mechanism behind LLMs is not theory — it is the reason every prompting technique in this module works. Three core concepts, one analogy, and a radar of six failure modes.
+        </p>
+
+        <!-- SCRIBE ANALOGY -->
+        <div class="card c2 fade-up" style="margin-bottom: 1.5rem;">
+          <span class="card-icon">📜</span>
+          <h3 id="the-scribe-analogy">The Scribe Analogy</h3>
+          <p>Imagine a student who copied ten thousand Bible commentaries, lexicons, and theological journals by hand — but never learned to <em>read</em>. From sheer pattern repetition, they know exactly which words tend to follow which other words in scholarly theological writing.</p>
+          <p style="margin-top: 0.75rem;">Ask them <em>"The Lord is my…"</em> and they write <em>"shepherd"</em> instantly — not because they understand Psalm 23, but because that word pair appeared millions of times.</p>
+          <p style="margin-top: 0.75rem;">Ask them something rare — a question about a minority language, a newly discovered manuscript, a community practice never written down — and they will produce a fluent, confident answer that may be entirely fabricated. <strong>They are not lying. They complete patterns. Truth and plausibility feel identical to them.</strong></p>
+        </div>
+
+        <!-- THREE CONCEPTS -->
+        <h3 style="margin-bottom: 0.875rem;" id="three-concepts-that-change-how-you-prompt">Three concepts that change how you prompt</h3>
+        <div class="card-grid cols-3">
+          <div class="card">
+            <span class="card-icon">🔢</span>
+            <h3 id="tokens-not-words">Tokens, not words</h3>
+            <p>The model counts tokens — roughly one common word each, but punctuation marks and rare words each split into fragments. A comma is a token. "Incomprehensible" is four tokens. This affects cost, context limits, and speed.</p>
+          </div>
+          <div class="card">
+            <span class="card-icon">🪟</span>
+            <h3 id="context-window">Context window</h3>
+            <p>Everything the AI can see at once: your instructions, the conversation history, any text you've pasted. Modern windows hold hundreds of pages — but older content gets weaker attention as sessions grow.</p>
+          </div>
+          <div class="card">
+            <span class="card-icon">📍</span>
+            <h3 id="vocabulary-location">Vocabulary = location</h3>
+            <p>Words the model has seen together live near each other in its internal space. Use "consultant's analysis" and it navigates toward structured, precise output. Use "explain" and it navigates toward general prose.</p>
+          </div>
+        </div>
+        <div class="fade-up" style="margin-top:1rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem;">
+          <figure style="margin:0;">
+            <img src="../hb-ch01-how-llms-work/assets/slide3.png"
+                 alt="Word embedding clusters: shepherd, flock, pasture grouped in blue; Lord, holy, temple in purple; demon, unclean, spirit in red — words used in similar contexts cluster together in the model's vocabulary space"
+                 style="width:100%; border-radius:8px; border:1px solid var(--border-light);">
+            <figcaption style="font-size:0.75rem; color:var(--text-muted); margin-top:0.4rem; text-align:center;">Vocabulary = location: word clusters in the AI's internal space</figcaption>
+          </figure>
+          <figure style="margin:0;">
+            <img src="../hb-ch01-how-llms-work/assets/slide4.png"
+                 alt="Context window layout showing three panels: system instructions on the left, conversation history in the centre, and the current user message on the right"
+                 style="width:100%; border-radius:8px; border:1px solid var(--border-light);">
+            <figcaption style="font-size:0.75rem; color:var(--text-muted); margin-top:0.4rem; text-align:center;">The context window: everything the AI can see at once</figcaption>
+          </figure>
+        </div>
+
+        <!-- THE 9 FACTORS → 4 IN YOUR HANDS -->
+        <div style="margin-top: 2rem;" class="fade-up">
+          <h3 style="margin-bottom: 0.5rem;" id="nine-factors-shape-every-ai-output-four-are-yours">Nine factors shape every AI output. Four are yours.</h3>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.25rem;">Most of these are fixed before you open the tool. Focus your energy where you have real leverage.</p>
+
+          <p style="font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:0.5rem;">Fixed by your provider — not in your hands</p>
+          <div class="card-grid cols-3" style="margin-bottom:1.5rem;">
+            <div class="card" style="opacity:0.6; border-left:3px solid var(--border-dark);">
+              <h3 style="font-size:0.85rem; margin-bottom:0.3rem;" id="training-data">Training data</h3>
+              <p style="font-size:0.8rem;">What the model learned from — determines knowledge, defaults, bias</p>
+            </div>
+            <div class="card" style="opacity:0.6; border-left:3px solid var(--border-dark);">
+              <h3 style="font-size:0.85rem; margin-bottom:0.3rem;" id="fine-tuning-purpose">Fine-tuning purpose</h3>
+              <p style="font-size:0.8rem;">What the model was further trained for after initial training</p>
+            </div>
+            <div class="card" style="opacity:0.6; border-left:3px solid var(--border-dark);">
+              <h3 style="font-size:0.85rem; margin-bottom:0.3rem;" id="provider-configuration">Provider configuration</h3>
+              <p style="font-size:0.8rem;">Platform-level filters, limits, and features your provider set</p>
+            </div>
+            <div class="card" style="opacity:0.6; border-left:3px solid var(--border-dark);">
+              <h3 style="font-size:0.85rem; margin-bottom:0.3rem;" id="knowledge-cutoff">Knowledge cutoff</h3>
+              <p style="font-size:0.8rem;">The date beyond which the model has no training data</p>
+            </div>
+            <div class="card" style="opacity:0.6; border-left:3px solid var(--border-dark);">
+              <h3 style="font-size:0.85rem; margin-bottom:0.3rem;" id="available-tools-partly">Available tools <em>(partly)</em></h3>
+              <p style="font-size:0.8rem;">Web search, file reading — partly set by provider; some are your choice</p>
+            </div>
+          </div>
+
+          <p style="font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--amber); margin-bottom:0.5rem;">✓ In your hands — your leverage points</p>
+          <div class="card-grid cols-2">
+            <div class="card" style="border-left:4px solid var(--amber); background:#fffbeb;">
+              <span class="card-icon">💻</span>
+              <h3 style="font-size:0.9rem;" id="model-choice">Model choice ✓</h3>
+              <p style="font-size:0.82rem;">Which AI tool you select for the task — capabilities vary significantly between tools</p>
+            </div>
+            <div class="card" style="border-left:4px solid var(--amber); background:#fffbeb;">
+              <span class="card-icon">⚙️</span>
+              <h3 style="font-size:0.9rem;" id="system-prompt">System prompt ✓</h3>
+              <p style="font-size:0.82rem;">Standing instructions loaded before conversation begins — your persistent guardrails</p>
+            </div>
+            <div class="card" style="border-left:4px solid var(--amber); background:#fffbeb;">
+              <span class="card-icon">📂</span>
+              <h3 style="font-size:0.9rem;" id="augmentation-data">Augmentation data ✓</h3>
+              <p style="font-size:0.82rem;">Documents and project files you paste in — grounds the AI in your actual material</p>
+            </div>
+            <div class="card" style="border-left:4px solid var(--amber); background:#fffbeb;">
+              <span class="card-icon">✍️</span>
+              <h3 style="font-size:0.9rem;" id="your-prompt">Your prompt ✓</h3>
+              <p style="font-size:0.82rem;">The instruction you write — highest immediate-impact lever. This entire module is about this one.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6 FAILURE MODES -->
+        <div style="margin-top: 2rem;" class="fade-up">
+          <h3 style="margin-bottom: 0.5rem;" id="risk-radar-six-failure-modes-every-bt-practitioner-must-know">Risk Radar: Six failure modes every BT practitioner must know</h3>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">These are not hypothetical. Each has caused real problems in Bible Translation work.</p>
+
+          <div class="accordion">
+
+            <details>
+              <summary><span class="fm-emoji">💥</span> Failure Mode 1: Hallucination <span class="summary-arrow">›</span></summary>
+              <div class="details-body">
+                <p><strong>What it is:</strong> The model generates authoritative-sounding content that is factually invented — fake Louw-Nida domain codes, non-existent scholarly citations, fabricated Greek glosses.</p>
+                <p><strong>Why it happens:</strong> The model optimises for <em>plausibility</em>, not truth. When it cannot reliably answer, it completes the pattern of what a confident answer looks like.</p>
+                <p><strong>Why it is dangerous in BT:</strong> A hallucinated code looks exactly like a real one. It can enter checking documentation and survive into publication.</p>
+                <div class="prompt-block">
+                  <div class="prompt-label weak">Triggers it</div>
+                  <div class="prompt-display weak" style="font-size:0.78rem;">What does Louw-Nida say about <em>akathartos</em> in Mark 5:2?</div>
+                </div>
+                <div class="prompt-block">
+                  <div class="prompt-label strong">Safer alternative</div>
+                  <div class="prompt-display strong" style="font-size:0.78rem;">Explain the semantic range of the Greek word <em>akathartos</em> as used in Mark 5. Do not cite specific reference codes — I will verify those independently. If you are uncertain about any claim, say so explicitly.</div>
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary><span class="fm-emoji">📅</span> Failure Mode 2: Knowledge Cutoff <span class="summary-arrow">›</span></summary>
+              <div class="details-body">
+                <p><strong>What it is:</strong> The model's training ends at a fixed date — typically 12–18 months before you are using it. Events, publications, and tool updates after that date simply do not exist for it.</p>
+                <p><strong>Why it matters in BT:</strong> New Paratext versions, updated UBS guidelines, recently completed surveys, your team's latest key-term decisions — the model knows nothing of these.</p>
+                <div class="prompt-block">
+                  <div class="prompt-label weak">Triggers it</div>
+                  <div class="prompt-display weak" style="font-size:0.78rem;">What are the latest Paratext 9.5 features I should use for my checking workflow?</div>
+                </div>
+                <div class="prompt-block">
+                  <div class="prompt-label strong">Safer alternative</div>
+                  <div class="prompt-display strong" style="font-size:0.78rem;">I am pasting the Paratext 9.5 release notes below. Based <em>only</em> on this content, summarise the checking features most relevant to a translation team working on a minority language project. [paste notes]</div>
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary><span class="fm-emoji">🧭</span> Failure Mode 3: Bias &amp; Worldview <span class="summary-arrow">›</span></summary>
+              <div class="details-body">
+                <p><strong>What it is:</strong> The model was trained predominantly on Western, English-language internet text. Its default theological frame, cultural illustrations, and metaphors lean Western Protestant. It does not know this about itself.</p>
+                <p><strong>Why it matters in BT:</strong> When you ask for "a culturally appropriate illustration," the model's default is the culture embedded in its training — which may be entirely foreign to your target audience.</p>
+                <p><strong>The rule:</strong> Always anchor the cultural frame explicitly. Name the people group, the social dynamics, what is <em>not</em> familiar in your context.</p>
+                <div class="minority-alert">
+                  <span>🌐</span>
+                  <div><strong>Low-resource language reality:</strong> AI performance degrades significantly for languages with small digital footprints. If your target language has little or no presence in training data, hallucination risk increases and grammatical suggestions become unreliable. Always have a mother-tongue speaker review any AI output in the target language.</div>
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary><span class="fm-emoji">🔢</span> Failure Mode 4: Math &amp; Counting <span class="summary-arrow">›</span></summary>
+              <div class="details-body">
+                <p><strong>What it is:</strong> LLMs process numbers as tokens, not values. They are statistically unreliable for arithmetic, syllable counts, verse tallying, word frequency analysis.</p>
+                <p><strong>Why it matters in BT:</strong> A wrong verse count or misreported key-term frequency can introduce errors into checking documentation.</p>
+                <p><strong>The rule:</strong> Delegate counting and arithmetic to reliable tools (Paratext's Find, a spreadsheet). Bring the AI back in to help you <em>interpret</em> the pattern once you have the verified count.</p>
+              </div>
+            </details>
+
+            <details>
+              <summary><span class="fm-emoji">🔍</span> Failure Mode 5: Attention Fade <span class="summary-arrow">›</span></summary>
+              <div class="details-body">
+                <p><strong>What it is:</strong> The "attention" mechanism underlying all modern LLMs gives progressively less weight to older text in a conversation. Tokens that are far apart receive weaker mutual attention. Your instructions from the start of a session gradually lose influence — even while still technically in the window.</p>
+                <p><strong>How it shows up:</strong> Gradual loosening of constraints. Speculation increases incrementally. Flags appear less frequently. Harder to spot than Context Loss because there's no clear before-and-after moment.</p>
+                <p><strong>The rule:</strong> Repeat key constraints at the start of a new task within a session. See Appendix F for the attention mechanism explained in plain English.</p>
+                <figure style="margin:1rem 0 0;">
+                  <img src="../hb-ch01-how-llms-work/assets/slide9.png"
+                       alt="Attention fade diagram: vertical bars representing tokens in the conversation window, bright at the bottom (recent) and fading to near-invisible at the top (older) — visualising how the model gives progressively less attention to earlier context"
+                       style="width:100%; border-radius:8px; border:1px solid var(--border-light);">
+                  <figcaption style="font-size:0.75rem; color:var(--text-muted); margin-top:0.4rem; text-align:center;">Attention fade: older tokens receive progressively less weight — even while still in the window</figcaption>
+                </figure>
+              </div>
+            </details>
+
+            <details>
+              <summary><span class="fm-emoji">🌊</span> Failure Mode 6: Context Loss <span class="summary-arrow">›</span></summary>
+              <div class="details-body">
+                <p><strong>What it is:</strong> As a session grows longer, the oldest content is silently dropped from the context window to make room for new content. The model does not warn you. It has no awareness of what is gone.</p>
+                <p><strong>The silent failure problem:</strong> The model cannot detect an absence. It continues with full confidence, operating under fewer constraints than you set, with no indication anything has changed. The onus falls entirely on you to notice.</p>
+                <p><strong>Why it matters in BT:</strong> The guardrails you set at the start — "do not speculate beyond the text," "flag uncertain interpretations" — are the <em>first things</em> to disappear as sessions grow.</p>
+                <p><strong>The rule:</strong> Long session? Refresh your constraints. Or better still: start a new chat per task. See Chapter 4 for the full defence system.</p>
+                <figure style="margin:1rem 0 0;">
+                  <img src="../hb-ch01-how-llms-work/assets/slide10.png"
+                       alt="Context loss diagram: a large red dashed box labelled 'Gone — no warning issued' marks content silently dropped as the session grew beyond the context window limit"
+                       style="width:100%; border-radius:8px; border:1px solid var(--border-light);">
+                  <figcaption style="font-size:0.75rem; color:var(--text-muted); margin-top:0.4rem; text-align:center;">Context loss: content dropped silently — the model continues as if the guardrails are still there</figcaption>
+                </figure>
+              </div>
+            </details>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C3 · CHALLENGE · Wrestle with Problem
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c3">
+      <div class="container">
+        <div class="section-badge badge-c3">C3 · Challenge</div>
+        <h2 id="spot-the-failure-mode">Spot the failure mode</h2>
+        <p class="section-lead">Three AI responses. Each contains a failure mode. Can you identify which one — before you see the analysis?</p>
+
+        <!-- SCENARIO 1 -->
+        <div class="card fade-up" style="margin-bottom: 1.5rem;">
+          <h3 style="margin-bottom: 0.75rem;" id="response-a">Response A</h3>
+          <div class="prompt-display" style="border-left: 4px solid var(--border-dark); font-size: 0.8rem; margin-bottom: 1rem;">The community testing of this draft was completed last month. Based on the June 2025 UBS guidelines, the checking team should use the new simplified back-translation protocol introduced in the latest Paratext workshop guidelines.</div>
+          <div class="activity-box" style="margin-top: 0.5rem;">
+            <div class="activity-header">
+              <span class="activity-icon">🤔</span>
+              <h3 id="what-failure-mode-is-this-discuss-with-your-group">What failure mode is this? Discuss with your group.</h3>
+            </div>
+            <p>What is the AI claiming to know? What problem does that create for a translation team that trusts this response?</p>
+          </div>
+          <button class="reveal-btn" data-target="reveal-a" data-open-text="Show analysis" data-close-text="Hide analysis">
+            <span class="reveal-arrow">▼</span>
+            <span class="btn-text">Show analysis</span>
+          </button>
+          <div class="hidden-reveal" id="reveal-a" style="margin-top: 1rem;">
+            <div class="callout warn">
+              <span class="callout-icon">📅</span>
+              <div><strong>Failure Mode 2: Knowledge Cutoff.</strong> The AI refers to "June 2025 UBS guidelines" and recent workshop events as if they are current. Depending on the model's training cutoff, these may not exist yet — or the model may be describing an older version of guidelines as if they were recent. The response names a timeframe to create credibility, but the model has no knowledge of events after its cutoff.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCENARIO 2 -->
+        <div class="card fade-up" style="margin-bottom: 1.5rem;">
+          <h3 style="margin-bottom: 0.75rem;" id="response-b">Response B</h3>
+          <div class="prompt-display" style="border-left: 4px solid var(--border-dark); font-size: 0.8rem; margin-bottom: 1rem;">For a community where pigs represent wealth, the most effective illustration of the grace shown in Mark 5:19 would be the father forgiving a child's debt — similar to the Prodigal Son narrative. This speaks powerfully to the individual conscience and personal relationship with God that lies at the heart of this community's experience.</div>
+          <div class="activity-box" style="margin-top: 0.5rem;">
+            <div class="activity-header">
+              <span class="activity-icon">🤔</span>
+              <h3 id="what-failure-mode-is-this-discuss-with-your-group-1">What failure mode is this? Discuss with your group.</h3>
+            </div>
+            <p>The response answers the question, but something is wrong with the frame it uses. What assumption has it made about the community?</p>
+          </div>
+          <button class="reveal-btn" data-target="reveal-b" data-open-text="Show analysis" data-close-text="Hide analysis">
+            <span class="reveal-arrow">▼</span>
+            <span class="btn-text">Show analysis</span>
+          </button>
+          <div class="hidden-reveal" id="reveal-b" style="margin-top: 1rem;">
+            <div class="callout warn">
+              <span class="callout-icon">🧭</span>
+              <div><strong>Failure Mode 3: Bias &amp; Worldview.</strong> "Individual conscience and personal relationship with God" is a Western Protestant framing. A community organised around honour, shame, and kinship obligations — common in many contexts where BT teams work — experiences grace and debt in entirely different social frameworks. The model defaulted to its training data's cultural center without flagging the assumption.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCENARIO 3 -->
+        <div class="card fade-up" style="margin-bottom: 1.5rem;">
+          <h3 style="margin-bottom: 0.75rem;" id="response-c">Response C</h3>
+          <div class="prompt-display" style="border-left: 4px solid var(--border-dark); font-size: 0.8rem; margin-bottom: 1rem;">The word "spirit" (πνεῦμα, <em>pneuma</em>) appears 7 times in the Gospel of Mark. In Mark 5:1–20 specifically, it appears 4 times, referring to the unclean spirit possessing the man. The frequency of this term is significant for establishing a key-term rendering, as it is the most repeated theological descriptor in this pericope.</div>
+          <div class="activity-box" style="margin-top: 0.5rem;">
+            <div class="activity-header">
+              <span class="activity-icon">🤔</span>
+              <h3 id="what-failure-mode-is-this-discuss-with-your-group-2">What failure mode is this? Discuss with your group.</h3>
+            </div>
+            <p>The numbers sound specific and authoritative. What is the problem with trusting them?</p>
+          </div>
+          <button class="reveal-btn" data-target="reveal-c" data-open-text="Show analysis" data-close-text="Hide analysis">
+            <span class="reveal-arrow">▼</span>
+            <span class="btn-text">Show analysis</span>
+          </button>
+          <div class="hidden-reveal" id="reveal-c" style="margin-top: 1rem;">
+            <div class="callout warn">
+              <span class="callout-icon">🔢</span>
+              <div><strong>Failure Mode 4: Math &amp; Counting.</strong> The model is not actually counting. It is predicting what a plausible word-count response looks like. The numbers (7 times in Mark, 4 times in Mark 5) are presented with full confidence but may be wrong. Never trust AI word counts. Use Paratext's Find function to get the actual number, then bring the AI back to help you interpret the pattern.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout info fade-up">
+          <span class="callout-icon">💡</span>
+          <div><strong>Key takeaway from this exercise:</strong> All three responses sounded credible. None of them warned you that something was wrong. The responsibility for detecting failure falls entirely on you — the AI cannot audit its own outputs.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C4 · CHANGE · Transfer / Application
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c4">
+      <div class="container">
+        <div class="section-badge badge-c4">C4 · Change</div>
+        <h2 id="my-risk-radar">My Risk Radar</h2>
+        <p class="section-lead">
+          Before the next session: identify which failure modes are most likely in your work. This is your personal awareness anchor.
+        </p>
+
+        <div class="lane-group fade-up">
+          <div class="lane-toggle">
+            <button class="lane-btn" data-lane="1">✍️ Translators</button>
+            <button class="lane-btn" data-lane="2">🔍 Consultants</button>
+            <button class="lane-btn" data-lane="3">⚙️ Tech &amp; Leadership</button>
+          </div>
+
+          <!-- LANE 1 -->
+          <div class="lane-content" data-lane="1">
+            <div class="lane-header">
+              <span class="lane-head-icon">✍️</span>
+              <div class="lane-head-text">
+                <h4>Lane 1 · Translators &amp; Language Practitioners</h4>
+                <p>Mother Tongue Translators · Translators · Linguists · Literacy Workers</p>
+              </div>
+            </div>
+            <div class="commitment-box">
+              <div class="commitment-header">
+                <span>📌</span>
+                <h3 id="your-commitment">Your commitment</h3>
+              </div>
+              <p class="commitment-prompt-text">The failure modes most relevant to my drafting and FIA work are:</p>
+              <textarea class="commitment-input" placeholder="e.g. Hallucination (when I ask about glosses), Bias (when I ask for illustrations)..."></textarea>
+              <p class="commitment-prompt-text" style="margin-top: 0.875rem;">The one verification habit I will add to my AI workflow this week:</p>
+              <textarea class="commitment-input" placeholder="e.g. I will always verify any Louw-Nida code the AI gives me against the printed lexicon before entering it in my notes..."></textarea>
+              <div class="commitment-actions">
+                <button class="btn-print">🖨️ Print this commitment</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- LANE 2 -->
+          <div class="lane-content" data-lane="2">
+            <div class="lane-header">
+              <span class="lane-head-icon">🔍</span>
+              <div class="lane-head-text">
+                <h4>Lane 2 · Consultants &amp; Advisors</h4>
+                <p>Translation Consultants · CITs · Exegetes · Advisors</p>
+              </div>
+            </div>
+            <div class="commitment-box">
+              <div class="commitment-header">
+                <span>📌</span>
+                <h3 id="your-commitment-1">Your commitment</h3>
+              </div>
+              <p class="commitment-prompt-text">In my reviewing and checking work, the failure modes most likely to slip through are:</p>
+              <textarea class="commitment-input" placeholder="e.g. Attention Fade (in long checking sessions), Hallucination (when asking about references)..."></textarea>
+              <p class="commitment-prompt-text" style="margin-top: 0.875rem;">The guardrail instruction I will add to every checking-session prompt this week:</p>
+              <textarea class="commitment-input" placeholder="e.g. 'Do not speculate. Flag all uncertain interpretations as NEEDS VERIFICATION rather than presenting them as established.'"></textarea>
+              <div class="commitment-actions">
+                <button class="btn-print">🖨️ Print this commitment</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- LANE 3 -->
+          <div class="lane-content" data-lane="3">
+            <div class="lane-header">
+              <span class="lane-head-icon">⚙️</span>
+              <div class="lane-head-text">
+                <h4>Lane 3 · Tech &amp; Leadership</h4>
+                <p>Cluster Managers · Project Executives · IT Support · Facilitators · QA</p>
+              </div>
+            </div>
+            <div class="commitment-box">
+              <div class="commitment-header">
+                <span>📌</span>
+                <h3 id="your-commitment-2">Your commitment</h3>
+              </div>
+              <p class="commitment-prompt-text">In my reporting, planning, and support work, the failure modes I need to brief my team about are:</p>
+              <textarea class="commitment-input" placeholder="e.g. Knowledge Cutoff (when teams ask about tool versions), Context Loss (in long multi-topic sessions)..."></textarea>
+              <p class="commitment-prompt-text" style="margin-top: 0.875rem;">One failure mode I will document in our team's AI usage guidelines this month:</p>
+              <textarea class="commitment-input" placeholder="e.g. Hallucination — I will add a mandatory verification step for all AI-generated reference data before it enters any formal document..."></textarea>
+              <div class="commitment-actions">
+                <button class="btn-print">🖨️ Print this commitment</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C5 · CLOSURE · Attitude Anchor
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c5">
+      <div class="container">
+        <div class="section-badge badge-c5">C5 · Closure</div>
+
+        <div class="big-quote fade-up">
+          <blockquote>
+            "The machine is not understanding. It is predicting. You are responsible for the guardrails."
+          </blockquote>
+          <cite>The capacity of the tool is not the limit. The clarity of your instruction is.</cite>
+        </div>
+
+        <div class="callout success fade-up">
+          <span class="callout-icon">✅</span>
+          <div>
+            <strong>What you can now do:</strong> Name the six failure modes, identify which prompts trigger them, and apply a safer alternative. You have the awareness layer. Chapter 2 builds the skill layer.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CHAPTER FOOTER NAV -->
+  <nav class="chapter-footer-nav">
+    <div class="nav-row">
+      <a href="index.html" class="ch-nav-btn">← All chapters</a>
+      <span class="ch-nav-spacer"></span>
+      <a href="ch02.html" class="ch-nav-btn primary">Chapter 2: Anatomy of a Prompt →</a>
+    </div>
+  </nav>
+
+  
+    </main>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <!-- ── PRESENTATION MODE CONTROLS ───────────────────────── -->
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="../assets/script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>

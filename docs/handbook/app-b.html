@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appendix B — Risk Reference</title>
+  <meta name="description" content="Prompt Engineering for Bible Translators · AILT 2026 AI Tools Workshop">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+</head>
+<body>
+
+  <!-- ── SITE NAV ──────────────────────────────────────────── -->
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="../" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="../" class="shell-nav-link">Home</a>
+        <a href="../prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="../handbook/" class="shell-nav-link">Handbook</a>
+        <a href="../about.html" class="shell-nav-link">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── PAGE LAYOUT ─────────────────────────────────────────────── -->
+  <div class="shell-page">
+    <main class="shell-main" id="main-content">
+      <div class="prose-content">
+<h1 id="appendix-b-risk-quick-reference">Appendix B: Risk Quick Reference</h1>
+<h2 id="six-failure-modes-and-how-to-guard-against-them">Six Failure Modes — and How to Guard Against Them</h2>
+<p><em>Keep this as a rapid reference during any AI session. If an output surprises or concerns you, check it against this list first.</em></p>
+<hr />
+<h2 id="risk-1-hallucination-">Risk 1: Hallucination 💥</h2>
+<p><strong>What it looks like:</strong> The AI produces a Louw-Nida domain code, a Greek lexicon entry, a scholar's quotation, or a verse reference that sounds authoritative but cannot be verified — because it was invented.</p>
+<p><strong>Why it happens:</strong> The model optimises for plausibility, not truth. It completes the <em>pattern of what a confident scholarly answer looks like</em>, even when it has no reliable content to draw from.</p>
+<p><strong>High-risk prompt types:</strong>
+- <em>"What does [reference work] say about [Greek word]?"</em>
+- <em>"Cite the scholarly sources on this interpretation."</em>
+- <em>"What is the Louw-Nida code for…?"</em></p>
+<p><strong>Guardrail to add:</strong></p>
+<blockquote>
+<p><em>"Do not cite specific reference codes, dictionary entries, or scholar names. Describe the semantic range in plain terms. If you are uncertain about any claim, say so explicitly."</em></p>
+</blockquote>
+<p><strong>Verification rule:</strong> Any specific reference (code, citation, verse number, Greek form) produced by AI must be independently verified against the primary source before it enters your documentation.</p>
+<hr />
+<h2 id="risk-2-knowledge-cutoff-">Risk 2: Knowledge Cutoff 📅</h2>
+<p><strong>What it looks like:</strong> The AI describes an older version of a tool, a superseded guideline, or a pre-existing state of your project as if it were the current situation.</p>
+<p><strong>Why it happens:</strong> Training data ends at a fixed date — typically 12–18 months before you are using the tool. The model has no awareness of what has changed since then.</p>
+<p><strong>High-risk prompt types:</strong>
+- <em>"What are the latest [tool] features for [task]?"</em>
+- <em>"What does the current UBS checking guideline say about…?"</em>
+- <em>"Is [specific function] available in Paratext now?"</em></p>
+<p><strong>Guardrail to add:</strong></p>
+<blockquote>
+<p><em>"I am pasting the relevant documentation below. Reason only from what I have provided — do not draw on prior knowledge about this tool or guideline. [paste document]"</em></p>
+</blockquote>
+<p><strong>Rule:</strong> For anything time-sensitive or tool-specific, supply the current document and instruct the model to reason exclusively from what you provide.</p>
+<hr />
+<h2 id="risk-3-bias-worldview-">Risk 3: Bias &amp; Worldview 🧭</h2>
+<p><strong>What it looks like:</strong> The AI produces cultural illustrations, metaphors, or theological framings that are Western Protestant by default — inappropriate for your target audience or culture.</p>
+<p><strong>Why it happens:</strong> Training data is weighted heavily toward Western English-language text. The model does not know it is biased; it presents its defaults as culturally neutral.</p>
+<p><strong>High-risk prompt types:</strong>
+- <em>"Give me a culturally appropriate illustration for [theological concept]."</em>
+- <em>"How would a person in this community understand [concept]?"</em>
+- Any prompt that leaves cultural context undefined.</p>
+<p><strong>Guardrail to add:</strong></p>
+<blockquote>
+<p><em>"My target audience is [specific description: people group, honour/shame or guilt/innocence framing, literacy level, economic context]. Use only illustrations and metaphors that would be natural in that cultural world. Avoid Western legal, financial, or individualist metaphors."</em></p>
+</blockquote>
+<p><strong>Low-resource language note:</strong> For languages with little digital presence, hallucination risk increases and grammatical suggestions in the target language are unreliable. Always have a mother-tongue speaker review any AI output in the target language.</p>
+<hr />
+<h2 id="risk-4-math-counting-">Risk 4: Math &amp; Counting 🔢</h2>
+<p><strong>What it looks like:</strong> The AI produces a confident, precise-looking number — a verse count, a word frequency, a syllable count — that is wrong.</p>
+<p><strong>Why it happens:</strong> The model processes numbers as tokens, not values. Counting is not pattern-matching; it is arithmetic. The AI predicts <em>what a plausible answer to a counting question looks like</em>, which often resembles the real answer but is not reliably accurate.</p>
+<p><strong>High-risk prompt types:</strong>
+- <em>"How many times does [word] appear in [passage]?"</em>
+- <em>"Count the syllables in this verse."</em>
+- <em>"How many verses are in this chapter?"</em></p>
+<p><strong>The safer approach:</strong>
+- Use Paratext's Find function, a spreadsheet, or a manual count for exact numbers.
+- Ask AI to <em>list every occurrence</em> of a term (then you count) rather than to produce a total.
+- Use AI for <em>interpretation</em> once you have a verified count.</p>
+<p><strong>Rule:</strong> Delegate counting and arithmetic to reliable tools. Delegate interpretation to AI.</p>
+<hr />
+<h2 id="risk-5-attention-fade-">Risk 5: Attention Fade 🔍</h2>
+<p><strong>What it looks like:</strong> Constraints set at the start of the session gradually lose their grip. Speculation creeps in. Uncertainty flags appear less often. The persona shifts toward a more generic register. No single clear break — it is a slow drift.</p>
+<p><strong>Why it happens:</strong> The Transformer architecture weights attention by proximity. Instructions written at the top of the session are farther from the model's current position than recent exchanges, so they exert less influence — even while they are still within the context window.</p>
+<p><strong>Warning signs:</strong>
+- Guardrails seem to be followed less consistently than at the start
+- Speculation and elaboration increase gradually
+- Flags and uncertainty markers thin out without instruction
+- No clear break point — just a general loosening</p>
+<p><strong>The defence:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mid-session refresh</strong></td>
+<td>Paste a reminder: <em>"Reminder: do not speculate beyond the text. Flag all uncertain items as NEEDS VERIFICATION."</em></td>
+</tr>
+<tr>
+<td><strong>System Prompt</strong></td>
+<td>Load key constraints as the system prompt — they receive elevated attention on every turn, regardless of session length.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="risk-6-context-loss-">Risk 6: Context Loss 🌊</h2>
+<p><strong>What it looks like:</strong> Mid-session, the AI begins speculating freely, changes its output format, stops flagging uncertain items, or drops the cultural constraints you set at the start — with no warning.</p>
+<p><strong>Why it happens:</strong> The session has grown long enough that the earliest content (your guardrails, persona instruction, AI session brief) has scrolled out of the context window. The model is no longer operating under those constraints because it cannot see them.</p>
+<p><strong>Warning signs:</strong>
+- AI starts adding theological commentary it was told not to add
+- Uncertainty flags ("NEEDS VERIFICATION") stop appearing
+- The output format changes without instruction
+- Speculative language increases</p>
+<p><strong>The four defences (in order of ease):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Defence</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Task Chunking</strong></td>
+<td>One task per chat. Start a new chat for each new task type.</td>
+</tr>
+<tr>
+<td><strong>Summarise &amp; Restart</strong></td>
+<td>Ask “Summarise all key findings as bullet points,” copy the summary, open a new chat, paste summary + AI session brief.</td>
+</tr>
+<tr>
+<td><strong>AI Session Brief</strong></td>
+<td>Paste <code>ai-session-brief.md</code> at the start of every new chat session.</td>
+</tr>
+<tr>
+<td><strong>System Prompt</strong></td>
+<td>In Claude Projects or Custom GPTs, load the brief as the system prompt — permanently in scope, cannot scroll out.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="quick-decision-guide">Quick Decision Guide</h2>
+<blockquote>
+<p><em>"AI just gave me something surprising. What do I do?"</em></p>
+</blockquote>
+<ol>
+<li>
+<p><strong>Is it a specific reference (code, citation, Greek form, verse number)?</strong> → Verify against the primary source before using. Risk: Hallucination.</p>
+</li>
+<li>
+<p><strong>Is it a claim about a tool or a current process?</strong> → Check the current documentation. Risk: Knowledge Cutoff.</p>
+</li>
+<li>
+<p><strong>Is it a cultural illustration or metaphor?</strong> → Check whether it actually fits your target audience. Risk: Bias.</p>
+</li>
+<li>
+<p><strong>Is it a count, frequency, or numeric value?</strong> → Recount with a reliable tool. Risk: Math &amp; Counting.</p>
+</li>
+<li>
+<p><strong>Are constraints becoming looser gradually — increasing speculation, fewer flags — without a clean break?</strong> → Reinforce key guardrails mid-session or switch to a system prompt. Risk: Attention Fade.</p>
+</li>
+<li>
+<p><strong>Did the output change character mid-session — dropped guardrails, added speculation?</strong> → Summarise, start a fresh chat, re-paste your brief. Risk: Context Loss.</p>
+</li>
+</ol>
+</div>
+    </main>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <!-- ── PRESENTATION MODE CONTROLS ───────────────────────── -->
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="../assets/script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>

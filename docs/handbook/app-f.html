@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appendix F — The Attention Paper</title>
+  <meta name="description" content="Prompt Engineering for Bible Translators · AILT 2026 AI Tools Workshop">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+</head>
+<body>
+
+  <!-- ── SITE NAV ──────────────────────────────────────────── -->
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="../" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="../" class="shell-nav-link">Home</a>
+        <a href="../prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="../handbook/" class="shell-nav-link">Handbook</a>
+        <a href="../about.html" class="shell-nav-link">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── PAGE LAYOUT ─────────────────────────────────────────────── -->
+  <div class="shell-page">
+    <main class="shell-main" id="main-content">
+      <div class="prose-content">
+<h1 id="appendix-f-the-paper-that-started-everything">Appendix F: The Paper That Started Everything</h1>
+<h2 id="attention-is-all-you-need-a-plain-english-introduction"><em>"Attention Is All You Need"</em> — A Plain-English Introduction</h2>
+<p><em>This appendix is not required reading for using the techniques in this handbook. It is background for the curious — a glimpse behind the curtain at the moment that changed everything.</em></p>
+<hr />
+<h2 id="before-the-revolution">Before the Revolution</h2>
+<p>To understand what happened in 2017, you need to know what AI was like before it.</p>
+<p>For decades, the best approach to language was a system called a <strong>recurrent neural network (RNN)</strong>. It read text the way a slow reader follows a line in a book — one word at a time, left to right, holding a summary of what it had read so far in a kind of short-term memory. The further back a word was, the hazier the memory of it. If an important clue appeared at the beginning of a long sentence and the answer came at the end, the system had usually forgotten the clue by the time it needed it.</p>
+<p>It was intelligent, in its way. But it was slow, forgetful, and difficult to scale up. Training these systems took weeks. Making them larger made them worse, not better. Researchers were stuck.</p>
+<hr />
+<h2 id="eight-people-changed-that">Eight People Changed That</h2>
+<p>In June 2017, eight researchers at Google Brain published a paper with a deceptively simple title: <strong>"Attention Is All You Need."</strong></p>
+<p>It was twelve pages long. Most people who have heard of it have never read it. Fewer still understood it when it came out. The reviewers at the conference where it was submitted were mixed; one described it as "interesting but not immediately convincing."</p>
+<p>Today it is the most cited paper in the history of computer science, with over 150,000 citations. The architecture it introduced — the <strong>Transformer</strong> — is the foundation of every major AI system in existence: ChatGPT, Claude, Gemini, Copilot, Grok. Every one of them.</p>
+<hr />
+<h2 id="what-the-paper-said">What the Paper Said</h2>
+<p>The key insight was this: <strong>you don't need to read text in order.</strong></p>
+<p>Instead of processing words one at a time, the Transformer looks at the entire sequence at once and asks — for every single word — <em>how much should every other word in this sequence influence how I interpret this one?</em></p>
+<p>The word for this relationship is <strong>attention</strong>. Some word pairs deserve strong attention: <em>"this"</em> and the noun it refers to three lines earlier; <em>"he"</em> and the specific person named at the beginning of the paragraph; <em>"Do not speculate"</em> and the output being generated fifty exchanges later. The Transformer learns — through training — which pairs matter and how much.</p>
+<p>A simple example. Consider the sentence: <em>"The pig, which had been grazing quietly by the edge of the water since dawn, ran."</em> </p>
+<p>In a recurrent system, by the time the model reaches <em>"ran"</em>, the word <em>"pig"</em> is a distant memory. In a Transformer, <em>"pig"</em> and <em>"ran"</em> are directly connected by attention — the model knows instantly what did the running, regardless of the distance between the two words.</p>
+<p>Now scale that up to an entire book. An entire library. The Transformer can hold every relationship in scope simultaneously and weight them appropriately. That is what attention does.</p>
+<blockquote>
+<p><strong>A nuance worth noting.</strong> The Transformer architecture guarantees that <em>"pig"</em> and <em>"ran"</em> can attend to one another directly, regardless of distance. That is the structural breakthrough described above. What it does not guarantee is that they <em>will</em> — because the actual attention weights are not hardwired; they are <em>learned</em> from training data. In practice, models trained on real-world text develop a recency bias: nearby tokens tend to receive stronger attention than distant ones. The architecture removes the ceiling; training sets the defaults. Chapter 1, §1.4 (Failure Mode 5: Attention Fade) describes the practical consequence — important instructions set early in a session gradually lose influence over a long conversation, not because the architecture forbids them from being attended to, but because learned weights favour what is near.</p>
+</blockquote>
+<hr />
+<h2 id="why-this-was-extraordinary">Why This Was Extraordinary</h2>
+<p>Before the Transformer, bigger models were barely better. There was a ceiling — not because researchers weren't trying, but because the architecture couldn't scale.</p>
+<p>The Transformer removed that ceiling.</p>
+<p>Because it processes the entire sequence at once rather than word by word, it can be parallelised — run on thousands of processors simultaneously. That means training can happen in days instead of months. It means you can feed the model more data. Much more. And more data, with this architecture, reliably produces a better model.</p>
+<p>For the first time, the path to a dramatically more capable AI system was simply: <em>more data, more compute, more layers.</em> The architecture would hold. The only limits were hardware and budget.</p>
+<hr />
+<h2 id="what-happened-next">What Happened Next</h2>
+<p>The first major system built on Transformers was <strong>BERT</strong> (Google, 2018) — focused on understanding language. Then came <strong>GPT</strong> (OpenAI, 2018), then <strong>GPT-2</strong> (2019), then <strong>GPT-3</strong> (2020). Each generation was larger, more capable, more startling.</p>
+<p>GPT-3 could write essays, translate languages, answer questions, summarise documents, and generate code — from a single prompt, with no specific training for any of those tasks. It had simply seen so much text that it had absorbed patterns for all of them. Researchers who tested it described a quality they had not expected: it felt like <em>understanding</em>.</p>
+<p>Then, in November 2022, OpenAI wrapped GPT-3.5 in a chat interface and called it <strong>ChatGPT</strong>. It reached one million users in five days. One hundred million in two months. No technology in human history had been adopted faster.</p>
+<hr />
+<h2 id="what-the-researchers-themselves-did-not-predict">What the Researchers Themselves Did Not Predict</h2>
+<p>The eight authors of "Attention Is All You Need" were solving a specific, narrow problem: machine translation. German to English, Chinese to French. Better, faster, more accurate translation.</p>
+<p>They did not predict ChatGPT. They did not predict that their architecture would, within seven years, be writing code, passing bar exams, generating images, composing music, and — yes — helping Bible Translation teams work through the exegesis of Mark 5.</p>
+<p>Ilya Sutskever, one of the early architects of GPT at OpenAI, described the moment GPT-3 first appeared as "genuinely shocking." These were not people easily impressed by AI — they had spent years building it. They were shocked anyway.</p>
+<p>The thing the paper unlocked was not a better translation tool. It was a general-purpose reasoning engine. No one fully saw that coming.</p>
+<hr />
+<h2 id="what-this-means-for-you">What This Means for You</h2>
+<p>Every prompt you write in this handbook is a conversation with a Transformer. When you give it a Persona, you are setting the attention weights toward a particular domain of its training. When you give it Materials, you are extending the sequence it attends to. When you use Chain of Thought, you are asking it to externalise the attention path step by step before reaching a conclusion.</p>
+<p>The techniques in Chapter 2 are, at their root, techniques for directing attention. You are telling the model what to focus on, in what order, with what constraints.</p>
+<p>Understanding that changes how you think about prompting. You are not typing into a search bar. You are not filling out a form. You are directing the attention of a system trained on more text than any human could read in a thousand lifetimes — and asking it to focus that particular passage of Mark 5, in your language, for your community.</p>
+<p>That is remarkable.</p>
+<hr />
+<p><em>"Attention Is All You Need" — Vaswani, Shazeer, Parmar, Uszkoreit, Jones, Gomez, Kaiser, Polosukhin. Google Brain / Google Research, 2017. Presented at NeurIPS 2017.</em></p>
+<p><em>Return to Chapter 1: How LLMs Work →</em><br />
+<em>Return to Chapter 4: Managing the Context Window →</em></p>
+</div>
+    </main>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <!-- ── PRESENTATION MODE CONTROLS ───────────────────────── -->
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="../assets/script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>

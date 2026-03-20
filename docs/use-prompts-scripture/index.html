@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Using Prompts to Understand Scripture</title>
+  <meta name="description" content="Prompt Engineering for Bible Translators · AILT 2026 AI Tools Workshop">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+</head>
+<body>
+
+  <!-- ── SITE NAV ──────────────────────────────────────────── -->
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="../" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="../" class="shell-nav-link">Home</a>
+        <a href="../prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="../handbook/" class="shell-nav-link">Handbook</a>
+        <a href="../about.html" class="shell-nav-link">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── PAGE LAYOUT ─────────────────────────────────────────────── -->
+  <div class="shell-page">
+    <main class="shell-main" id="main-content">
+      <!-- ── HERO ──────────────────────────────────────────────────────────── -->
+<div class="hero">
+  <p class="hero-meta">AILT 2026 · AI Tools Track · All Lanes</p>
+  <h1>Using Prompts to<br>Understand Scripture</h1>
+  <p class="hero-sub">Ask better questions. See more in the text.</p>
+  <div class="hero-pills">
+    <span class="pill sky">Day 3 · Morning</span>
+    <span class="pill amber">45 minutes</span>
+    <span class="pill emerald">Practical — you will be prompting</span>
+  </div>
+</div>
+
+<!-- ── SESSION MAP ────────────────────────────────────────────────────── -->
+<div class="map-bar">
+  <div class="map-inner">
+    <a class="map-step c1" href="#c1">Connection<span class="mtime">00:00–00:05</span></a>
+    <div class="map-line"></div>
+    <a class="map-step c2" href="#c2">Content<span class="mtime">00:05–00:15</span></a>
+    <div class="map-line"></div>
+    <a class="map-step c3" href="#c3">Challenge<span class="mtime">00:15–00:35</span></a>
+    <div class="map-line"></div>
+    <a class="map-step c4" href="#c4">Change<span class="mtime">00:35–00:42</span></a>
+    <div class="map-line"></div>
+    <a class="map-step c5" href="#c5">Closure<span class="mtime">00:42–00:45</span></a>
+  </div>
+</div>
+
+
+<div class="page">
+
+  <!-- ══════════════════════════════════════════════════════════════
+       C1 · CONNECTION
+       ══════════════════════════════════════════════════════════════ -->
+  <section class="c-section" id="c1">
+    <div class="c-header">
+      <div class="c-badge badge-amber">1</div>
+      <div class="c-title-area">
+        <div class="c-label">C1 · Connection</div>
+        <div class="c-title">A Real Question. From a Real Team.</div>
+        <div class="c-timing">⏱ 00:00 – 00:05 · 5 minutes</div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="scenario">
+        <strong>Scenario · submitted by a participant</strong>
+        Our 3-member NE tribal translation team wants to do an exegetical check of an NT book we drafted. We use an SF-generated draft with GNTD as the source, and also refer to NIV, TNN, and other resources. We are MTTs with Bible college training and 6–8 years of experience — but no formal training in meaning-based translation principles. How do we do a systematic exegetical check?
+      </div>
+
+      <div class="task-box">
+        <div class="task-label">✏️ Your task — 90 seconds</div>
+        <div class="task-title">Write a prompt you would use to explore this scenario.</div>
+        <div class="task-desc">Don't overthink it. Write what you would actually type into the AI tool.</div>
+      </div>
+
+      <div class="tip info">
+        <span class="tip-icon">💬</span>
+        <span>After 90 seconds: share your prompt with the group. Which prompt goes furthest into the text? What makes the difference?</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       C2 · CONTENT
+       ══════════════════════════════════════════════════════════════ -->
+  <section class="c-section" id="c2">
+    <div class="c-header">
+      <div class="c-badge badge-sky">2</div>
+      <div class="c-title-area">
+        <div class="c-label">C2 · Content</div>
+        <div class="c-title">Your Reference Card + Two New Skills</div>
+        <div class="c-timing">⏱ 00:05 – 00:15 · 10 minutes</div>
+      </div>
+    </div>
+
+    <div class="cards">
+
+      <!-- Anatomy reference card -->
+      <div class="ref-card">
+        <div class="ref-header">📌 Six Building Blocks — the anatomy of a strong prompt</div>
+        <div class="ref-rows">
+          <div class="ref-row">
+            <div class="ref-key" style="background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-b);">P</div>
+            <div>
+              <div class="ref-label">Persona — Who is the AI acting as?</div>
+              <div class="ref-desc">Sets the vocabulary, expertise, and depth of the response. Be specific — not just "an expert."</div>
+              <div class="ref-example">"You are a biblical scholar specialising in 1st-century Jewish culture…"</div>
+            </div>
+          </div>
+          <div class="ref-row">
+            <div class="ref-key" style="width:auto;min-width:28px;padding:0 5px;background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">CX</div>
+            <div>
+              <div class="ref-label">Context — What is your situation?</div>
+              <div class="ref-desc">Who you are, your project, your target audience. Overrides the model's generic assumptions.</div>
+              <div class="ref-example">"We are translating the Gospel of Mark into a Tibeto-Burman language. We use GNTD as our primary source…"</div>
+            </div>
+          </div>
+          <div class="ref-row" style="border-left:3px solid rgba(52,211,153,0.25);">
+            <div class="ref-key" style="background:var(--emr-dim);color:var(--emerald);border:1px solid var(--emr-b);">→</div>
+            <div>
+              <div class="ref-label">Task — the core of every prompt</div>
+              <div class="ref-desc">The specific thing you are asking. Be precise about scope, subject, and deliverable.</div>
+              <div class="ref-example">"List the 5 most important exegetical issues to check in this passage, with 2–3 checking questions each…"</div>
+            </div>
+          </div>
+          <div class="ref-row">
+            <div class="ref-key" style="background:var(--red-dim);color:var(--red);border:1px solid var(--red-b);">G</div>
+            <div>
+              <div class="ref-label">Guardrails — What should the AI NOT do?</div>
+              <div class="ref-desc">Prevents speculation, hallucination, jargon, and theological overreach. Essential for BT work.</div>
+              <div class="ref-example">"Do not speculate beyond the text. Flag anything uncertain as NEEDS VERIFICATION."</div>
+            </div>
+          </div>
+          <div class="ref-row">
+            <div class="ref-key" style="background:var(--sky-dim);color:var(--sky);border:1px solid var(--sky-b);">F</div>
+            <div>
+              <div class="ref-label">Format — How should the response be structured?</div>
+              <div class="ref-desc">Table, checklist, sections, word limit. Saves reformatting and makes output directly usable.</div>
+              <div class="ref-example">"Write in two labelled sections: (1) Cultural background and (2) Footnote draft — under 60 words."</div>
+            </div>
+          </div>
+          <div class="ref-row">
+            <div class="ref-key" style="width:auto;min-width:28px;padding:0 4px;background:rgba(99,102,241,0.12);color:#818cf8;border:1px solid rgba(99,102,241,0.3);">FS</div>
+            <div>
+              <div class="ref-label">Few-Shot — Show one perfect example</div>
+              <div class="ref-desc">One well-chosen example teaches style and format more precisely than a paragraph of description.</div>
+              <div class="ref-example">"Here is a good checking question: '…' — write one for the next verse in exactly this pattern."</div>
+            </div>
+          </div>
+          <div class="ref-row">
+            <div class="ref-key" style="width:auto;min-width:28px;padding:0 4px;background:rgba(20,184,166,0.12);color:#2dd4bf;border:1px solid rgba(20,184,166,0.3);">CT</div>
+            <div>
+              <div class="ref-label">Chain of Thought — Make it reason step-by-step</div>
+              <div class="ref-desc">Forces the model to show its reasoning — so you can catch an error before it corrupts the conclusion.</div>
+              <div class="ref-example">"Work through this step by step. Step 1 — … Step 2 — … Only then, make your recommendation."</div>
+            </div>
+          </div>
+        </div>
+        <div style="padding:10px 20px 14px;font-size:0.78em;color:var(--t3);border-top:1px solid rgba(255,255,255,0.05);">
+          Not every prompt needs all six. A simple task may need only a Persona and a Guardrail. In this session we focus on: <strong style="color:var(--t2);">Persona · Context · Guardrails · Format</strong>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="card sky">
+          <div class="card-icon">📎</div>
+          <div class="card-title">New Skill 1: Upload a Document</div>
+          <div class="card-body">
+            Upload a commentary excerpt, lexicon entry, or project notes. Then ask:<br><br>
+            <strong>"Based <em>only</em> on this document, explain…"</strong><br><br>
+            The AI reasons from <em>your</em> source — not its general training. You control the frame of reference.
+          </div>
+        </div>
+        <div class="card sky">
+          <div class="card-icon">🔗</div>
+          <div class="card-title">New Skill 2: Paste a Link</div>
+          <div class="card-body">
+            Paste a URL as your reference source:<br><br>
+            <strong>"Using this article, summarise the background to [passage]…"</strong><br><br>
+            ⚠️ Not all tools read links the same way. Some fetch the page; some don't. Test before you rely on it.
+          </div>
+        </div>
+      </div>
+
+      <div class="tip info">
+        <span class="tip-icon">📎 vs 🔗</span>
+        <span>&nbsp;<strong>Upload</strong> — private files, PDFs, project documents. &nbsp;|&nbsp; <strong>Link</strong> — public web articles, online lexicons, open commentaries. Note which your tool handles reliably.</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       C3 · CHALLENGE
+       ══════════════════════════════════════════════════════════════ -->
+  <section class="c-section" id="c3">
+    <div class="c-header">
+      <div class="c-badge badge-amber">3</div>
+      <div class="c-title-area">
+        <div class="c-label">C3 · Challenge</div>
+        <div class="c-title">Two Rounds — Watch, Then Build</div>
+        <div class="c-timing">⏱ 00:15 – 00:35 · 20 minutes</div>
+      </div>
+    </div>
+
+    <div class="cards">
+
+      <!-- Round 1 -->
+      <div class="card amber">
+        <div class="card-icon">👁️ Round 1 — Watch and Think Along &nbsp;·&nbsp; <span style="font-weight:400;font-size:0.9em;">00:15–00:25</span></div>
+        <div class="card-body" style="margin-top:10px;">
+          <div class="scenario" style="margin-bottom:16px;">
+            <strong>Scenario · submitted by a participant</strong>
+            Our 3-member NE tribal translation team wants to do an exegetical check of an NT book we drafted. We use an SF-generated draft with GNTD as the source, and also refer to NIV, TNN, and other resources. We are MTTs with Bible college training and 6–8 years of experience — but no formal training in meaning-based translation principles. How do we do a systematic exegetical check?
+          </div>
+          <p style="color:var(--t2);font-size:0.9em;margin-bottom:14px;">Watch the facilitator build this prompt live — one layer at a time. As you watch, ask yourself: <strong>what would <em>you</em> have added or changed?</strong></p>
+          <div class="prompt-block">
+            <div class="pb-header"><span class="dot"></span> Prompt — built using the 6 building blocks</div>
+            <div class="pb-rows">
+              <div class="pb-line">
+                <span class="pb-tag p">Persona</span>
+                <span class="pb-text">You are an experienced exegetical consultant who has supported Bible translation teams working in Asian minority languages.</span>
+              </div>
+              <div class="pb-line">
+                <span class="pb-tag cx">Context</span>
+                <span class="pb-text">We are a 3-member translation team working in a NE tribal (Tibeto-Burman) language. We produced an NT draft using a Scripture Forge-generated text, with GNTD as our primary source. We also consult NIV, TNN, and other versions. Our team has Bible college training and 6–8 years of translation experience, but we have not had formal training in meaning-based translation principles.</span>
+              </div>
+              <div class="pb-line">
+                <span class="pb-tag task">Task</span>
+                <span class="pb-text">Help us design a systematic process for checking our translation draft exegetically. Give us the 5–6 most important categories of exegetical issues to examine in each passage, and for each category, provide 2–3 specific checking questions our team can work through together.</span>
+              </div>
+              <div class="pb-line">
+                <span class="pb-tag g">Guardrails</span>
+                <span class="pb-text">Use plain, practical language — no academic technical terms our team would not know. If any category is especially important given our use of GNTD as the source text, flag it clearly.</span>
+              </div>
+              <div class="pb-line">
+                <span class="pb-tag f">Format</span>
+                <span class="pb-text">Present the output as a reusable checking guide — each category as a clear heading, with checking questions listed beneath it.</span>
+              </div>
+            </div>
+            <div class="pb-assembled">
+              <div class="pb-assembled-label">▶ Assembled — ready to paste into the AI tool</div>
+              <div class="pb-assembled-text">You are an experienced exegetical consultant who has supported Bible translation teams working in Asian minority languages.
+
+We are a 3-member translation team working in a NE tribal (Tibeto-Burman) language. We produced an NT draft using a Scripture Forge-generated text, with GNTD as our primary source. We also consult NIV, TNN, and other versions. Our team has Bible college training and 6–8 years of translation experience, but we have not had formal training in meaning-based translation principles.
+
+Help us design a systematic process for checking our translation draft exegetically. Give us the 5–6 most important categories of exegetical issues to examine in each passage, and for each category, provide 2–3 specific checking questions our team can work through together.
+
+Use plain, practical language — no academic technical terms our team would not know. Format the output as a reusable checking guide. If any category is especially important given our use of GNTD as the source text, flag it clearly.</div>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="tip warn" style="margin-top:0;">
+            <span class="tip-icon">💬</span>
+            <span><strong>Debrief:</strong> What made the prompt go deeper than what you first wrote? What would you have done differently?</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Round 2 -->
+      <div class="card violet" style="border-color:var(--vio-b);">
+        <div class="card-icon">👫 Round 2 — Your Turn, In Pairs &nbsp;·&nbsp; <span style="font-weight:400;font-size:0.9em;">00:25–00:35</span></div>
+        <div class="card-body" style="margin-top:10px;">
+          <div class="scenario sky" style="margin-bottom:16px;border-left-color:var(--violet);">
+            <strong style="color:var(--violet);">Scenario · submitted by a participant</strong>
+            In Paratext's RSV+ Enhanced resources, only the word dictionary is linked — it won't explain the cultural weight behind phrases and idioms. In Mark 5:9, the demon names itself <em>"Legion, for we are many."</em> We know Legion is a Roman military term, but what did that word carry for a Jewish audience living under occupation? And how do we write a footnote that brings that weight across into our language?
+          </div>
+
+          <div class="task-box" style="margin-bottom:16px;border-color:var(--vio-b);">
+            <div class="task-label" style="color:var(--violet);">👫 In pairs — 6 minutes</div>
+            <div class="task-title">Build a prompt that gives you what you need for a real passage you're working on.</div>
+            <div class="task-desc">Use a document upload <em>or</em> a link. Use the building blocks from the reference card — you don't need all six.</div>
+          </div>
+
+          <details class="spoiler">
+            <summary><span class="arrow">▶</span>&nbsp; Facilitator — click to reveal example prompt after teams share</summary>
+            <div class="spoiler-inner">
+              <div class="prompt-block">
+                <div class="pb-header"><span class="dot"></span> Example prompt — Mark 5:9 · "Legion" · 6 building blocks</div>
+                <div class="pb-rows">
+                  <div class="pb-line">
+                    <span class="pb-tag p">Persona</span>
+                    <span class="pb-text">You are a scholar of 1st-century Jewish culture and New Testament background, with expertise in how Roman political realities shaped the language and imagery of the Gospels.</span>
+                  </div>
+                  <div class="pb-line">
+                    <span class="pb-tag cx">Context</span>
+                    <span class="pb-text">We are translating the Gospel of Mark into [our language]. In Mark 5:9, the unclean spirit identifies itself as "Legion, for we are many." "Legion" is a Latin loanword for a Roman military unit of approximately 6,000 soldiers. Our readers may be unfamiliar with Roman occupation. We need to understand what this word meant to a 1st-century Jewish audience in order to make a good translation decision and to write a useful footnote.</span>
+                  </div>
+                  <div class="pb-line">
+                    <span class="pb-tag task">Task</span>
+                    <span class="pb-text">Explain the cultural and political significance of "Legion" in Mark 5:9: (1) what did this word mean to a Jewish person living under Roman occupation, and why does the demon's self-identification as "Legion" carry more weight than simply meaning "many"? (2) What are the main translation options — transliterate, use a native equivalent, or explain in the text — and what are the trade-offs of each?</span>
+                  </div>
+                  <div class="pb-line">
+                    <span class="pb-tag g">Guardrails</span>
+                    <span class="pb-text">Avoid academic jargon. Base your answer on widely accepted biblical scholarship. If scholars interpret this term differently, note that briefly.</span>
+                  </div>
+                  <div class="pb-line">
+                    <span class="pb-tag f">Format</span>
+                    <span class="pb-text">Write in two clearly labelled sections: (1) Cultural background — for the translator's reference, and (2) Footnote draft — under 60 words, in plain language suitable for general Bible readers.</span>
+                  </div>
+                </div>
+                <div class="pb-assembled">
+                  <div class="pb-assembled-label">▶ Assembled — ready to paste into the AI tool</div>
+                  <div class="pb-assembled-text">You are a scholar of 1st-century Jewish culture and New Testament background, with expertise in how Roman political realities shaped the language and imagery of the Gospels.
+
+We are translating the Gospel of Mark into [our language]. In Mark 5:9, the unclean spirit identifies itself as "Legion, for we are many." "Legion" is a Latin loanword for a Roman military unit of approximately 6,000 soldiers. Our readers may be unfamiliar with Roman occupation. We need to understand what this word meant to a 1st-century Jewish audience in order to make a good translation decision and to write a useful footnote.
+
+Explain the cultural and political significance of "Legion" in Mark 5:9: (1) what did this word mean to a Jewish person living under Roman occupation, and why does the demon's self-identification as "Legion" carry more weight than simply meaning "many"? (2) What are the main translation options — transliterate, use a native equivalent, or explain in the text — and what are the trade-offs of each?
+
+Write in two clearly labelled sections: (1) Cultural background — for the translator's reference, and (2) Footnote draft — under 60 words, in plain language suitable for general Bible readers. Avoid academic jargon. If scholars interpret this term differently, note that briefly.</div>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <div class="step-list">
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">1</div>
+              <div class="step-text"><strong>Persona</strong> — who should the AI be for this task?</div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">2</div>
+              <div class="step-text"><strong>Context</strong> — your project, your passage, your team's situation</div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">3</div>
+              <div class="step-text"><strong>Task</strong> — state exactly what you need (be specific about scope and deliverable)</div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">4</div>
+              <div class="step-text"><strong>Guardrails</strong> — what should it NOT do? Upload or paste your source document here too</div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">5</div>
+              <div class="step-text"><strong>Format</strong> — how should the response be structured?</div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <p style="font-size:0.82em;color:var(--t3);margin-bottom:10px;">If you're stuck — try one of these starting points:</p>
+          <div class="step-list">
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">→</div>
+              <div class="step-text">"What is the cultural background of [phrase] in [passage]?"</div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">→</div>
+              <div class="step-text">Add a Persona: "You are a scholar of 1st-century Jewish culture…"</div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">→</div>
+              <div class="step-text">Upload a UBS Handbook excerpt or paste an open commentary link</div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--vio-dim);color:var(--violet);border:1px solid var(--vio-b);">→</div>
+              <div class="step-text">Ask for output in a footnote-ready format</div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <div class="tip warn" style="margin-top:0;">
+            <span class="tip-icon">💬</span>
+            <span><strong>Share out:</strong> Show us your prompt. What did you get back? Did it go deep enough? What would you change?</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       C4 · CHANGE
+       ══════════════════════════════════════════════════════════════ -->
+  <section class="c-section" id="c4">
+    <div class="c-header">
+      <div class="c-badge badge-pink">4</div>
+      <div class="c-title-area">
+        <div class="c-label">C4 · Change</div>
+        <div class="c-title">Your Project. Your Passage.</div>
+        <div class="c-timing">⏱ 00:35 – 00:42 · 7 minutes</div>
+      </div>
+    </div>
+
+    <div class="cards">
+
+      <div class="task-box pink">
+        <div class="task-label" style="color:var(--pink);">🎯 Individual — 4 minutes</div>
+        <div class="task-title">Pick one passage or question from your current translation project. Write a prompt for it. Run it. Keep what's useful.</div>
+        <div class="task-desc">This is for you — not for the group. Take something real back with you.</div>
+      </div>
+
+      <div class="card neutral">
+        <div class="card-title" style="color:var(--pink);">As you work, ask yourself</div>
+        <div class="card-body" style="margin-top:10px;">
+          <div class="step-list">
+            <div class="step">
+              <div class="step-num num-pink">?</div>
+              <div class="step-text">What Persona gives me the most useful perspective on this passage?</div>
+            </div>
+            <div class="step">
+              <div class="step-num num-pink">?</div>
+              <div class="step-text">Is there a document I could upload to ground the answer?</div>
+            </div>
+            <div class="step">
+              <div class="step-num num-pink">?</div>
+              <div class="step-text">Am I asking for interpretive <em>options</em> — or just asking for an answer?</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip warn">
+        <span class="tip-icon">💬</span>
+        <span><strong>Share out (1–2 volunteers):</strong> Share your prompt and what you got back. Room responds: "Would you use that? What would make it stronger?"</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       C5 · CLOSURE
+       ══════════════════════════════════════════════════════════════ -->
+  <section class="c-section" id="c5">
+    <div class="c-header">
+      <div class="c-badge badge-sky">5</div>
+      <div class="c-title-area">
+        <div class="c-label">C5 · Closure</div>
+        <div class="c-title">One Thing You'll Do Differently</div>
+        <div class="c-timing">⏱ 00:42 – 00:45 · 3 minutes</div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="task-box sky">
+        <div class="task-label" style="color:var(--sky);">💬 Quick round</div>
+        <div class="task-title">"What is one thing you will do differently next time you sit with a difficult passage?"</div>
+        <div class="task-desc">3–4 quick responses. No elaboration needed. Your words.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CLOSING QUOTE ──────────────────────────────────────────── -->
+  <div class="closing-quote">
+    "At the start of this session, you wrote a prompt.<br>
+    <span>You now write the second kind.</span>"
+  </div>
+
+</div><!-- /.page -->
+    </main>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <!-- ── PRESENTATION MODE CONTROLS ───────────────────────── -->
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="../assets/script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>

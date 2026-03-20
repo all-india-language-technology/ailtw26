@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 3 — The Master Formula</title>
+  <meta name="description" content="Prompt Engineering for Bible Translators · AILT 2026 AI Tools Workshop">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+</head>
+<body>
+
+  <!-- ── SITE NAV ──────────────────────────────────────────── -->
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="../" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="../" class="shell-nav-link">Home</a>
+        <a href="../prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="../handbook/" class="shell-nav-link">Handbook</a>
+        <a href="../about.html" class="shell-nav-link">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── PAGE LAYOUT ─────────────────────────────────────────────── -->
+  <div class="shell-page">
+    <main class="shell-main" id="main-content">
+      <div class="prose-content">
+<h1 id="chapter-3-the-master-formula">Chapter 3: The Master Formula</h1>
+<blockquote>
+<p><strong>Session tag:</strong> Framework<br />
+<strong>Key question:</strong> Beyond writing a good prompt, what else shapes the quality of AI output?</p>
+</blockquote>
+<hr />
+<h2 id="30-why-the-prompt-alone-is-not-enough">3.0 Why the Prompt Alone Is Not Enough</h2>
+<p>By now you have the tools to write a technically strong prompt — with a persona, guardrails, the right format, and a chain of thought. But you may have noticed that a well-crafted prompt can still produce weak results when something crucial is missing <em>outside the prompt itself</em>.</p>
+<p>The reason is that the prompt you write is only one of four components that the AI draws on when generating a response. A skilled practitioner manages all four — consciously, every session.</p>
+<hr />
+<h2 id="31-the-four-components">3.1 The Four Components</h2>
+<pre><code>Strong AI Output = [Instruction] + [Materials] + [Tools] + [Additional Info]
+</code></pre>
+<p>Think of this as the full briefing you would give an expert colleague before asking them to start work. The prompt is the instruction — but without documents, access, and standing references, even the best instruction produces guesswork.</p>
+<hr />
+<h3 id="component-1-instruction">Component 1: Instruction</h3>
+<p><strong>What it is:</strong> The prompt itself — the role, task, constraints, and output format you craft using the techniques in Chapter 2.</p>
+<p><strong>Weak instruction:</strong></p>
+<blockquote>
+<p><em>"Explain Mark 5."</em></p>
+</blockquote>
+<p>No role. No boundaries. No structure. The model defaults to a general audience and produces a Sunday-school overview.</p>
+<p><strong>Strong instruction:</strong></p>
+<blockquote>
+<p><em>"Act as a translation consultant. Analyse Mark 5:1–20 for a rural translation team in a shame-honour culture. Do not speculate beyond the text. Return a table: Verse | Cultural Insight | Translation Risk."</em></p>
+</blockquote>
+<p>Role + scope + cultural anchoring + constraint + format.</p>
+<p><strong>The most common missing element:</strong> Most practitioners have the task right but omit the format. Specifying output format alone — adding <em>"return as a table"</em> or <em>"return as a numbered checklist"</em> — often doubles the immediate usability of the output.</p>
+<hr />
+<h3 id="component-2-materials">Component 2: Materials</h3>
+<p><strong>What it is:</strong> The material the model can actually see and reason over — pasted text, uploaded files, and connected project sources. If the relevant text is not present in the conversation, the model fills the gap with statistical guesses.</p>
+<p><strong>No materials — generate a sample translation:</strong></p>
+<blockquote>
+<p><em>"Act as a translator. Generate a Tamil rendering of Mark 5:1–5 suitable for a rural oral audience."</em></p>
+</blockquote>
+<p>The model will produce something. It has seen Tamil text and the Gospel of Mark in training. But it has no knowledge of your project's key-term decisions, your team's style choices, or the renderings your community has already tested. The output is a generic reconstruction — not a step forward in your actual translation.</p>
+<p><strong>With materials — improve the real translation:</strong></p>
+<blockquote>
+<p><em>"Below is our current Tamil draft of Mark 5:1–5 alongside the ESV source text. Identify three phrases in the draft that could be made more natural for a rural oral audience, and suggest a specific alternative rendering for each.</em></p>
+<p><em>[paste ESV source text]</em>
+<em>[paste Tamil draft]"</em></p>
+</blockquote>
+<p>Now the model works on your team's real text. Its suggestions engage directly with the choices your translators have already made — and the improvements it proposes are grounded in what is actually on the page.</p>
+<p><strong>Materials you can supply:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>How to supply it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Current draft passage</td>
+<td>Paste into the chat</td>
+</tr>
+<tr>
+<td>Back-translation</td>
+<td>Paste alongside the draft</td>
+</tr>
+<tr>
+<td>ESV / ULT source text</td>
+<td>Paste in clearly labelled</td>
+</tr>
+<tr>
+<td>Team checking notes</td>
+<td>Paste or upload as a text file</td>
+</tr>
+<tr>
+<td>AI session brief / style guide</td>
+<td>Upload or paste at session start</td>
+</tr>
+<tr>
+<td>Key-term decisions</td>
+<td>Paste or upload your key-terms CSV</td>
+</tr>
+<tr>
+<td>Commentary excerpt</td>
+<td>Paste the relevant section</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Rule of thumb:</strong> No source text in the materials = no trustworthy translation output. The model cannot reason accurately over material it cannot see.</p>
+<hr />
+<h3 id="component-3-tools">Component 3: Tools</h3>
+<p><strong>What it is:</strong> Registered capabilities that the AI can call programmatically — operations that go beyond generating text. When a tool is available to the AI, the model does not just produce an answer: it <em>invokes</em> the tool, passes the relevant data to it, and works with what the tool returns.</p>
+<p>This is a different relationship to tools than "using an app." The AI becomes an orchestrator — deciding which tool is needed, fetching the right data, calling the tool with the right inputs, and assembling the result — all driven by a single prompt.</p>
+<hr />
+<h4 id="two-tiers-chat-window-vs-connected-environments">Two tiers: chat window vs. connected environments</h4>
+<p><strong>Tier 1 — Standard chat interface (where most practitioners are today)</strong></p>
+<p>In a standard chat window (Claude, ChatGPT, Gemini), the AI's built-in tools are limited to what it can do <em>with text you supply</em>. You paste a passage; the AI reads, searches, compares, and transforms it. Powerful, but manual: you are the bridge between the AI and your project files.</p>
+<p><strong>Tier 2 — MCP-connected / agentic environments (emerging)</strong></p>
+<p>When tools are registered to the AI via an MCP (Model Context Protocol) server or similar integration, the model gains direct access to external systems. It can <em>fetch</em> data it needs without you pasting it, <em>call</em> specialist tools and pass them the right inputs, and <em>chain</em> multiple operations in a single session.</p>
+<p>The clearest way to understand this is to imagine a <strong>Copilot for Paratext</strong>.</p>
+<hr />
+<h4 id="the-paratext-copilot-model">The Paratext Copilot model</h4>
+<p>A Copilot built on top of Paratext via MCP would give the AI access to your Paratext project as a live data source — and to the specialist tools in your workflow:</p>
+<table>
+<thead>
+<tr>
+<th>Tool available via MCP</th>
+<th>What the AI can do with it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Paratext project files</strong></td>
+<td>Fetch the current draft of any passage directly — no copy-paste required</td>
+</tr>
+<tr>
+<td><strong>AQuA</strong> (quality assessment)</td>
+<td>Submit a back-translation for automated scoring; retrieve the results as structured data</td>
+</tr>
+<tr>
+<td><strong>Whisper</strong> (speech-to-text)</td>
+<td>Pass an audio file of a community testing session; receive a transcript</td>
+</tr>
+<tr>
+<td><strong>PTXprint</strong> (typesetting)</td>
+<td>Generate or modify the configuration file; trigger a typeset run and retrieve the PDF</td>
+</tr>
+<tr>
+<td><strong>ElevenLabs</strong> (text-to-speech)</td>
+<td>Pass a passage; receive an audio rendering for oral community distribution</td>
+</tr>
+</tbody>
+</table>
+<p>In this environment, a single prompt can orchestrate a multi-step workflow:</p>
+<blockquote>
+<p><em>"Fetch our current draft of Mark 5:1–10 from the project. Call AQuA to score the back-translation against the ULT source. For any verse scoring below 0.7, generate a checking question. Return the results as a table: Verse | Score | Checking Question."</em></p>
+</blockquote>
+<p>The AI fetches the text (Read), submits it to AQuA (Execute), interprets the scores (Verify), generates checking questions for weak verses (Transform), and assembles a table (Format) — all without the user touching a file.</p>
+<hr />
+<h4 id="the-three-tool-categories-reframed-as-agent-operations">The three tool categories — reframed as agent operations</h4>
+<p>These categories apply whether you are in a chat window today or a fully connected environment tomorrow. In a chat window, you perform the fetch manually (pasting). In a connected environment, the AI performs the fetch automatically.</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>What the AI does</th>
+<th>Chat window today</th>
+<th>Connected environment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Read + Search</strong></td>
+<td>Fetch text; find terms, patterns, references</td>
+<td>Works on text you paste</td>
+<td>Fetches directly from Paratext, Scripture Forge, or a key-term database</td>
+</tr>
+<tr>
+<td><strong>Compare + Transform</strong></td>
+<td>Compare versions; reformat into tables, structured data</td>
+<td>Compares pasted texts</td>
+<td>Compares live project draft against ULT/ESV; outputs to Paratext notes</td>
+</tr>
+<tr>
+<td><strong>Execute + Verify</strong></td>
+<td>Call a specialist tool; validate results</td>
+<td>Simulates checks within the conversation</td>
+<td>Calls AQuA, PTXprint, or Whisper; returns verified structured output</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="bt-tools-an-ai-agent-can-be-given-access-to">BT tools an AI agent can be given access to</h4>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Tool</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Text &amp; drafting</strong></td>
+<td>Paratext (SIL)</td>
+<td>Primary translation platform — drafts, checking tasks, notes</td>
+</tr>
+<tr>
+<td></td>
+<td>Scripture Forge</td>
+<td>Cloud-based collaborative drafting on Scripture data</td>
+</tr>
+<tr>
+<td><strong>Quality &amp; checking</strong></td>
+<td>AQuA (SIL)</td>
+<td>AI quality scoring of back-translations against source text</td>
+</tr>
+<tr>
+<td></td>
+<td>USFM Validator</td>
+<td>Syntax checking — catches malformed markers before import</td>
+</tr>
+<tr>
+<td><strong>Typesetting</strong></td>
+<td>PTXprint (SIL)</td>
+<td>Publication-ready booklets and community Scripture portions</td>
+</tr>
+<tr>
+<td></td>
+<td>XeLaTeX</td>
+<td>Academic typesetter; full Unicode and non-Latin script support</td>
+</tr>
+<tr>
+<td><strong>Audio &amp; oral</strong></td>
+<td>Whisper (offline)</td>
+<td>Speech-to-text in 100+ languages; runs locally, no internet required</td>
+</tr>
+<tr>
+<td></td>
+<td>HearThis (SIL)</td>
+<td>Chapter-by-chapter audio Scripture recording workflow</td>
+</tr>
+<tr>
+<td></td>
+<td>ElevenLabs</td>
+<td>Text-to-speech; regional voice styles for oral community distribution</td>
+</tr>
+<tr>
+<td><strong>Visualisation</strong></td>
+<td>Mermaid</td>
+<td>Text-to-diagram; AI writes the syntax, tool renders the image</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Data sensitivity note:</strong> <em>Offline/local</em> tools (Whisper via LM Studio, PTXprint, XeLaTeX) are safe for unpublished draft text — no data leaves the device. Cloud tools (ElevenLabs, AQuA web, Scripture Forge) should only receive text covered by your organisation's data agreements. See Chapter 4, §4.5 for the full decision rule.</p>
+</blockquote>
+<hr />
+<h3 id="component-4-additional-info">Component 4: Additional Info</h3>
+<p><strong>What it is:</strong> Persistent reference documents that should guide <em>every</em> AI session on your project — uploaded or pasted at the start of each new chat. This is your stable memory layer.</p>
+<p><strong>The problem it solves:</strong> Without standing references, you repeat the same project briefing in every session. Each new chat starts from zero. Guardrails drift. Key-term choices are forgotten. The model does not know what decisions your team has already made.</p>
+<p><strong>What to include in your Additional Info pack:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ai-session-brief.md</code></td>
+<td>Project context, target audience, theological guardrails, standing constraints, key decisions (see Chapter 4, §4.3)</td>
+</tr>
+<tr>
+<td><code>key-terms.csv</code></td>
+<td>Approved renderings for key theological and cultural terms</td>
+</tr>
+<tr>
+<td><code>style-guide.md</code></td>
+<td>Tone, register, reading level, what to avoid</td>
+</tr>
+<tr>
+<td><code>decision-log.md</code></td>
+<td>Checking-round decisions that should not be revisited</td>
+</tr>
+</tbody>
+</table>
+<p><strong>How to use it:</strong> At the start of every new chat session, paste or upload these documents before writing your first prompt. They set the frame for the entire session.</p>
+<p><strong>Longer-term:</strong> In tools that support custom system contexts (Claude Projects, Custom GPTs), these documents can be loaded permanently into the model's starting context, so you do not need to re-upload them each time. See Chapter 4 for details.</p>
+<hr />
+<h2 id="32-the-iteration-loop-conversational-steering">3.2 The Iteration Loop: Conversational Steering</h2>
+<p>A strong first prompt does not always produce a perfect first output. This is normal and expected. The model's first response is a starting point, not a final product. The skill of <em>conversational steering</em> — building on the previous response rather than starting over — multiplies the value of every prompt you write.</p>
+<h3 id="the-three-step-steering-sequence">The three-step steering sequence</h3>
+<p><strong>Prompt 1 — Initial ask:</strong></p>
+<blockquote>
+<p><em>"Explain the significance of the pigs in Mark 5 for a translation team."</em></p>
+</blockquote>
+<p>Result: well-structured but too academic — full of technical language your team cannot use directly.</p>
+<p><strong>Prompt 2 — Refinement:</strong></p>
+<blockquote>
+<p><em>"Good start. Now remove the jargon and rewrite this in plain language — 3 sentences maximum."</em></p>
+</blockquote>
+<p>Result: simpler and shorter, but still in paragraph form rather than the table format you need.</p>
+<p><strong>Prompt 3 — Final transformation:</strong></p>
+<blockquote>
+<p><em>"Now format that as a 2-column table: Verse Range | Cultural Insight."</em></p>
+</blockquote>
+<p>Result: ready to paste into your checking notes.</p>
+<h3 id="why-this-works">Why this works</h3>
+<p>Each message builds on the previous context. You are not starting over — the model still has access to everything it said in Prompt 1 and 2. You are placing a specific, targeted correction on top of what it already produced. This is far more efficient than trying to write a perfect first prompt that specifies every nuance.</p>
+<h3 id="steering-language">Steering language</h3>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>How to steer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Output is too long</td>
+<td><em>"Good. Now reduce this to 3 bullet points maximum."</em></td>
+</tr>
+<tr>
+<td>Output is too generic</td>
+<td><em>"This is too general. Add specific examples from Mark 5:1–20."</em></td>
+</tr>
+<tr>
+<td>Output used wrong vocabulary</td>
+<td><em>"Replace all theological jargon with plain English equivalents."</em></td>
+</tr>
+<tr>
+<td>Output missed a key point</td>
+<td><em>"You didn't address the role of the pigs as a symbol of economic wealth. Add that as a separate point."</em></td>
+</tr>
+<tr>
+<td>Output used the wrong format</td>
+<td>*"Reformat this as a table: Insight</td>
+</tr>
+<tr>
+<td>Output speculated too freely</td>
+<td><em>"Remove any speculation. Only state what is supported by the text itself."</em></td>
+</tr>
+</tbody>
+</table>
+<h3 id="when-to-start-a-new-chat-vs-continue-steering">When to start a new chat vs continue steering</h3>
+<p>Continue the same chat when: you are refining the same output toward a final version.</p>
+<p>Start a new chat when: you are moving to a different passage, a different task type, or a different topic entirely. Mixing unrelated tasks in one long session creates two problems: earlier instructions (guardrails, persona, format) quietly drop out as the window fills — and earlier conversation about a different task creeps in and skews output for the current one. See Chapter 4 for both effects and how to manage them.</p>
+<hr />
+<h2 id="33-putting-the-formula-together-a-full-workflow-example">3.3 Putting the Formula Together: A Full Workflow Example</h2>
+<p><strong>Scenario:</strong> A Lane 2 consultant preparing for a checking round on Mark 5:1–20.</p>
+<p><strong>Step 1 — Load Additional Info (session start)</strong></p>
+<blockquote>
+<p><em>[Paste ai-session-brief.md, key-terms.csv, and style-guide.md into the chat with a brief framing note: "The following documents govern all work in this session."]</em></p>
+</blockquote>
+<p><strong>Step 2 — Instruction + Materials</strong></p>
+<blockquote>
+<p><em>"Act as a senior translation consultant. Below are three texts: our draft of Mark 5:1–20, the back-translation of the same passage, and the ESV source text. Identify passages where the back-translation diverges from the ESV source in a way that could indicate a translation accuracy issue. [paste all three texts]</em></p>
+<p><em>Do not speculate. If you are uncertain whether a divergence is significant, flag it as NEEDS VERIFICATION. Return as: Verse | Divergence | Severity (Major/Minor/Flag) | Suggested Checking Question."</em></p>
+</blockquote>
+<p><strong>Step 3 — Review and steer</strong></p>
+<p>Review the output. If several items seem too minor, steer:</p>
+<blockquote>
+<p><em>"Remove all Minor flagged items. Show only Major and Flag items. Add a column: Which Louw-Nida semantic domain is most relevant to each issue? (I will verify the codes myself.)"</em></p>
+</blockquote>
+<p><strong>Step 4 — Extract and save</strong></p>
+<p>Copy the final table into your checking documentation. This is the output of the session — not a draft to prompt further, but a tool-ready deliverable.</p>
+<hr />
+<p><em>Continue to Chapter 4: Advanced Techniques — Managing the Context Window →</em></p>
+</div>
+    </main>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <!-- ── PRESENTATION MODE CONTROLS ───────────────────────── -->
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="../assets/script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>

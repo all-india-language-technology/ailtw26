@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ch 4 — Advanced Techniques · Prompt Engineering</title>
+  <meta name="description" content="Prompt Engineering for Bible Translators · AILT 2026 AI Tools Workshop">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+</head>
+<body>
+
+  <!-- ── SITE NAV ──────────────────────────────────────────── -->
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="../" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="../" class="shell-nav-link">Home</a>
+        <a href="../prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="../handbook/" class="shell-nav-link">Handbook</a>
+        <a href="../about.html" class="shell-nav-link">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── PAGE LAYOUT ─────────────────────────────────────────────── -->
+  <div class="shell-page">
+    <main class="shell-main" id="main-content">
+      <!-- NAV -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">004 · Prompt Engineering</a>
+      <div class="nav-links">
+        <a href="ch01.html" class="nav-link">Ch 1</a>
+        <a href="ch02.html" class="nav-link">Ch 2</a>
+        <a href="ch03.html" class="nav-link">Ch 3</a>
+        <a href="ch04.html" class="nav-link active">Ch 4</a>
+        <a href="ch05.html" class="nav-link">Ch 5</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="chapter-hero">
+    <div class="container">
+      <div class="ch-eyebrow">
+        <span class="ch-num">Chapter 4</span>
+        <span class="ch-tag-label">Advanced</span>
+      </div>
+      <h1>Advanced Techniques —<br>Managing the Context Window</h1>
+      <p class="hero-key-q">How do I keep my AI sessions reliable when they grow long?</p>
+    </div>
+  </header>
+
+  <!-- PHASE BAR -->
+  <div class="phase-bar">
+    <div class="phase-inner">
+      <a class="phase-pip" data-c="1" data-section="c1" href="#c1"><div class="phase-dot">C1</div><span class="phase-name">Connection</span></a>
+      <a class="phase-pip" data-c="2" data-section="c2" href="#c2"><div class="phase-dot">C2</div><span class="phase-name">Content</span></a>
+      <a class="phase-pip" data-c="3" data-section="c3" href="#c3"><div class="phase-dot">C3</div><span class="phase-name">Challenge</span></a>
+      <a class="phase-pip" data-c="4" data-section="c4" href="#c4"><div class="phase-dot">C4</div><span class="phase-name">Change</span></a>
+      <a class="phase-pip" data-c="5" data-section="c5" href="#c5"><div class="phase-dot">C5</div><span class="phase-name">Closure</span></a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C1 · CONNECTION
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c1">
+      <div class="container">
+        <div class="section-badge badge-c1">C1 · Connection</div>
+        <h2 id="the-session-that-nobody-noticed-was-failing">The session that nobody noticed was failing.</h2>
+        <p class="section-lead">
+          A checking team used AI to support a three-day consultant review of Mark 5. Read what happened — turn by turn.
+        </p>
+
+        <div class="step-list fade-up">
+          <li>
+            <span class="step-num" style="background: var(--c4);">1</span>
+            <div class="step-body">
+              <strong>Turn 1 — Session start</strong>
+              The consultant pasted the AI session brief, loaded key-term decisions, and began with a strong instruction: <em>"Do not speculate beyond the text. Flag all uncertain interpretations as NEEDS VERIFICATION. Do not suggest renderings for terms not in our key-terms file."</em> The AI followed every rule in the first ten exchanges.
+            </div>
+          </li>
+          <li>
+            <span class="step-num" style="background: var(--c5);">25</span>
+            <div class="step-body">
+              <strong>Turn 25 — Mid-session</strong>
+              The team had worked through Mark 5:1–12. The AI was still largely on-point, but started occasionally offering rendering suggestions for terms not in the key-terms file. The team assumed it was "just being helpful." Nobody re-read the original constraints.
+            </div>
+          </li>
+          <li>
+            <span class="step-num" style="background: var(--c1);">48</span>
+            <div class="step-body">
+              <strong>Turn 48 — Late session</strong>
+              The team reached Mark 5:19 — <em>"Go home to your people and tell them how much the Lord has done for you."</em> The AI produced a full theological commentary on the passage, including speculation about whether the man's witness constitutes an early example of Gentile mission. No flags. No NEEDS VERIFICATION. The original constraints had silently faded.
+            </div>
+          </li>
+          <li>
+            <span class="step-num" style="background: var(--c1);">72</span>
+            <div class="step-body">
+              <strong>Three days later</strong>
+              The checking documentation was reviewed. Several unmarked speculative statements sourced from the late-session AI exchanges had entered the report as if verified. The team had to go back through 48 exchanges to identify which outputs to flag.
+            </div>
+          </li>
+        </div>
+
+        <div class="activity-box fade-up">
+          <div class="activity-header"><span class="activity-icon">💬</span><h3 id="discuss-before-we-explain">Discuss before we explain</h3></div>
+          <ol>
+            <li>At what point did the failure actually start — Turn 25 or Turn 1?</li>
+            <li>Was this the AI's fault? What happened mechanically?</li>
+            <li>What could the team have done differently at turns 1, 25, and 48?</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C2 · CONTENT
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c2">
+      <div class="container">
+        <div class="section-badge badge-c2">C2 · Content</div>
+        <h2 id="four-defences-for-long-session-reliability">Four defences for long-session reliability</h2>
+        <p class="section-lead">
+          Context loss is not a bug that will be fixed. It is the expected behaviour of the underlying architecture. Your job is to manage it.
+        </p>
+
+        <!-- THE THREE STAGES -->
+        <div style="margin-bottom: 1.75rem;" class="fade-up">
+          <h3 style="margin-bottom: 0.75rem;" id="the-three-stages-of-a-session">The three stages of a session</h3>
+          <div class="stage-row">
+            <div class="stage-label">Session start</div>
+            <div class="stage-desc">All instructions, brief, and guardrails are in scope. The model attends to them with full weight.</div>
+            <div class="stage-risk risk-low">Low risk</div>
+          </div>
+          <div class="stage-row">
+            <div class="stage-label">Mid-session</div>
+            <div class="stage-desc">Context filling. Older content approaching the edge of the window. Attention fading but instructions still technically present.</div>
+            <div class="stage-risk risk-mid">Medium</div>
+          </div>
+          <div class="stage-row">
+            <div class="stage-label">Overflow</div>
+            <div class="stage-desc">Earliest content (your guardrails and session brief) silently dropped. Model operates with proportionally fewer constraints.</div>
+            <div class="stage-risk risk-high">⚠️ High</div>
+          </div>
+          <div class="callout warn" style="margin-top: 0.875rem;">
+            <span class="callout-icon">🌐</span>
+            <div><strong>Minority language reality:</strong> Non-Latin scripts (Tamil, Telugu, Ge'ez, etc.) tokenise at 2–3 tokens per word — meaning sessions with non-Latin pasted text fill the context window significantly faster than equivalent English content. If you work in a non-Latin script, mid-session risk arrives earlier than you expect.</div>
+          </div>
+        </div>
+
+        <!-- DEFENCE 1 -->
+        <details class="fade-up">
+          <summary>
+            <span style="display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:var(--c4); color:white; font-size:0.72rem; font-weight:700; margin-right:0.5rem; flex-shrink:0;">D1</span>
+            Defence 1 · Task Chunking — One task per chat
+            <span class="summary-arrow">›</span>
+          </summary>
+          <div class="details-body">
+            <p><strong>The principle:</strong> Never mix unrelated work in a single long session. A session that covers exegesis, back-translation review, key-term analysis, and formatting a report — over two hours — will be unreliable by the end.</p>
+            <p>Starting a new chat costs you nothing. A fresh chat starts with a full, clean context window ready for your brief.</p>
+            <div class="callout warn">
+              <span class="callout-icon">⚠️</span>
+              <div><strong>One critical step:</strong> A new chat is blank. The AI has no memory of previous sessions by default — it does not know your project, your guardrails, or what was decided last week. Before typing your first prompt in any new session, paste your AI Session Brief. Skip this step and you are briefing a stranger who has never heard of your project.</div>
+            </div>
+          </div>
+        </details>
+
+        <!-- DEFENCE 2 -->
+        <details class="fade-up">
+          <summary>
+            <span style="display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:var(--c4); color:white; font-size:0.72rem; font-weight:700; margin-right:0.5rem; flex-shrink:0;">D2</span>
+            Defence 2 · Session Refresh — Reinject constraints mid-session
+            <span class="summary-arrow">›</span>
+          </summary>
+          <div class="details-body">
+            <p><strong>The principle:</strong> In long sessions, repeat key constraints at natural pause points — when starting a new passage, a new task type, or after a significant digression.</p>
+            <p>A single reinforcing line is often enough:</p>
+            <div class="prompt-display" style="font-size: 0.82rem; margin: 0.875rem 0;">Reminder: do not speculate beyond the text. Flag all uncertain interpretations as NEEDS VERIFICATION. Do not suggest renderings for terms not in our key-terms file.</div>
+            <p>This is not a sign of bad prompting. It is the correct response to a known architectural behaviour.</p>
+          </div>
+        </details>
+
+        <!-- DEFENCE 3 -->
+        <details class="fade-up">
+          <summary>
+            <span style="display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:var(--c4); color:white; font-size:0.72rem; font-weight:700; margin-right:0.5rem; flex-shrink:0;">D3</span>
+            Defence 3 · The AI Session Brief
+            <span class="summary-arrow">›</span>
+          </summary>
+          <div class="details-body">
+            <p><strong>The principle:</strong> Write your standing instructions once, save them as a text file, and paste them at the start of every new chat. This is the most impactful single habit change most practitioners can make.</p>
+            <p>The brief replaces ad-hoc re-briefing and ensures guardrails are reset at the start of every task. Structure:</p>
+            <div class="prompt-display" style="font-size: 0.78rem; margin: 0.875rem 0;">## AI Session Brief — [Project Name]
+
+## Project context
+- Project: [language name] NT / [book / stage]
+- Team: [team composition]
+- Stage: [e.g. Checking Stage 2 / FIA]
+
+## Target audience
+- [Language community, oral / literate]
+- [Cultural frame — e.g. shame-honour]
+- [Reading level of primary audience]
+
+## Standing guardrails
+- Do not speculate beyond the text
+- Flag all uncertain interpretations as NEEDS VERIFICATION
+- Do not cite specific reference codes — I will verify independently
+- Do not suggest renderings not in our key-terms file
+
+## Style rules
+- Reading level: [primary / secondary / expert]
+- Register: [formal / conversational / plain]
+- Avoid: [specific vocabulary or framing]
+
+## Output format defaults
+- Tables use: Issue | Verse | Suggestion
+- Flag unchecked items as: NEEDS VERIFICATION</div>
+            <p>The brief costs three minutes to write once. It saves you re-briefing at the start of every session and prevents the silent erosion of constraints that happens when you rely on memory alone.</p>
+          </div>
+        </details>
+
+        <!-- DEFENCE 4 -->
+        <details class="fade-up">
+          <summary>
+            <span style="display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:var(--c4); color:white; font-size:0.72rem; font-weight:700; margin-right:0.5rem; flex-shrink:0;">D4</span>
+            Defence 4 · System Prompts — Permanent guardrails
+            <span class="summary-arrow">›</span>
+          </summary>
+          <div class="details-body">
+            <p><strong>The principle:</strong> In tools that support it, move your standing instructions into a <em>system prompt</em> — a special instruction layer that sits outside the conversation scroll and is always visible, regardless of session length.</p>
+            <div class="table-wrap" style="margin: 0.875rem 0;">
+              <table>
+                <thead><tr><th>Tool</th><th>How to set a system prompt</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Claude Projects</strong></td><td>Create a new Project; add instructions in the Project Instructions field. All chats within the Project inherit those instructions.</td></tr>
+                  <tr><td><strong>Custom GPTs (OpenAI)</strong></td><td>In the GPT editor, add instructions in the System field. All chats with that GPT use those instructions.</td></tr>
+                  <tr><td><strong>API access</strong></td><td>The <code>system</code> parameter in the request.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout info">
+              <span class="callout-icon">🏗️</span>
+              <div><strong>Lane 3 note:</strong> This is the architectural upgrade from individual best-practice to team-level reliability. A project-specific Claude Project or Custom GPT — with the AI Session Brief, key-term list, and theological guardrails as the system prompt — means every team member starts every session with fully correct constraints.</div>
+            </div>
+          </div>
+        </details>
+
+        <!-- DATA SAFETY -->
+        <div style="margin-top: 2rem;" class="fade-up">
+          <h3 style="margin-bottom: 0.75rem;" id="choosing-the-right-tool-data-sensitivity">Choosing the right tool: data sensitivity</h3>
+          <div class="callout danger">
+            <span class="callout-icon">🔴</span>
+            <div>
+              <strong>One question determines which tool to use:</strong>
+              <em>"Is this draft text published?"</em>
+              <br><br>
+              <strong>Yes →</strong> cloud tools are acceptable.<br>
+              <strong>No →</strong> use a local model (LM Studio) or an enterprise-licensed API only.<br><br>
+              Never paste unpublished draft text into a free consumer chat interface. Free tiers of ChatGPT, Gemini, and similar tools may use session data for model training. Treat them like a public forum: do not share anything you would not publish openly.
+            </div>
+          </div>
+          <div class="callout info" style="margin-top: 0.75rem;">
+            <span class="callout-icon">ℹ️</span>
+            <div>Your organisation may have stricter policies than this baseline. If your IT or administration team has an approved tool list or data handling policy, follow it. Treat this decision rule as the floor, not the ceiling.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C3 · CHALLENGE — Build your AI Session Brief
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c3">
+      <div class="container">
+        <div class="section-badge badge-c3">C3 · Challenge</div>
+        <h2 id="build-your-ai-session-brief">Build your AI Session Brief</h2>
+        <p class="section-lead">
+          Fill this out for a real project you are currently working on. This is the hardest-working document you will create in this workshop — it travels with you into every AI session.
+        </p>
+
+        <div class="activity-box fade-up" style="margin-bottom: 1.5rem;">
+          <div class="activity-header"><span class="activity-icon">🛠️</span><h3 id="working-individually-10-minutes">Working individually — 10 minutes</h3></div>
+          <p>Fill in every field you can. Leave gaps where you genuinely don't know — and flag them: those gaps are the first things to discuss with your team when you get back.</p>
+        </div>
+
+        <div class="card fade-up" style="background: #f8fafc;">
+          <h3 style="margin-bottom: 1.25rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted);" id="ai-session-brief-template">AI Session Brief Template</h3>
+
+          <div class="brief-field">
+            <label>Project name &amp; stage</label>
+            <span class="hint">e.g. "Swahili NT · Mark · Checking Stage 2" or "Cluster admin · rollout planning"</span>
+            <input type="text" class="brief-input" placeholder="Project / language / book / stage">
+          </div>
+
+          <div class="brief-field">
+            <label>Team composition</label>
+            <span class="hint">Roles, sizes, background language</span>
+            <input type="text" class="brief-input" placeholder="e.g. 3 mother-tongue translators, 1 literacy worker, consultant check scheduled for...">
+          </div>
+
+          <div class="brief-field">
+            <label>Target audience</label>
+            <span class="hint">Language community, oral/literate, cultural frame (honour-shame, etc.), reading level</span>
+            <textarea class="brief-input" rows="2" placeholder="e.g. First-generation literate adults in rural Tamil Nadu, strong oral culture, shame-honour frame, primary school reading level..."></textarea>
+          </div>
+
+          <div class="brief-field">
+            <label>Standing guardrails <em>(copy and keep these)</em></label>
+            <textarea class="brief-input" rows="4">Do not speculate beyond the text. Flag all uncertain interpretations as NEEDS VERIFICATION.
+Do not cite specific Louw-Nida codes or scholar names — I will verify those independently.
+Do not suggest renderings for terms not in my key-terms file.
+If you do not know something, say so. Do not fabricate an answer to fill the gap.</textarea>
+          </div>
+
+          <div class="brief-field">
+            <label>Project-specific guardrails</label>
+            <span class="hint">What should the AI never do for your specific project or language community?</span>
+            <textarea class="brief-input" rows="2" placeholder="e.g. Do not use Western agricultural metaphors — our community is primarily urban..."></textarea>
+          </div>
+
+          <div class="brief-field">
+            <label>Style rules</label>
+            <span class="hint">Register, vocabulary to avoid, tone preferences</span>
+            <textarea class="brief-input" rows="2" placeholder="e.g. Plain English, primary school reading level, avoid theological jargon, use conversational sentence structure..."></textarea>
+          </div>
+
+          <div class="brief-field">
+            <label>Default output format</label>
+            <span class="hint">What format should AI responses use by default in this project?</span>
+            <input type="text" class="brief-input" placeholder="e.g. Tables: Issue | Verse | Suggestion. Flagged items: NEEDS VERIFICATION.">
+          </div>
+
+          <div class="brief-field">
+            <label>Key decisions already made (do not revisit)</label>
+            <span class="hint">Checking-round decisions that are settled and should not be reopened by the AI</span>
+            <textarea class="brief-input" rows="2" placeholder="e.g. 'Spirit' was decided in checking round 1 — use [approved term]. Do not suggest alternatives."></textarea>
+          </div>
+        </div>
+
+        <div class="callout success fade-up" style="margin-top: 1rem;">
+          <span class="callout-icon">💾</span>
+          <div><strong>Next step:</strong> Copy this into a text file on your desktop. Name it <code>ai-session-brief.md</code>. Paste it at the start of every new AI chat for this project. This is the document that Defence 3 and Defence 4 both depend on.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C4 · CHANGE
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c4">
+      <div class="container">
+        <div class="section-badge badge-c4">C4 · Change</div>
+        <h2 id="my-commitment-to-the-brief">My commitment to the Brief</h2>
+        <p class="section-lead">
+          You have built the brief. Now commit to using it.
+        </p>
+
+        <div class="commitment-box fade-up">
+          <div class="commitment-header"><span>📋</span><h3 id="my-session-integrity-commitment">My session integrity commitment</h3></div>
+
+          <p class="commitment-prompt-text">The first real AI session I will use this brief for is:</p>
+          <textarea class="commitment-input" style="min-height: 60px;" placeholder="e.g. My next FIA session for Mark 6 on Thursday. I will paste the brief before I type the first prompt."></textarea>
+
+          <p class="commitment-prompt-text" style="margin-top: 0.875rem;">The defence I am most likely to forget and need to build as a habit:</p>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.875rem; font-size: 0.9rem;">
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;"><input type="radio" name="defence" style="flex-shrink:0;"> D1 — Task chunking (one chat per task)</label>
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;"><input type="radio" name="defence" style="flex-shrink:0;"> D2 — Session refresh (re-injecting constraints mid-session)</label>
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;"><input type="radio" name="defence" style="flex-shrink:0;"> D3 — Pasting the AI Session Brief at the start of every new chat</label>
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;"><input type="radio" name="defence" style="flex-shrink:0;"> D4 — Setting up a system prompt or Claude Project for team use</label>
+          </div>
+
+          <p class="commitment-prompt-text">My data safety decision for this project:</p>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.875rem; font-size: 0.9rem;">
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;"><input type="radio" name="datasafety" style="flex-shrink:0;"> Draft text is unpublished → local model (LM Studio) or enterprise API only</label>
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;"><input type="radio" name="datasafety" style="flex-shrink:0;"> Draft text is published or publicly available → standard cloud tools are acceptable</label>
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;"><input type="radio" name="datasafety" style="flex-shrink:0;"> I need to check my organisation's data policy before deciding</label>
+          </div>
+
+          <div class="commitment-actions"><button class="btn-print">🖨️ Print my commitment</button></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C5 · CLOSURE
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c5">
+      <div class="container">
+        <div class="section-badge badge-c5">C5 · Closure</div>
+
+        <div class="big-quote fade-up">
+          <blockquote>
+            "The AI cannot detect its own lapses. You are the quality check that the session's guardrails haven't silently expired."
+          </blockquote>
+          <cite>Reliability is not a property of the tool. It is a practice you maintain.</cite>
+        </div>
+
+        <div class="callout success fade-up">
+          <span class="callout-icon">✅</span>
+          <div>
+            <strong>What you can now do:</strong> Recognise the three stages of a session. Apply all four defences. Write and use an AI Session Brief. Make the right data-safety decision for your project. Chapter 5 applies everything we have built to your specific role and real workflow scenarios.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="chapter-footer-nav">
+    <div class="nav-row">
+      <a href="ch03.html" class="ch-nav-btn">← Ch 3: The Master Formula</a>
+      <span class="ch-nav-spacer"></span>
+      <a href="ch05.html" class="ch-nav-btn primary">Ch 5: Prompting by Lane →</a>
+    </div>
+  </nav>
+
+  
+    </main>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <!-- ── PRESENTATION MODE CONTROLS ───────────────────────── -->
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="../assets/script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>

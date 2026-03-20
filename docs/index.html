@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Engineering for Bible Translators · AILT 2026</title>
+  <meta name="description" content="Five sessions on LLMs and prompt engineering for Bible translation teams — AILT 2026 AI Tools Workshop.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body>
+
+  <!-- ── SITE NAV ──────────────────────────────────────────── -->
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="./" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="./" class="shell-nav-link active">Home</a>
+        <a href="prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="handbook/" class="shell-nav-link">Handbook</a>
+        <a href="about.html" class="shell-nav-link">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── HERO ──────────────────────────────────────────────── -->
+  <div class="landing-hero">
+    <span class="landing-badge">AILT 2026 · AI Tools Track</span>
+    <h1 class="landing-title">Prompt Engineering<br>for Bible Translators</h1>
+    <p class="landing-subtitle">
+      Five sessions, nine appendices, three audience lanes. One clear answer:
+      how AI fits into your part of the Bible translation workflow &mdash;
+      and how to use it well.
+    </p>
+    <a href="prompt-engineering/" class="landing-cta">Start the course &rarr;</a>
+  </div>
+
+  <!-- ── COURSE CARDS ───────────────────────────────────────── -->
+  <div class="landing-grid">
+
+    <div class="landing-card">
+      <a href="prompt-engineering/">Prompt Engineering Course</a>
+      <p>Five interactive sessions plus nine course appendices with lane-differentiated content for translators, consultants, and tech staff. Activities, prompt reveals, reference cards, and reusable prompt tools.</p>
+    </div>
+
+    <div class="landing-card">
+      <a href="use-prompts-scripture/">Using Prompts to Understand Scripture</a>
+      <p>A practical 45-minute session exploring how AI tools can deepen exegetical understanding. All lanes. Real prompts. Real results.</p>
+    </div>
+
+    <div class="landing-card">
+      <a href="handbook/">AI Tools Handbook</a>
+      <p>Five chapters and nine appendices covering LLM fundamentals, the master prompt formula, advanced techniques, lane-specific workflows, and ready-to-use prompt templates.</p>
+    </div>
+
+  </div>
+
+  <!-- ── QUICK LINKS ────────────────────────────────────────── -->
+  <div class="chapter-chips">
+    <h2 class="chapter-chips-heading">Core chapters</h2>
+    <div class="chapter-chips-list">
+      <a href="prompt-engineering/ch01.html" class="chapter-chip">Ch 1 · How LLMs Work</a>
+      <a href="prompt-engineering/ch02.html" class="chapter-chip">Ch 2 · Anatomy of a Prompt</a>
+      <a href="prompt-engineering/ch03.html" class="chapter-chip">Ch 3 · Master Formula</a>
+      <a href="prompt-engineering/ch04.html" class="chapter-chip">Ch 4 · Advanced Techniques</a>
+      <a href="prompt-engineering/ch05.html" class="chapter-chip">Ch 5 · Prompting by Lane</a>
+    </div>
+  </div>
+
+  <div class="chapter-chips">
+    <h2 class="chapter-chips-heading">Course appendices</h2>
+    <div class="chapter-chips-list">
+      <a href="handbook/app-a.html" class="chapter-chip">App A · Glossary</a>
+      <a href="handbook/app-b.html" class="chapter-chip">App B · Risk Reference</a>
+      <a href="handbook/app-c.html" class="chapter-chip">App C · Lane Reference</a>
+      <a href="handbook/app-d.html" class="chapter-chip">App D · Prompt Templates</a>
+      <a href="handbook/app-e.html" class="chapter-chip">App E · Meta-Prompting</a>
+      <a href="handbook/app-f.html" class="chapter-chip">App F · Attention</a>
+      <a href="handbook/app-g.html" class="chapter-chip">App G · Beyond the Basics</a>
+      <a href="handbook/app-h.html" class="chapter-chip">App H · Minority Languages</a>
+      <a href="handbook/app-i.html" class="chapter-chip">App I · How This Was Made</a>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <!-- ── PRESENTATION MODE CONTROLS ───────────────────────── -->
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="assets/script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>

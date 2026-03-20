@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 5 — Prompting by Lane</title>
+  <meta name="description" content="Prompt Engineering for Bible Translators · AILT 2026 AI Tools Workshop">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+</head>
+<body>
+
+  <!-- ── SITE NAV ──────────────────────────────────────────── -->
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="../" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="../" class="shell-nav-link">Home</a>
+        <a href="../prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="../handbook/" class="shell-nav-link">Handbook</a>
+        <a href="../about.html" class="shell-nav-link">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── PAGE LAYOUT ─────────────────────────────────────────────── -->
+  <div class="shell-page">
+    <main class="shell-main" id="main-content">
+      <div class="prose-content">
+<h1 id="chapter-5-prompting-by-lane">Chapter 5: Prompting by Lane</h1>
+<blockquote>
+<p><strong>Session tag:</strong> Application<br />
+<strong>Key question:</strong> How do I apply everything I have learned to my specific role and tasks?</p>
+</blockquote>
+<hr />
+<h2 id="how-to-use-this-chapter">How to Use This Chapter</h2>
+<p>This chapter works through the full set of prompting techniques applied to realistic scenarios for each of the three lanes. Each section is self-contained — you can jump directly to your lane and work through the examples, or read all three to understand how the same technique plays out differently across roles.</p>
+<p>Each scenario follows the same structure:
+1. <strong>The task</strong> — what you are trying to accomplish
+2. <strong>The weak prompt</strong> — what most people type first
+3. <strong>The strong prompt</strong> — the upgraded version with building blocks labelled
+4. <strong>What changed</strong> — a brief explanation of the key moves</p>
+<hr />
+<h2 id="51-lane-1-translation-language-practitioners">5.1 Lane 1 — Translation &amp; Language Practitioners</h2>
+<p><em>Mother Tongue Translators · Translators · Linguists · Literacy Workers</em></p>
+<h3 id="scenario-a-cultural-and-historical-background-fia-support">Scenario A: Cultural and Historical Background (FIA Support)</h3>
+<p><strong>The task:</strong> Before drafting Mark 5:1–20, you need to understand the cultural and historical background of the pigs in the story — specifically how this would affect translation for an audience where pigs are an important wealth symbol.</p>
+<p><strong>Weak prompt:</strong></p>
+<blockquote>
+<p><em>"Tell me about pigs in the Bible."</em></p>
+</blockquote>
+<p>This gives you a general survey of pig references across the Old and New Testaments. Not wrong — but not targeted to your task, your audience, or your passage.</p>
+<p><strong>Strong prompt:</strong></p>
+<blockquote>
+<p><em>"Act as a biblical scholar specialised in Second Temple Judaism and Mediterranean economics. [Persona]</em></p>
+<p><em>Explain the cultural and economic significance of pigs in Mark 5:1–20 for a translation team working with a community where pigs represent significant household wealth. Focus on: (1) what the pig herd would have meant to the local economy, (2) what cultural weight the destruction of the herd carries, (3) why that detail matters for how the passage will be received by a community that prizes pigs. [Task + cultural anchor]</em></p>
+<p><em>Use plain English. Do not speculate beyond what the text and historical record support. Do not cite specific reference codes — I will verify those independently. [Guardrails]</em></p>
+<p><em>Return as 3 numbered paragraphs, one per focus point above. Maximum 80 words each. [Format]"</em></p>
+</blockquote>
+<p><strong>What changed:</strong> Persona grounds the language. The three focus points create structure before the output is generated. The cultural anchor ("community where pigs represent wealth") pulls the response toward the actual translation challenge. Guardrails prevent fabricated citations. Format prevents a sprawling essay.</p>
+<hr />
+<h3 id="scenario-b-naturalness-check">Scenario B: Naturalness Check</h3>
+<p><strong>The task:</strong> You have a draft of Mark 5:3–5 and want to identify phrasings that sound unnatural to a native speaker of your target language.</p>
+<p><strong>Weak prompt:</strong></p>
+<blockquote>
+<p><em>"Check if this translation is natural."</em></p>
+</blockquote>
+<p>Without the draft, the model cannot help at all. Even with the draft pasted in, "natural" is undefined — natural <em>for whom?</em></p>
+<p><strong>Strong prompt:</strong></p>
+<blockquote>
+<p><em>"Act as a mother-tongue speaker of [language name] hearing this passage for the first time as spoken narrative — not as written text. [Persona]</em></p>
+<p><em>Below is a draft rendering of Mark 5:3–5. [paste draft]</em></p>
+<p><em>Identify up to 3 phrases that would sound unnatural, awkward, or overly formal to an oral listener. For each phrase: quote it exactly, explain what sounds wrong, and suggest a more natural alternative. [Task]</em></p>
+<p><em>Do not change the meaning of any phrase — only adjust for naturalness. Flag any suggestion you are uncertain about. [Guardrails]</em></p>
+<p><em>Return as: Phrase | Problem | Suggested Alternative. [Format]"</em></p>
+</blockquote>
+<p><strong>What changed:</strong> The persona is an <em>oral listener</em>, not a written-language proofreader — which is the correct frame for spoken naturalness. The task is bounded to 3 items. The meaning-preservation constraint prevents the model from "improving" the translation beyond what you asked.</p>
+<hr />
+<h3 id="scenario-c-storyboard-scripting-for-oral-literacy-contexts">Scenario C: Storyboard Scripting for Oral / Literacy Contexts</h3>
+<p><strong>The task:</strong> You want an AI-scripted storyboard for Mark 5:1–20 to brief a local illustrator on a 6-panel stick-figure series for oral community engagement.</p>
+<p><strong>The common mistake:</strong> Many practitioners try to ask AI to <em>draw</em> something. Text-based AI cannot generate images. But it can script a storyboard with precision that a human artist can follow exactly.</p>
+<p><strong>Strong prompt:</strong></p>
+<blockquote>
+<p><em>"For Mark 5:1–20, create a detailed storyboard script for a local artist to use as a brief for a 6-panel stick-figure illustration series. [Task]</em></p>
+<p><em>For each panel provide: (1) the setting, (2) the key characters present, (3) the main action, (4) one short caption in plain language (maximum 10 words). [Format]</em></p>
+<p><em>Capture the key narrative movements in sequence: arrival by boat, encounter at the tombs, dialogue with Legion, the pigs, the healed man, and the sending. [Content scope]</em></p>
+<p><em>Do not add theological interpretation to the captions — describe only what can be seen. [Guardrail]"</em></p>
+</blockquote>
+<p><strong>What changed:</strong> The task is correctly scoped as <em>scripting</em>, not drawing. The 6-panel structure and the 4-part per-panel format are defined before the model begins. The narrative scope ensures all major movements are represented. Guardrail keeps captions visual rather than interpretive.</p>
+<hr />
+<h2 id="52-lane-2-consultants-advisors">5.2 Lane 2 — Consultants &amp; Advisors</h2>
+<p><em>Translation Consultants · Consultants in Training · Exegetes · Translation Advisors</em></p>
+<h3 id="scenario-a-comparative-analysis-draft-vs-source">Scenario A: Comparative Analysis — Draft vs Source</h3>
+<p><strong>The task:</strong> You have two renderings of Mark 5:9 — the team's draft and the KJV — and want a structured consultant-grade comparison.</p>
+<p><strong>Weak prompt:</strong></p>
+<blockquote>
+<p><em>"Compare this verse with the KJV and tell me if there are any issues."</em></p>
+</blockquote>
+<p>"Issues" is undefined. The model will produce a generic literary comparison that misses translation-accuracy problems entirely.</p>
+<p><strong>Strong prompt:</strong></p>
+<blockquote>
+<p><em>"Act as a translation consultant conducting a formal checking review. [Persona]</em></p>
+<p><em>Below are two renderings of Mark 5:9: [paste draft] and [paste KJV].</em></p>
+<p><em>Identify differences in: (1) theological content, (2) implicit information, (3) natural discourse structure. [Task with defined categories]</em></p>
+<p><em>For each difference, assess: is this a significant translation issue, an acceptable variation, or a style choice? [Evaluation criteria]</em></p>
+<p><em>Do not resolve uncertain items — flag them as NEEDS VERIFICATION. [Guardrail]</em></p>
+<p><em>Return as: Difference | Category | Assessment | Flag. [Format]"</em></p>
+</blockquote>
+<p><strong>What changed:</strong> The three comparison categories (theological content, implicit information, discourse structure) define what "issues" means operationally — the model cannot default to a generic literary comparison. The evaluation criteria distinguish significance levels. The uncertainty guardrail prevents confident-sounding verdicts on genuinely debatable points.</p>
+<hr />
+<h3 id="scenario-b-key-term-analysis-with-chain-of-thought">Scenario B: Key-Term Analysis with Chain of Thought</h3>
+<p><strong>The task:</strong> Identifying key terms in Mark 5:1–20 that carry significant translation risk.</p>
+<p><strong>Strong prompt (using CoT):</strong></p>
+<blockquote>
+<p><em>"Act as a translation consultant with expertise in New Testament Greek semantics. [Persona]</em></p>
+<p><em>From Mark 5:1–20 (ESV text below), work through the following steps before producing your output: [Chain of Thought]</em></p>
+<p><em>Step 1 — Identify all theologically significant terms: defined as words whose precise rendering will significantly affect doctrinal understanding in translation.</em></p>
+<p><em>Step 2 — For each term: describe its semantic range in plain language (do not fabricate Greek dictionary codes — I will verify those independently).</em></p>
+<p><em>Step 3 — For each term: identify the translation risk if the term is rendered too narrowly vs too broadly.</em></p>
+<p><em>Step 4 — Suggest one checking question for each term that a translation team could use to verify the rendering.</em></p>
+<p><em>[paste ESV text]</em></p>
+<p><em>Do not speculate. Flag uncertain items as NEEDS VERIFICATION. [Guardrail]</em></p>
+<p><em>Return as: Term | Semantic Range | Narrowing Risk | Broadening Risk | Checking Question. [Format]"</em></p>
+</blockquote>
+<p><strong>What changed:</strong> The four-step chain of thought forces the model to reason through all analytical layers before producing any output. This prevents the most common failure: jumping to a translation recommendation without adequately characterising the term's range. The checking-question column transforms the output into a directly usable tool, not just a report.</p>
+<hr />
+<h3 id="scenario-c-back-translation-review">Scenario C: Back-Translation Review</h3>
+<p><strong>The task:</strong> Reviewing a back-translation for implicit information gaps.</p>
+<p><strong>Strong prompt:</strong></p>
+<blockquote>
+<p><em>"Act as a senior translation consultant. [Persona]</em></p>
+<p><em>Below are three texts for Mark 5:1–20: the ESV source text, the current draft, and the back-translation of the draft. [paste all three, clearly labelled]</em></p>
+<p><em>Step 1 — Compare the back-translation to the ESV source. Identify any place where information present in the ESV source is absent from or weakened in the back-translation. [CoT Step 1]</em></p>
+<p><em>Step 2 — For each gap identified, assess whether the gap is: (a) an implicit-information issue in the draft, (b) a back-translation accuracy issue, or (c) both. [CoT Step 2]</em></p>
+<p><em>Step 3 — For each gap, suggest a specific checking question the consultant could use with the translation team to surface the issue. [CoT Step 3]</em></p>
+<p><em>Do not flag minor stylistic variations. Focus only on meaning gaps. Do not speculate about intent. [Guardrail]</em></p>
+<p><em>Return as: Verse | Gap Description | Type (a/b/both) | Checking Question. [Format]"</em></p>
+</blockquote>
+<hr />
+<h2 id="53-lane-3-leadership-technical-enablers">5.3 Lane 3 — Leadership &amp; Technical Enablers</h2>
+<p><em>Cluster Managers · Project Executives · IT Support · Facilitators · Software QA</em></p>
+<h3 id="scenario-a-meeting-notes-action-list">Scenario A: Meeting Notes → Action List</h3>
+<p><strong>The task:</strong> You have 5 emails from this week and need a structured action list extracted from them.</p>
+<p><strong>Weak prompt:</strong></p>
+<blockquote>
+<p><em>"Look through my emails and prepare a to-do list for me."</em></p>
+</blockquote>
+<p>The AI has no access to your inbox. It cannot read emails you have not given it. This prompt produces a confused refusal or a generic template.</p>
+<p><strong>Strong prompt:</strong></p>
+<blockquote>
+<p><em>"I am pasting 5 emails from this week below. [Context]</em></p>
+<p><em>For each email, identify: (1) any action required from me, (2) the deadline if mentioned, (3) who else is involved. [Task]</em></p>
+<p><em>Ignore greetings, signatures, and social pleasantries — extract only actionable content. [Guardrail]</em></p>
+<p><em>Return as a markdown checklist table: Action | Owner | Deadline | Waiting On. [Format]</em></p>
+<p><em>[paste all 5 emails, each clearly labelled with its sender and date]"</em></p>
+</blockquote>
+<p><strong>What changed:</strong> The data is supplied. The extraction categories are defined. The guardrail prevents the model from over-processing social content. The table format produces a deliverable that can be pasted into any project management tool immediately.</p>
+<hr />
+<h3 id="scenario-b-governance-report-from-raw-notes">Scenario B: Governance Report from Raw Notes</h3>
+<p><strong>The task:</strong> Converting a cluster manager's handwritten session notes into a formal governance report.</p>
+<p><strong>Strong prompt (using Few-Shot):</strong></p>
+<blockquote>
+<p><em>"Act as a project manager writing a formal governance report for a non-technical executive audience. [Persona]</em></p>
+<p><em>Here is an example of the report format we use for this project: [Few-Shot example — paste one previous report entry] [Example]</em></p>
+<p><em>Now convert the following session notes into the same format. [Task]</em></p>
+<p><em>[paste raw notes]</em></p>
+<p><em>Do not insert information not present in the notes. Do not use technical jargon. [Guardrail]</em></p>
+<p><em>Return in the same section structure as the example report above. [Format]"</em></p>
+</blockquote>
+<p><strong>What changed:</strong> Few-shot learning replaces the need to describe the report format in abstract terms. One previous report entry communicates the structure, vocabulary, and register more precisely than a paragraph of description.</p>
+<hr />
+<h3 id="scenario-c-rollout-readiness-checklist">Scenario C: Rollout Readiness Checklist</h3>
+<p><strong>The task:</strong> You are preparing to introduce a new AI tool to a field translation team and need a rollout readiness checklist.</p>
+<p><strong>Strong prompt:</strong></p>
+<blockquote>
+<p><em>"Act as a deployment project manager in a field technology context. [Persona]</em></p>
+<p><em>I am preparing to introduce [tool name] to a translation team of 12 people in a low-bandwidth environment. Hardware: i5 laptops, 16GB RAM, no dedicated GPU. Internet: intermittent 3G. Team profile: experienced with Paratext, new to AI tools. [Context]</em></p>
+<p><em>Generate a rollout readiness checklist covering: (1) pre-deployment infrastructure checks, (2) team training requirements, (3) first-session facilitation plan, (4) risk flags specific to low-bandwidth deployment, (5) success criteria for a 30-day pilot. [Task with structure]</em></p>
+<p><em>Do not recommend steps that require dedicated GPU or stable broadband — all suggestions must be feasible within the hardware constraints above. [Guardrail]</em></p>
+<p><em>Return as a numbered checklist grouped by the 5 sections above. [Format]"</em></p>
+</blockquote>
+<hr />
+<h2 id="54-cross-lane-exercises">5.4 Cross-Lane Exercises</h2>
+<p>The following exercises are designed for use in cross-lane pairs — one participant from Lane 1 or 2, one from Lane 3:</p>
+<ol>
+<li>
+<p><strong>Swap prompts:</strong> Each person shows their strongest prompt from today's lab to their cross-lane partner. Can their partner understand what the prompt is trying to accomplish without explanation? If not, what is unclear?</p>
+</li>
+<li>
+<p><strong>Translate the output:</strong> Take a Lane 2 checking output (a formatted table of translation issues) and ask Lane 3: "How would you present this to a project executive who is not a translation specialist?" Build a new prompt together.</p>
+</li>
+<li>
+<p><strong>Build a shared brief:</strong> What would an <code>ai-session-brief.md</code> look like that is useful to both a translator and a project manager working on the same project? Draft one together in 10 minutes.</p>
+</li>
+</ol>
+<hr />
+<p><em>Continue to the Appendices →</em></p>
+</div>
+    </main>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <!-- ── PRESENTATION MODE CONTROLS ───────────────────────── -->
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="../assets/script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>

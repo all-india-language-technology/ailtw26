@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appendix G — Beyond the Basics</title>
+  <meta name="description" content="Prompt Engineering for Bible Translators · AILT 2026 AI Tools Workshop">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+</head>
+<body>
+
+  <!-- ── SITE NAV ──────────────────────────────────────────── -->
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="../" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="../" class="shell-nav-link">Home</a>
+        <a href="../prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="../handbook/" class="shell-nav-link">Handbook</a>
+        <a href="../about.html" class="shell-nav-link">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── PAGE LAYOUT ─────────────────────────────────────────────── -->
+  <div class="shell-page">
+    <main class="shell-main" id="main-content">
+      <div class="prose-content">
+<h1 id="appendix-g-beyond-the-basics-expanding-your-practice">Appendix G: Beyond the Basics — Expanding Your Practice</h1>
+<h2 id="topics-for-further-exploration-after-the-workshop">Topics for Further Exploration After the Workshop</h2>
+<p><em>This appendix is not required for the workshop sessions. It is a signpost — a guided orientation to the territory that lies beyond the core techniques in Chapters 1–5. Each section is a starting point, not a complete guide. Use it when you are ready to go deeper.</em></p>
+<hr />
+<h2 id="g1-prompting-in-regional-and-minority-languages">G.1 Prompting in Regional and Minority Languages</h2>
+<p>The quality of AI output degrades significantly when you move away from English and other high-resource languages. This is not a bug to be fixed by a better prompt — it is a data problem baked into how these models were trained.</p>
+<p><strong>Why it happens:</strong> Every major AI model was trained predominantly on English text — with substantial representation of French, German, Spanish, and Chinese, and progressively less of everything else. Most languages in which Bible Translation work is being done today occupy the thin edge of that distribution.</p>
+<p><strong>What this means in practice:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Language situation</th>
+<th>What to expect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>High-resource language</strong> (English, French, Hindi)</td>
+<td>Reliable output; standard prompting techniques fully apply</td>
+</tr>
+<tr>
+<td><strong>Mid-resource language</strong> (many national languages)</td>
+<td>Competent output with more variability; test before trusting; grammar suggestions less reliable</td>
+</tr>
+<tr>
+<td><strong>Low-resource language</strong> (most minority / regional languages)</td>
+<td>High hallucination risk; grammatical suggestions unreliable; any AI-generated text in the target language must be reviewed by a mother-tongue speaker before use</td>
+</tr>
+<tr>
+<td><strong>Unwritten / oral language</strong></td>
+<td>Do not use AI for generation in the target language at all — it has nothing to draw from</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What you can do:</strong></p>
+<ul>
+<li><strong>Work in English or a strong regional language for reasoning tasks</strong> — use AI to reason about translation problems (exegesis, cultural analysis, back-translation review), then apply the reasoning in your target language yourself. The AI's reasoning can be strong even when its output in the target language is weak.</li>
+<li><strong>Use AI output in minority languages as zero-draft only</strong> — treat it the way you would treat any unreviewed back-translation: useful for surfacing issues, not authoritative.</li>
+<li><strong>Prompt explicitly for uncertainty</strong> — include: <em>"If you are uncertain about any term or grammatical form in this language, flag it as UNCERTAIN rather than guessing."</em></li>
+<li><strong>Test systematically</strong> — before relying on AI assistance for a new language, run a few known passages through it and verify the output independently. This tells you what quality level to expect.</li>
+</ul>
+<p><strong>The longer horizon:</strong> Several organisations are actively working to improve AI capability for minority languages — including work connected to Bible Translation communities. This is discussed in §G.8.</p>
+<p><strong>The rule:</strong> For generation tasks in low-resource languages, AI output is zero-draft at best. Always have a mother-tongue speaker review before any content enters checking workflows.</p>
+<hr />
+<h2 id="g2-offline-and-local-llms">G.2 Offline and Local LLMs</h2>
+<p>Not everyone on your team has reliable internet. Some field locations cannot use cloud AI at all — and for sensitive content (see §G.3), you may not want to even if you could.</p>
+<p><strong>What local LLMs are:</strong> AI models that run entirely on your own device without sending any data to an external server. The model files are downloaded once and run locally — no internet required at inference time.</p>
+<p><strong>Main tools:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>How it works</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LM Studio</strong></td>
+<td>Desktop app; download and run models via a simple interface; no coding required</td>
+<td>Non-technical users who need a chat interface</td>
+</tr>
+<tr>
+<td><strong>Ollama</strong></td>
+<td>Command-line tool; runs models efficiently; can be integrated with other software</td>
+<td>Technical users; team deployments; IDE integration</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The trade-off:</strong> Local models are smaller than cloud models. A model running on a laptop cannot match GPT-4 or Claude Sonnet in reasoning depth or language breadth. For well-defined, structured tasks (classification, extraction, formatting, comprehension question generation), the quality gap is often acceptable. For deep exegetical reasoning or nuanced cultural analysis, cloud models are still significantly stronger.</p>
+<p><strong>Practical guidance for the field:</strong>
+- Test your most common task types against a local model before committing to it for field use.
+- Local models work best with clean, well-structured prompts — the lower the model quality, the more important prompt precision becomes.
+- A capable laptop (8–16 GB RAM, modern processor) can run models in the 7–13 billion parameter range reasonably well. Larger models require dedicated hardware.</p>
+<p><strong>Who should pursue this:</strong> Primarily Lane 3 (Technical). The decision to deploy a local model for a team is an infrastructure decision — it involves model evaluation, hardware assessment, and policy. Individual translators should not set this up independently without IT guidance.</p>
+<p><strong>The rule:</strong> Local LLMs are viable for structured, well-defined tasks in field contexts without reliable internet or with strict data privacy requirements. Evaluate before deploying — do not assume cloud-equivalent quality.</p>
+<hr />
+<h2 id="g3-what-must-never-leave-your-device-data-privacy-for-field-teams">G.3 What Must Never Leave Your Device — Data Privacy for Field Teams</h2>
+<p>The AI tools you use in this workshop are, almost without exception, cloud services. When you type a prompt and press send, that text travels to a server — usually operated by a company in a high-income country, under that country's law, with its own data retention and training policies. For most tasks, this is an acceptable trade-off. For some tasks in Bible Translation, it is not.</p>
+<p><strong>What is at risk:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Examples</th>
+<th>Risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Unpublished Scripture drafts</strong></td>
+<td>Back-translations, draft renderings, checking notes</td>
+<td>May become training data; constitutes early disclosure of unpublished Scripture</td>
+</tr>
+<tr>
+<td><strong>Community information</strong></td>
+<td>Informant names, village locations, language group identities</td>
+<td>Can expose vulnerable communities in restricted or sensitive areas</td>
+</tr>
+<tr>
+<td><strong>Project-confidential decisions</strong></td>
+<td>Key-term debates still under review, partnership agreements, funding sources</td>
+<td>Premature external disclosure; intellectual property concerns</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The default rule:</strong> If you would not paste it into an email to a stranger, do not paste it into a public AI tool. If it is not yet published, treat it as confidential until your organisation has a written policy that says otherwise.</p>
+<p><strong>What you can do instead:</strong></p>
+<ul>
+<li><strong>Use a local model</strong> — tools like LM Studio and Ollama run a model entirely on your own device. No data leaves. See §G.2 for orientation.</li>
+<li><strong>Restructure the task</strong> — often you do not need to paste the sensitive content at all. Instead of <em>"review this draft of Mark 5:3 in [language]"</em>, describe the translation problem in abstract terms: <em>"In a shame-honour society, how should a translator handle a passage where a character's dignity is publicly restored?"</em> The AI reasons on the question; you apply the answer to your draft privately.</li>
+<li><strong>Use enterprise tiers</strong> — some platforms (Claude Teams, Microsoft Copilot for Enterprise) include data residency and no-training commitments. Verify with your organisation's IT lane before relying on these guarantees — platform terms change, and verification requires reading the current policy, not assumed reputation.</li>
+</ul>
+<p><strong>Who owns this decision:</strong> This is not a translator-level call. Every organisation using AI on live project data needs a written policy. If yours does not have one yet, the Lane 3 deliverable from this workshop is to initiate that conversation — before it becomes a problem.</p>
+<p><strong>The rule:</strong> Published content and abstract reasoning tasks are generally safe for public cloud AI. Unpublished drafts, community identities, and project-confidential data are not — until your organisation's policy says otherwise in writing.</p>
+<hr />
+<h2 id="g4-beyond-chat-api-platforms-and-automation">G.4 Beyond Chat: API Platforms and Automation</h2>
+<p>The chat interface is the most accessible way to use AI, but it is not the only way. Two platforms are particularly relevant for teams that want to go further:</p>
+<p><strong>Google AI Studio</strong> and <strong>OpenAI Platform</strong> are developer-facing interfaces that give you direct access to the underlying models without the chat wrapper — allowing you to send prompts programmatically, build automated workflows, connect AI to other tools, and process large volumes of content in batch. These are the entry points to building AI-powered tools rather than just using them.</p>
+<p><strong>What this enables for BT work:</strong>
+- Batch-processing a full chapter's back-translations through a checking rubric with a single script
+- Connecting Paratext data to an AI analysis function
+- Building a team-specific checking assistant with project data baked in
+- Automating repetitive formatting or classification tasks across large datasets</p>
+<p><strong>Who this is for:</strong> Primarily Lane 3 (Technical). API access requires programming skills (Python is the most common language) and introduces cost considerations (API usage is typically metered per token). However, even non-technical practitioners benefit from knowing this tier exists — it allows them to brief a technical colleague on what is possible rather than assuming the chat interface is AI's only mode.</p>
+<p><strong>The realistic starting point:</strong> If your team has someone with basic Python knowledge and a specific repetitive task that currently takes hours, API automation is worth exploring. The platforms provide extensive documentation and introductory tutorials.</p>
+<p><strong>A caution:</strong> Building custom AI workflows introduces new governance questions — who reviews the automation logic, who handles errors, who is accountable when the batch output contains mistakes? These questions need answers before deployment, not after.</p>
+<hr />
+<h2 id="g5-multi-modal-prompting">G.5 Multi-Modal Prompting</h2>
+<p>Most AI prompting in BT work uses text. But modern AI models can also work with images, documents, audio, and combinations of all of these. This is called <strong>multi-modal</strong> input.</p>
+<p><strong>What is currently available in most tools:</strong>
+- <strong>Images</strong> — paste or upload an image and ask the AI to describe, analyse, or reason about it
+- <strong>Documents</strong> — upload a PDF or Word file and ask the AI to work with its contents
+- <strong>Audio</strong> — some tools (notably tools built on Whisper, OpenAI's transcription model) can transcribe speech to text, which can then be processed by a language model</p>
+<p><strong>Practical applications for BT:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>How multi-modal helps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Handwritten field notes</strong></td>
+<td>Photograph notes and ask the AI to transcribe and organise them</td>
+</tr>
+<tr>
+<td><strong>Scanned commentaries</strong></td>
+<td>Upload a scanned page and ask for a summary relevant to your passage</td>
+</tr>
+<tr>
+<td><strong>Diagram or map analysis</strong></td>
+<td>Share a geographical or cultural diagram and ask for context relevant to your translation</td>
+</tr>
+<tr>
+<td><strong>Oral community recordings</strong></td>
+<td>Transcribe audio using Whisper-based tools, then use the transcript in standard prompting workflows</td>
+</tr>
+<tr>
+<td><strong>Checking illustrations</strong></td>
+<td>Share an illustration draft and ask: "Does this image accurately represent the events of Mark 5:1–20? List any discrepancies."</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Current limitations:</strong>
+- Image analysis quality varies significantly by tool and model.
+- Audio transcription introduces its own error rate, especially for low-resource languages or heavy accents — always verify the transcript before using it.
+- Multi-modal workflows involve larger data volumes and raise sharper privacy questions (images and recordings may contain identifiable information).</p>
+<p><strong>The rule:</strong> Treat multi-modal outputs with the same verification habits as text outputs. Transcription errors and image misreadings are as possible — and as consequential — as text hallucinations.</p>
+<hr />
+<h2 id="g6-agentic-workflows">G.6 Agentic Workflows</h2>
+<p>Standard prompting is a single-turn or multi-turn conversation: you ask, the model responds, you act on the response. <strong>Agentic AI</strong> goes further: an AI agent can plan a multi-step task, execute steps sequentially, use tools (search, code execution, file access), make decisions along the way, and produce a complex output — with minimal human input at each step.</p>
+<p>You have probably already encountered a basic form of this: ChatGPT using web search, or Claude reading a file you uploaded. These are simple agents. More complex agents can write and run code, browse websites, check facts, and chain tasks together autonomously.</p>
+<p><strong>Prompting in IDEs — AI at Your Desk, Not in the Cloud</strong></p>
+<p>Most AI interaction happens in a browser tab: you type into a chatbot, get a response, copy it somewhere useful. An <strong>Integrated Development Environment (IDE)</strong> with AI built in works differently. Think of it as a personal AI workbench — one that sits on your machine, has direct access to the files you are actually working on, and can coordinate multiple tools and steps on your behalf without you uploading anything. Tools like <strong>Cursor</strong>, <strong>VS Code with GitHub Copilot</strong>, or <strong>Windsurf</strong> are increasingly used not just by programmers, but by any practitioner who works with text files and wants AI close to their work.</p>
+<p><em>What makes this relevant for Bible translators</em></p>
+<p>An AI-equipped IDE gives you something no chatbot tab does: the AI can already see what is in your files. You do not describe your key-term list or paste your draft — you open the folder and the AI reads across everything in it. Because it runs locally, your translation files and community data can stay on your machine (see §G.2).</p>
+<p>Some practical possibilities, all achievable through natural language prompting once you have a feel for the interface:</p>
+<ul>
+<li>
+<p><strong>Draft generation against your own reference material.</strong> Point the AI at your existing Scripture translation files and a reference lexicon. Ask it to generate a draft of a new passage that is consistent with your team's established key-term decisions. It reads both at once — no manual copy-pasting.</p>
+</li>
+<li>
+<p><strong>RAG without infrastructure.</strong> A full RAG pipeline normally requires a server and technical setup. In an AI-equipped IDE you can approximate the same effect by prompting: <em>"Here is my translation style guide [file A]. Here are my checking notes [file B]. Evaluate this draft for consistency with both."</em> The AI reads your documents, reasons over them, and responds — all without sending data to a third-party storage service.</p>
+</li>
+<li>
+<p><strong>Formatting and batch transformation.</strong> Reformatting USFM files, extracting key terms into a spreadsheet, converting back-translation notes into a checking report — tasks that would take hours of manual work can often be described in plain language. <em>"Take all the consultant notes in this folder and produce a summary table with passage reference, issue type, and resolution status."</em> One prompt, a multi-step task, structured output.</p>
+</li>
+<li>
+<p><strong>Multi-step checking workflows.</strong> Ask the AI to read a draft passage, compare it against the UBS checking questions for that section, and flag any question the draft does not clearly answer. The AI carries out the full sequence across your working files.</p>
+</li>
+</ul>
+<p>The key shift in posture: you are not asking one question per session. You are describing a workflow — and the AI carries it out.</p>
+<p><em>For the technically oriented</em></p>
+<p>If you have programming capability — or are willing to learn a little Python — the possibilities expand further. An AI IDE will write the code for you: a script that processes a whole folder of USFM files, a tool that checks your key-term register against every chapter of a translation, a formatter that converts from one tool's export format to another's import format. You describe what you need in plain language; the AI writes the code; you run it. This is not the same as becoming a programmer — but it is a level of technical agency that was previously unavailable to people who had not spent years learning to code.</p>
+<p><em>Honest limitations</em></p>
+<ul>
+<li>The learning curve is steeper than a chatbot. Initial setup takes time.</li>
+<li>AI-generated code must be reviewed — it writes plausible scripts that may contain errors.</li>
+<li>Complex agentic tasks require precise task descriptions; vague instructions produce adjacent results.</li>
+</ul>
+<p>The investment is real. So is the capability. For translation teams working with large file sets, multi-language comparisons, or repetitive formatting tasks, the time saved at scale makes the initial learning curve worthwhile.</p>
+<p><em>This handbook is itself a worked example of this workflow — produced in an AI-equipped IDE over the course of a few days. Appendix I documents exactly how it was done.</em></p>
+<p><strong>A governance note:</strong> Agents can act on your behalf — sending emails, modifying files, publishing content. Any agentic tool given access to production systems needs explicit governance: what is it authorised to do, who can override it, and how are errors caught?</p>
+<hr />
+<h2 id="g7-prompt-maintenance-treating-prompts-as-institutional-assets">G.7 Prompt Maintenance — Treating Prompts as Institutional Assets</h2>
+<p>Individual prompts written for one task and discarded are a missed opportunity. When a prompt works well, it encodes hard-won knowledge — about your team's workflow, your target community, your style requirements, your theological guardrails. That knowledge should not live only in one person's chat history.</p>
+<p><strong>Why prompts decay</strong></p>
+<p>A prompt that produces excellent output today may produce noticeably different output six months from now — because the underlying model has been updated, because the platform has changed its default behaviour, or because your project's context has evolved. This is <strong>prompt decay</strong>: the gradual divergence between what a prompt was designed to do and what it actually produces.</p>
+<p>Treating prompts as living documents — with version dates, review cycles, and ownership — prevents this from becoming invisible drift.</p>
+<p><strong>Building a team prompt library</strong></p>
+<p>A prompt library is a shared, maintained collection of production-ready prompts for your team's most common tasks. It should include:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>What to record</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Task</strong></td>
+<td>What workflow step this prompt serves</td>
+</tr>
+<tr>
+<td><strong>Lane</strong></td>
+<td>Which role(s) it is designed for</td>
+</tr>
+<tr>
+<td><strong>Date tested</strong></td>
+<td>When it was last verified to produce good output</td>
+</tr>
+<tr>
+<td><strong>Model tested on</strong></td>
+<td>Which model it was verified with (prompts are not always portable across models)</td>
+</tr>
+<tr>
+<td><strong>Known limitations</strong></td>
+<td>What it does not handle well</td>
+</tr>
+<tr>
+<td><strong>Guardrails</strong></td>
+<td>What safety constraints are built in</td>
+</tr>
+</tbody>
+</table>
+<p>For small teams, a shared document or spreadsheet is sufficient. For larger networks, a structured digital resource is worth the setup investment.</p>
+<p><strong>Prompt ownership</strong></p>
+<p>Someone needs to own each prompt — to review it when the model updates, to revise it when project context changes, and to retire it when it is no longer fit for purpose. This is a Lane 3 function in larger organisations, but the culture of maintenance needs to be shared across all lanes.</p>
+<p><strong>The rule:</strong> A prompt that works is worth keeping. A prompt worth keeping is worth maintaining.</p>
+<hr />
+<h2 id="g8-diagnostic-prompting-when-the-output-is-wrong">G.8 Diagnostic Prompting — When the Output Is Wrong</h2>
+<p>When an AI produces a bad output, the instinct is to re-prompt immediately. Often this makes things worse — you change the wrong thing, or you obscure the underlying problem with new instructions. <strong>Diagnostic prompting</strong> is a structured alternative: you interrogate <em>why</em> the output failed before you change anything.</p>
+<p><strong>A simple diagnostic loop</strong></p>
+<p>When an output is wrong or weak, run through these checks before re-prompting:</p>
+<ol>
+<li>
+<p><strong>Is this a hallucination?</strong> Did the AI invent a fact, reference, or detail? If so, the fix is a stronger verification guardrail, not a rephrased question.</p>
+</li>
+<li>
+<p><strong>Is this a knowledge cutoff problem?</strong> Is the AI describing a state of affairs that has since changed? If so, supply the current document and instruct the model to reason from it only.</p>
+</li>
+<li>
+<p><strong>Is the persona too generic?</strong> Is the output aimed at the statistical average reader rather than your specific context? Sharpen the Persona and audience description.</p>
+</li>
+<li>
+<p><strong>Is the context missing?</strong> Did the AI have to guess at information you have but didn't provide — the target community, the passage scope, the checking stage? Add it.</p>
+</li>
+<li>
+<p><strong>Is the output format wrong?</strong> Did the AI produce prose when you needed a table, or a table when you needed a running analysis? Specify the format explicitly.</p>
+</li>
+<li>
+<p><strong>Is the task too broad?</strong> Did you ask for multiple things in one prompt, causing the AI to average across them? Break it into sequential tasks.</p>
+</li>
+</ol>
+<p>Most bad outputs fail for one of these six reasons. Identifying which one before re-prompting produces a more targeted fix and a better prompt for reuse.</p>
+<hr />
+<h2 id="g9-red-teaming-your-own-prompts">G.9 Red-Teaming Your Own Prompts</h2>
+<p>Before deploying a prompt in a real workflow — especially a prompt that will be used by your team, or applied to sensitive content — try to break it deliberately. This is called <strong>red-teaming</strong>.</p>
+<p><strong>What red-teaming looks like in practice:</strong></p>
+<ul>
+<li>Run the prompt with input that is deliberately ambiguous, incomplete, or edge-case. Does the output hold? Does the guardrail trigger when it should?</li>
+<li>Ask the AI to roleplay as a careless user deliberately trying to bypass the constraints. Does the prompt hold?</li>
+<li>Run the same prompt on several different passages or tasks. Is the output quality consistent, or does it work only for the original test case?</li>
+<li>Have a colleague run the prompt independently on the same input. Do they get the same output? If not, why?</li>
+</ul>
+<p>A prompt that survives simple red-teaming is significantly more trustworthy than one that was only ever tested on the ideal case.</p>
+<p><strong>For theological guardrails specifically:</strong> before using a prompt in a checking round, test it on content where you already know what the correct answer is. Does the prompt produce the right constraint behaviour? Does it flag what it should flag? Does it refrain from speculating where it should?</p>
+<p>This investment is proportional to the stakes. A prompt for formatting meeting notes needs less red-teaming than one used in a key-term checking session.</p>
+<hr />
+<h2 id="g10-the-future-minority-languages-and-what-comes-next">G.10 The Future: Minority Languages and What Comes Next</h2>
+<p><strong>The capability gap</strong></p>
+<p>AI capability in minority languages is currently poor — and this is not a marginal problem for Bible Translation communities. The languages where BT work is most needed are precisely the languages least represented in AI training data. The communities most dependent on accurate Scripture in their mother tongue are the ones for whom AI assistance is currently least reliable.</p>
+<p>This should not be a source of despair. It should be a source of strategic clarity: AI is a powerful accelerant for work in well-resourced languages and a useful — but heavily caveated — assistant for work in low-resource languages right now. The gap is real. It is also closing.</p>
+<p><strong>Three paths toward language-aware AI</strong></p>
+<p>BT communities are not passive consumers in this story. There are three concrete paths through which existing BT data and expertise can feed back into expanding AI capability for minority languages:</p>
+<ol>
+<li>
+<p><strong>RAG (Retrieval-Augmented Generation)</strong> — supplying your existing translated texts, back-translations, and lexicons to a general-purpose model so it reasons over your data during a session. No model training required; can be implemented with existing tools. The trade-offs (data privacy, context window limits, output verification) are covered in this handbook — see Chapter 4 and §G.3.</p>
+</li>
+<li>
+<p><strong>Fine-tuning</strong> — taking a pre-trained model and continuing to train it on your language's data, producing a model that has absorbed your community's patterns. Requires technical resources and data governance decisions that go well beyond prompting, but produces more durable capability gains.</p>
+</li>
+<li>
+<p><strong>Tools built on existing BT data</strong> — Scripture Forge is a current example: a tool that uses already-translated texts and back-translations to assist with generating new drafts in related languages or registers. This is AI augmentation from within the BT ecosystem, not dependent on general model improvements.</p>
+</li>
+</ol>
+<p><strong>What is being done more broadly</strong></p>
+<ul>
+<li><strong>NLLB (No Language Left Behind)</strong> — Meta's multilingual translation model trained on data that includes many minority languages; directly relevant to BT communities.</li>
+<li><strong>FLORES and similar benchmarks</strong> — measure AI performance across hundreds of languages, identifying where gaps are largest.</li>
+<li><strong>Masakhane</strong> — building training data and models specifically for under-resourced African languages.</li>
+<li><strong>Omnilingual-ASR and audio-first initiatives</strong> — recognise that the data scarcity for minority languages exists primarily in <em>written and parallel</em> form; audio data already exists in communities and is increasingly usable for training.</li>
+<li><strong>OPUS</strong> — growing multilingual training datasets that include minority language texts.</li>
+</ul>
+<p>The BT movement has been generating parallel text data — source, back-translation, draft, checking notes — for decades. This data is potentially one of the most valuable minority language resources in existence. Engaging with the AI research community around how this data can be responsibly shared and used is an unfinished conversation the tech side of BT needs to initiate.</p>
+<p><strong>The AI automation trajectory</strong></p>
+<p>A common concern among participants is: <em>as AI gets better, will it replace human translators and consultants?</em></p>
+<p>For high-resource languages, AI capability will continue to advance rapidly. Human oversight will remain essential — but the nature of that oversight shifts from manual execution to quality assurance, community accountability, and the judgment no compute can replace: does this rendering land correctly with the people it is for?</p>
+<p>For minority languages, the trajectory is slower. But it is not zero — and a minority language LLM, once trained, is not limited to Scripture. It enables dictionaries, newspapers, educational materials, and community communication across every domain. That is not just a Bible Translation outcome. It is a community capacity outcome. The case for investing in it goes well beyond any single organisation's mission.</p>
+<p><em>For a full treatment of this topic — including the strategic case for BT involvement in the minority language AI movement — see Appendix H: LLMs and Minority Languages.</em></p>
+<p><strong>The skills you already have</strong></p>
+<p>The Informed Pilot posture is not a temporary stance while AI is primitive. Precise prompting, critical evaluation, structured output, diagnostic thinking — these are the foundation for using AI responsibly at whatever capability level the tools reach. They are also the foundation for knowing when to trust an output, when to push back, and when the tool has reached the limit of what it can do for your community today.</p>
+<hr />
+<p><em>Return to Chapter 1: How LLMs Work →</em><br />
+<em>Return to Appendix B: Risk Quick Reference →</em><br />
+<em>Return to Appendix D: Prompt Template Library →</em></p>
+</div>
+    </main>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <!-- ── PRESENTATION MODE CONTROLS ───────────────────────── -->
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="../assets/script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>

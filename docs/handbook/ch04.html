@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 4 — Advanced Techniques</title>
+  <meta name="description" content="Prompt Engineering for Bible Translators · AILT 2026 AI Tools Workshop">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+</head>
+<body>
+
+  <!-- ── SITE NAV ──────────────────────────────────────────── -->
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="../" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="../" class="shell-nav-link">Home</a>
+        <a href="../prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="../handbook/" class="shell-nav-link">Handbook</a>
+        <a href="../about.html" class="shell-nav-link">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── PAGE LAYOUT ─────────────────────────────────────────────── -->
+  <div class="shell-page">
+    <main class="shell-main" id="main-content">
+      <div class="prose-content">
+<h1 id="chapter-4-advanced-techniques-managing-the-context-window">Chapter 4: Advanced Techniques — Managing the Context Window</h1>
+<blockquote>
+<p><strong>Session tag:</strong> Advanced<br />
+<strong>Key question:</strong> How do I keep my AI sessions reliable when they grow long?</p>
+</blockquote>
+<hr />
+<h2 id="40-the-context-window-your-ais-working-memory">4.0 The Context Window: Your AI's Working Memory</h2>
+<p>Every AI conversation sits inside a <strong>context window</strong> — the total amount of text the model can hold in its working memory at one time. Context windows are measured in <strong>tokens</strong> — roughly one common word per token, with punctuation marks each counting as a separate token. To anchor the numbers: a 128,000-token window holds approximately 350–400 pages of standard English text; a 1,000,000-token window holds roughly 2,500–3,000 pages. In practice, most working BT sessions comfortably fit within these limits — the risk is not running out of space, but the subtler problem of <em>behavioural drift</em> as the session grows (see below). Note also that non-Latin scripts (Tamil, Telugu, Ge'ez, etc.) tokenise less efficiently — often 2–3 tokens per word — so sessions with non-Latin pasted text fill the window faster than equivalent English content.</p>
+<p>There is a deeper mechanism behind drift that is worth understanding. The architecture underlying all modern LLMs — introduced in Google's landmark 2017 paper <em>"Attention Is All You Need"</em> — uses a mechanism called <strong>attention</strong> to decide how much weight to give to each token in the context when generating each new word. Tokens that are close together in the conversation receive strong mutual attention; tokens that are far apart receive progressively weaker attention. In practical terms: as your session grows, the guardrails you set at the beginning become not just older — they become <em>less influential</em>. The model can technically still see them, but it attends to them with diminishing weight compared to the recent exchanges filling the foreground of the window. This is why drift can begin before anything has literally scrolled off: distance within the context window is itself a form of forgetting.</p>
+<p>The model does not flag this. From its perspective, the conversation simply begins at whatever is currently within view. It has no awareness of what has scrolled out — and no ability to tell you that something important has been lost. This is the defining characteristic of context loss as a failure mode: the model cannot detect an absence, so it produces no warning. The full discussion of why this makes it distinctively dangerous is in Chapter 1, §1.4 (Failure Mode 6).</p>
+<h3 id="why-this-matters-for-bt-sessions">Why this matters for BT sessions</h3>
+<p>Your guardrails, role instructions, and AI session brief are written at the very <em>start</em> of a session. They are therefore the <em>first things</em> to scroll out of the window as the session grows.</p>
+<p>A session that began with <em>"Do not speculate beyond the text — flag all uncertain interpretations as NEEDS VERIFICATION"</em> may, after 40–50 exchanges, be operating with that instruction entirely out of scope. The model will begin speculating freely, not because it is misbehaving, but because it genuinely cannot see the instruction anymore.</p>
+<p>This is not a failure of the tool. It is the expected behaviour — and it is your responsibility to manage it.</p>
+<h3 id="the-three-stages-of-a-session">The three stages of a session</h3>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>What is happening</th>
+<th>Risk level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Session start</strong></td>
+<td>All instructions, brief, and guardrails are in scope</td>
+<td>Low</td>
+</tr>
+<tr>
+<td><strong>Mid-session</strong></td>
+<td>Context filling; older content approaching the edge</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td><strong>Overflow</strong></td>
+<td>Earliest content (your guardrails) silently dropped</td>
+<td>High — silent rule-breaking</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="41-defence-1-task-chunking">4.1 Defence 1: Task Chunking</h2>
+<p><strong>The principle:</strong> One task per chat. Never mix unrelated work in a single long session.</p>
+<p>A session that covers exegesis of Mark 5, then back-translation review, then key-term analysis, then formatting a report — over two hours — will be unreliable by the end. The constraints you set for exegesis work may not apply to the formatting task, and vice versa. Cross-contamination of instructions is as dangerous as context loss.</p>
+<p><strong>Practice:</strong>
+- Exegesis session → one chat
+- Back-translation review → separate chat
+- Administrative summary → separate chat</p>
+<p>Starting a new chat costs you nothing. A fresh chat starts with a full, clean context window ready for your brief. The habit of <em>one chat per task</em> is the single most impactful change most practitioners can make to improve the reliability of their AI work.</p>
+<p><strong>One critical step:</strong> A new chat is blank. The AI has no memory of previous sessions by default — it does not know your project, your guardrails, your key-term decisions, or what was decided last week. Before typing your first prompt in any new session, paste your AI Session Brief and (if continuing from a prior session) a summary of where you left off. Skip this step and you are briefing a stranger who has never heard of your project. Defence 3 (the AI Session Brief) exists precisely to make this re-injection fast and consistent.</p>
+<hr />
+<h2 id="42-defence-2-summarise-and-restart">4.2 Defence 2: Summarise and Restart</h2>
+<p><strong>The principle:</strong> When a session grows long, ask the model to summarise what was decided, then carry that summary into a fresh chat.</p>
+<p><strong>How to do it:</strong></p>
+<p>When you notice a session becoming long, ask:</p>
+<blockquote>
+<p><em>"Summarise all key findings and decisions from this session as a compact bullet-point list. Include any items flagged as NEEDS VERIFICATION."</em></p>
+</blockquote>
+<p>Copy the summary. Open a new chat. Paste the summary along with your AI session brief as the opening context. Continue from where you left off — but with a full, clean window.</p>
+<p>This takes about 90 seconds and completely resets the context. The new session begins with the decisions intact and the guardrails fully in scope.</p>
+<p><strong>When to do it:</strong> Length alone is a poor trigger — modern frontier models handle context windows of 128,000 tokens or more, and even a long conversation rarely approaches that limit through text exchange alone. The real trigger is <em>behavioural drift</em>: the model stops following your format, starts speculating when it was told not to, changes register, or produces output that no longer matches the constraints you set at the start. When you notice any of these, the session has drifted and a summarise-and-restart will reset it cleanly. A second trigger is document volume: if you have pasted multiple large texts (source passage, back-translation, key-term list, AI session brief) in a single session, the window fills faster than conversation alone — consider restarting when you are about to add a large paste to an already substantial session.</p>
+<hr />
+<h2 id="43-defence-3-keep-an-ai-session-brief">4.3 Defence 3: Keep an AI Session Brief</h2>
+<p><strong>A note on terminology:</strong> In Bible Translation, <em>project brief</em> already has a specific meaning — the foundational document that defines the translation's purpose, target audience, and scope. That is not what this section is describing. The document here is an <strong>AI Session Brief</strong>: a short, structured file you paste at the start of every AI chat to orient the model to your project. The two documents are related but distinct.</p>
+<p><strong>The good news:</strong> You do not need to create this from scratch. Your existing translation project brief already contains most of what the AI needs. A useful first step is to ask the AI to help you convert it:</p>
+<blockquote>
+<p><em>"Below is our translation project brief. Extract from it a compact AI session brief covering: project context, theological guardrails, key-term decisions so far, style rules, and output format defaults. Structure it so I can paste it at the start of every AI session."</em></p>
+</blockquote>
+<p>Then review and supplement the result with any AI-specific instructions (output format defaults, uncertainty flags, etc.) that are not in the original brief.</p>
+<p><strong>The principle:</strong> Maintain a single <code>ai-session-brief.md</code> file that contains everything the model needs to know about your project and your standing rules. Paste or upload it at the start of <em>every</em> new chat session.</p>
+<p><strong>What goes in an AI Session Brief:</strong></p>
+<pre><code class="language-markdown"># AI Session Brief — [Project Name]
+
+## Project context
+- Target language: [name]
+- Target audience: [description — literacy level, cultural framing, etc.]
+- Current phase: [FIA / Drafting / Checking / etc.]
+
+## Theological guardrails
+- Do not speculate beyond what the source text states
+- Flag any uncertain interpretation as: NEEDS VERIFICATION
+- Do not paraphrase or reword source text quotations
+- Do not add theological commentary not present in the source
+
+## Key-term decisions
+- [Term] → [Approved rendering]
+- [Term] → [Approved rendering]
+
+## Style rules
+- Reading level: [primary school / secondary / expert]
+- Register: [formal / conversational / plain]
+- Avoid: [specific vocabulary or framing to avoid]
+
+## Output format defaults
+- Tables use: Issue | Verse | Suggestion
+- Flag unchecked items as: NEEDS VERIFICATION
+</code></pre>
+<p><strong>The brief costs you three minutes to write once — or a few minutes to generate from your existing translation brief. It saves you re-briefing at the start of every session and prevents the silent erosion of constraints that happens when you rely on memory alone.</strong></p>
+<p>Keep this file where you can find it quickly — a desktop shortcut, a pinned Notion page, a printed card. The faster you can paste it, the more consistently you will use it.</p>
+<hr />
+<h2 id="44-defence-4-use-a-system-prompt">4.4 Defence 4: Use a System Prompt</h2>
+<p><strong>The principle:</strong> In tools that support it, move your standing instructions into a <strong>system prompt</strong> — a special instruction layer that sits <em>outside</em> the conversation scroll and is always visible to the model, regardless of session length.</p>
+<h3 id="what-is-a-system-prompt">What is a system prompt?</h3>
+<p>In a standard chat, all content — your instructions, the model's responses, your follow-ups — occupies the same scrolling context window. When the window fills, the oldest content goes.</p>
+<p>A system prompt is different. It is loaded into the model's context <em>before</em> the conversation begins, in a privileged position that does not scroll. Your guardrails and AI session brief placed in the system prompt are permanently in scope — the context window filling up cannot touch them.</p>
+<h3 id="where-to-find-system-prompts">Where to find system prompts</h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>How to set a system prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Claude Projects</strong></td>
+<td>Create a new Project; add instructions in the Project Instructions field. All chats within the Project inherit those instructions.</td>
+</tr>
+<tr>
+<td><strong>Custom GPTs (OpenAI)</strong></td>
+<td>In the GPT editor, add instructions in the System field. All chats with that GPT use those instructions.</td>
+</tr>
+<tr>
+<td><strong>Chipp.ai</strong></td>
+<td>Custom agent system prompt field.</td>
+</tr>
+<tr>
+<td><strong>API access</strong></td>
+<td>The <code>system</code> parameter in the request.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="for-lane-3-practitioners">For Lane 3 practitioners</h3>
+<p>System prompts are the strongest defence for team-level and production use. If your translation team runs multiple checking sessions per week, creating a project-specific Custom GPT or Claude Project — with the AI Session Brief, key-term list, and theological guardrails loaded as the system prompt — means every team member starts every session with fully correct constraints, without needing to copy and paste anything.</p>
+<p>This is the architectural upgrade from individual best-practice to team-level reliability.</p>
+<hr />
+<h2 id="45-the-ai-ecosystem-choosing-the-right-tool">4.5 The AI Ecosystem: Choosing the Right Tool</h2>
+<h3 id="not-all-ai-is-the-same-and-data-sensitivity-matters">Not all AI is the same — and data sensitivity matters</h3>
+<p>The five-building-block prompting skills in this handbook apply across all major AI tools. But which tool you use for a given task depends on two factors: <strong>capability</strong> and <strong>data sensitivity</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Tool type</th>
+<th>Best for</th>
+<th>Data sensitivity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Frontier cloud models</strong> (ChatGPT, Claude, Gemini — paid/enterprise)</td>
+<td>Deep research, complex exegesis, long-document analysis</td>
+<td>Enterprise API plans: private. Free consumer tiers: may train on your data.</td>
+</tr>
+<tr>
+<td><strong>Local models</strong> (LM Studio on your laptop)</td>
+<td>Any task involving unpublished draft text in the field</td>
+<td>Highest privacy — model runs entirely on your device, no internet required</td>
+</tr>
+<tr>
+<td><strong>Specialist BT tools</strong> (Scripture Forge, Faithbridge, AQuA)</td>
+<td>Workflow-integrated tasks (drafting, FIA, quality checking)</td>
+<td>Covered by your organization's data agreements</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-data-sensitivity-decision-rule">The data-sensitivity decision rule</h3>
+<p>A simple question determines which tool to use:</p>
+<blockquote>
+<p><strong>"Is this draft text published?"</strong>
+- Yes → cloud tools are acceptable
+- No → use a local model (LM Studio) or an enterprise-licensed API only</p>
+</blockquote>
+<p><strong>Never paste unpublished, sensitive, or community-private draft text into a free consumer chat interface.</strong> Free tiers of ChatGPT, Gemini, and similar tools may use session data for model training. Treat them like a public forum: do not share anything you would not publish openly.</p>
+<blockquote>
+<p><strong>Beyond these guidelines:</strong> The decision rule above is a practical baseline. Teams should also check with their own IT and administration teams — many organisations have their own data handling policies, approved tool lists, and acceptable-use guidelines that may be stricter than the baseline here. If your organisation has such policies, follow them. If it does not, treat this decision rule as the floor, not the ceiling.</p>
+</blockquote>
+<hr />
+<p><em>Continue to Chapter 5: Prompting by Lane →</em></p>
+</div>
+    </main>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <!-- ── PRESENTATION MODE CONTROLS ───────────────────────── -->
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="../assets/script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>

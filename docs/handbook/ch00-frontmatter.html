@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frontmatter</title>
+  <meta name="description" content="Prompt Engineering for Bible Translators · AILT 2026 AI Tools Workshop">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+</head>
+<body>
+
+  <!-- ── SITE NAV ──────────────────────────────────────────── -->
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="../" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="../" class="shell-nav-link">Home</a>
+        <a href="../prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="../handbook/" class="shell-nav-link">Handbook</a>
+        <a href="../about.html" class="shell-nav-link">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── PAGE LAYOUT ─────────────────────────────────────────────── -->
+  <div class="shell-page">
+    <main class="shell-main" id="main-content">
+      <div class="prose-content">
+<h1 id="prompt-with-precision">Prompt with Precision</h1>
+<h2 id="a-practitioners-guide-to-ai-prompting-for-bible-translation">A Practitioner's Guide to AI Prompting for Bible Translation</h2>
+<p><strong>AI Tools Track — Prompt Engineering Module</strong><br />
+AILT Workshop · March 2026</p>
+<p><strong>Author:</strong> Benjamin C. Varghese<br />
+<strong>Release:</strong> v0.1-beta<br />
+<strong>Licence:</strong> <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> — free to share and adapt with attribution; derivatives must carry the same licence.</p>
+<hr />
+<p><em>Prepared for participants of the AI Tools Track, AILT 2026.</em><br />
+<em>All examples use Mark 5:1–20 as the shared through-line passage.</em></p>
+<hr />
+<h2 id="preface">Preface</h2>
+<p>This handbook grew out of a simple observation: most people who use AI tools in Bible Translation work are not getting nearly as much out of them as they could — not because the tools are inadequate, but because the instructions given to those tools are.</p>
+<p>Prompting is the skill of giving AI precise, well-structured instructions that produce reliable, usable output. It is not a technical skill in the programmer sense. It is a <em>communication</em> skill — the same discipline that makes a good brief, a clear checking question, or a useful consultant report. If you can write a focused request to a colleague, you can learn to prompt well.</p>
+<p>This handbook is the take-home companion to the Prompt Engineering session taught in the AILT 2026 AI Tools Track. It follows the same structure as the session: foundations first, then techniques, then application by role. Use it during the workshop. Keep it on your desk afterward. Adapt the templates for your team.</p>
+<p>A note on scope: this handbook covers prompt engineering only. It does not cover Scripture Forge, AQuA, LM Studio, or other specific tools in the AI Tools track — those have their own guides. What it covers is the underlying skill that makes every one of those tools work better.</p>
+<hr />
+<h2 id="how-to-use-this-handbook">How to Use This Handbook</h2>
+<p><strong>During the course:</strong> Each chapter maps to a segment of the live session. The appendices belong to the course too: use them as in-session aids, workshop handouts, and follow-up tools when you build your own prompts in the labs.</p>
+<p><strong>After the session:</strong> The appendices are designed as standalone quick-reference cards. Appendix D (Prompt Template Library) in particular is meant to be photocopied, laminated, or pinned to a wall — a working tool that extends the course into daily practice.</p>
+<p><strong>For your team:</strong> Chapter 5 (Prompting by Lane) and Appendix C (Lane Reference Card) are the most shareable sections. They require no prior reading to be useful.</p>
+<hr />
+<h2 id="the-three-lanes">The Three Lanes</h2>
+<p>Throughout this handbook, examples and techniques are tagged by role:</p>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Lane</th>
+<th>Who</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Lane 1</strong></td>
+<td>Translation &amp; Language</td>
+<td>Mother Tongue Translators · Translators · Linguists · Literacy Workers</td>
+</tr>
+<tr>
+<td><strong>Lane 2</strong></td>
+<td>Consultants &amp; Advisors</td>
+<td>Translation Consultants · Consultants in Training · Exegetes · Advisors</td>
+</tr>
+<tr>
+<td><strong>Lane 3</strong></td>
+<td>Leadership &amp; Technical</td>
+<td>Cluster Managers · Project Executives · IT Support · Software QA · Facilitators</td>
+</tr>
+</tbody>
+</table>
+<p>Not every technique section will have an example for every lane. Where a technique is especially important for a specific lane, it is called out. All techniques apply to all lanes — the examples just illustrate the most common application.</p>
+<hr />
+<h2 id="the-through-line-mark-5120">The Through-Line: Mark 5:1–20</h2>
+<p>To make the principles concrete and comparable across examples, this handbook uses a single shared passage: <strong>Mark 5:1–20</strong>, the account of Jesus and the man possessed by "Legion" among the tombs. This passage was selected because it:</p>
+<ul>
+<li>Is culturally rich and translation-challenging (pigs, tombs, Legion, Decapolis)</li>
+<li>Contains a named and unusual key term ("Legion") that requires careful rendering</li>
+<li>Involves a cultural context (honour/shame, purity laws, Roman military presence) that varies significantly across target audiences</li>
+<li>Is familiar enough to most participants that the focus stays on the prompting technique, not on parsing the content</li>
+</ul>
+<p>Where your own work uses different passages or different challenges, substitute freely. The structures transfer directly.</p>
+<hr />
+<h2 id="a-note-on-how-this-handbook-was-made">A Note on How This Handbook Was Made</h2>
+<p>This handbook was written with the assistance of AI tools — which is fitting, given its subject matter. Content was developed through a guided dialogue between the author and an AI assistant: the author supplied the domain knowledge, the structure, the examples from field practice, and the theological and methodological judgments; the AI assisted with drafting, language refinement, and working through the implications of each section. Every section was reviewed, corrected, and approved by the author before being included.</p>
+<p>Specifically, AI was used for:
+- <strong>Guided content generation</strong> — developing section drafts from author-supplied outlines, notes, and direction
+- <strong>Language improvement</strong> — improving clarity and fluency in a second-language writing context
+- <strong>Fact-checking support</strong> — though all claims about tools, field practice, and Scripture were verified by the author independently</p>
+<p>This is itself an example of the <em>Informed Pilot</em> posture described in Chapter 1: the author remained accountable for every judgment in this text. The AI was a capable assistant, not an authority.</p>
+<p>Where any error survives into this text, it is the author's responsibility to correct it.</p>
+<hr />
+<h2 id="a-word-about-ai-and-scripture">A Word About AI and Scripture</h2>
+<p>AI is a powerful assistant. It is not a new authority over Scripture.</p>
+<p>When an AI output disagrees with the text, your exegetical judgment — supported by Paratext, Logos, your consultants, and your language community — is the tie-breaker. AI accelerates the process. The standard of truth rests with you.</p>
+<p>This handbook will return to this point at each stage where the risk of over-reliance is highest.</p>
+<hr />
+<p><em>Continue to Chapter 1: How LLMs Work and Why It Matters for Prompting →</em></p>
+</div>
+    </main>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <!-- ── PRESENTATION MODE CONTROLS ───────────────────────── -->
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="../assets/script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>

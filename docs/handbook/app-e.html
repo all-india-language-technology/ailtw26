@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appendix E — Meta-Prompting</title>
+  <meta name="description" content="Prompt Engineering for Bible Translators · AILT 2026 AI Tools Workshop">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+</head>
+<body>
+
+  <!-- ── SITE NAV ──────────────────────────────────────────── -->
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="../" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="../" class="shell-nav-link">Home</a>
+        <a href="../prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="../handbook/" class="shell-nav-link">Handbook</a>
+        <a href="../about.html" class="shell-nav-link">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── PAGE LAYOUT ─────────────────────────────────────────────── -->
+  <div class="shell-page">
+    <main class="shell-main" id="main-content">
+      <div class="prose-content">
+<h1 id="appendix-e-meta-prompting">Appendix E: Meta Prompting</h1>
+<h2 id="let-the-ai-write-your-prompts">Let the AI Write Your Prompts</h2>
+<p><em>Meta prompting is using the AI to generate or improve a prompt you will then use for your actual task. Instead of building a complex, multi-block prompt from scratch, you describe what you need in plain language and ask the model to do the structural work.</em></p>
+<hr />
+<h2 id="what-meta-prompting-is-and-is-not">What Meta Prompting Is — and Is Not</h2>
+<p><strong>It is:</strong> Using the AI as a prompt engineer — giving it a plain-language description of your task and asking it to produce a structured, detailed prompt built on best practices.</p>
+<p><strong>It is not:</strong> A shortcut past learning the building blocks. You still need to understand what good looks like in order to evaluate and correct the prompt the model generates. The building blocks in Chapter 2 are not less relevant when you use meta prompting — they are the criteria by which you judge the output.</p>
+<p><strong>Critical principle:</strong> A meta-generated prompt inherits the AI's assumptions about your audience, culture, and theological constraints. <strong>Always review it before you use it.</strong> The checklist at the end of this appendix tells you exactly what to check.</p>
+<hr />
+<h2 id="three-ways-to-use-it">Three Ways to Use It</h2>
+<h3 id="1-generate-a-new-prompt-from-scratch">1 — Generate a new prompt from scratch</h3>
+<p>You describe the task; the AI writes the prompt.</p>
+<blockquote>
+<p><em>"I need a prompt that will help me check whether our Tamil translation of Mark 5:1–20 sounds natural when read aloud to a rural audience. Our team are mother-tongue translators, not scholars. The output should be practical — something I can use in a team session this week. Write me a detailed prompt I can use with Claude or ChatGPT, using Persona, Guardrails, and Output Format."</em></p>
+</blockquote>
+<p>The model returns a fully structured prompt. You read it, adjust anything that doesn't fit your project, and then use it.</p>
+<hr />
+<h3 id="2-improve-a-prompt-you-already-have">2 — Improve a prompt you already have</h3>
+<p>You paste your existing prompt and ask for a structured upgrade.</p>
+<blockquote>
+<p><em>"Here is a prompt I have been using:</em></p>
+<p><em>'Review our back-translation of Mark 5 and flag accuracy issues.'</em></p>
+<p><em>Improve this prompt by adding a clear Persona, relevant Guardrails for Bible Translation accuracy work, a Chain of Thought instruction, and a structured Output Format. Keep it practical — this will be used by a translation consultant, not a software developer."</em></p>
+</blockquote>
+<p>The model returns a strengthened version. This is one of the fastest ways to see what ch02's building blocks look like in practice applied to your own real task.</p>
+<hr />
+<h3 id="3-generate-a-reusable-template-for-a-recurring-task">3 — Generate a reusable template for a recurring task</h3>
+<p>You describe a workflow that repeats across your project and ask for a template with placeholders.</p>
+<blockquote>
+<p><em>"I need a reusable prompt template for key-term analysis sessions. We use these regularly throughout our translation project — one session per key term. The template should include Persona, a Chain of Thought reasoning structure, Guardrails against speculation, and an Output Format we can paste into our key-term register. Use bracketed placeholders for the parts that change each session (e.g. the term, the passage, the target language)."</em></p>
+</blockquote>
+<p>The result becomes your own project-specific entry for App-D — a template built for your team rather than a generic one.</p>
+<hr />
+<h2 id="worked-examples-by-lane">Worked Examples by Lane</h2>
+<h3 id="lane-1-translator">Lane 1 — Translator</h3>
+<p><strong>Plain-language request:</strong></p>
+<blockquote>
+<p><em>"Write me a prompt to help me think through how to render the word 'Legion' in Mark 5:9 into Tamil. I need the AI to reason step by step — not just give me options. I want suggestions I can bring to my consultant."</em></p>
+</blockquote>
+<p><strong>Meta-generated prompt (typical output):</strong></p>
+<blockquote>
+<p><em>"Act as a biblical exegете and translation advisor working with a Tamil mother-tongue translation team.</em></p>
+<p><em>Work through the following steps before making any recommendations:</em></p>
+<p><em>Step 1 — What does 'Legion' mean in its first-century Roman military context? What does this term communicate about scale, power, and the nature of the possession?</em></p>
+<p><em>Step 2 — What range of Tamil words or phrases could communicate 'an overwhelming, terrifying, innumerable spiritual force'? Consider both formal and colloquial registers.</em></p>
+<p><em>Step 3 — For each option, assess: (a) Does it carry unintended connotations in Tamil cultural context? (b) Is it likely to be understood by a first-generation literate rural reader?</em></p>
+<p><em>After completing all three steps, suggest 2–3 translation options with your reasoning. Do not speculate beyond what the text and linguistic evidence support. Flag any uncertainty as NEEDS VERIFICATION.</em></p>
+<p><em>Return as: Option | Reasoning | Potential Risk | Suggested for consultant review (Yes/No)."</em></p>
+</blockquote>
+<p><strong>Review before use:</strong> Check Step 2 — the model may have assumed a specific register or cultural frame. Adjust to match your team's actual community.</p>
+<hr />
+<h3 id="lane-2-consultant">Lane 2 — Consultant</h3>
+<p><strong>Plain-language request:</strong></p>
+<blockquote>
+<p><em>"Write me a prompt for checking a team's key-term decisions against their translation project brief. I want to use this at the start of a checking round. It should compare their actual decisions against the translation project brief guidelines and flag any inconsistencies."</em></p>
+</blockquote>
+<p><strong>Meta-generated prompt (typical output):</strong></p>
+<blockquote>
+<p><em>"Act as a senior translation consultant conducting a pre-check review.</em></p>
+<p><em>Below I will provide two documents: (1) our translation project brief, which contains our key-term guidelines; and (2) our current key-term decision list.</em></p>
+<p><em>[Paste translation project brief here]</em>
+<em>[Paste key-term list here]</em></p>
+<p><em>Work through the key-term list systematically:</em></p>
+<p><em>Step 1 — For each key term, identify the guideline or constraint in the translation project brief that applies.</em></p>
+<p><em>Step 2 — Compare the team's decision against that guideline.</em></p>
+<p><em>Step 3 — Flag any decision that conflicts with, deviates from, or is not addressed by the translation project brief.</em></p>
+<p><em>Do not suggest alternative renderings — only flag inconsistencies for discussion. If a term is not addressed in the translation project brief, flag it as BRIEF GAP rather than marking it as an error.</em></p>
+<p><em>Return as: Term | Team Decision | Relevant Brief Guideline | Status (Consistent / Inconsistent / Brief Gap) | Notes."</em></p>
+</blockquote>
+<p><strong>Review before use:</strong> Confirm that the "BRIEF GAP" category fits your workflow — if you want the AI to suggest alternatives for gaps, remove that constraint.</p>
+<hr />
+<h3 id="lane-3-leadership-support">Lane 3 — Leadership / Support</h3>
+<p><strong>Plain-language request:</strong></p>
+<blockquote>
+<p><em>"I need a prompt to summarise long meeting notes from translation project meetings into a clean action-item table I can send to team leads. The notes are always messy — mixed language, incomplete sentences, tangents. I want something I can reuse every week."</em></p>
+</blockquote>
+<p><strong>Meta-generated prompt (typical output, as a reusable template):</strong></p>
+<blockquote>
+<p><em>"Act as a project coordinator summarising a translation team meeting.</em></p>
+<p><em>Below are the raw meeting notes from [date] — [meeting title]:</em>
+<em>[Paste meeting notes here]</em></p>
+<p><em>Identify every action item, decision, and follow-up mentioned in the notes.</em></p>
+<p><em>For each item:</em>
+<em>- Extract the action or decision even if it is stated informally or indirectly.</em>
+<em>- Identify the person responsible (if named; otherwise write 'Owner: TBC').</em>
+<em>- Identify the deadline (if mentioned; otherwise write 'Deadline: TBC').</em></p>
+<p><em>Ignore general discussion, background context, and tangents that did not produce an action or decision.</em></p>
+<p><em>Return as a markdown table: Action | Owner | Deadline | Status (Action / Decision / Follow-up).</em></p>
+<p><em>Do not invent, infer, or assume any details not stated in the notes. If something is ambiguous, include it and mark it as NEEDS CLARIFICATION."</em></p>
+</blockquote>
+<p><strong>Review before use:</strong> The "NEEDS CLARIFICATION" flag is a guardrail the model added — keep it. It prevents fabricated owners and deadlines.</p>
+<hr />
+<h2 id="before-you-use-a-meta-generated-prompt-review-checklist">Before You Use a Meta-Generated Prompt: Review Checklist</h2>
+<p>A meta-generated prompt is a first draft, not a final product. Check these five things before you use it:</p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Question to ask</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Persona</strong></td>
+<td>Does the role match your actual task? Is it specific enough — or too generic?</td>
+</tr>
+<tr>
+<td><strong>Audience assumptions</strong></td>
+<td>Has the model assumed an audience (language, culture, literacy level) that doesn't match your community?</td>
+</tr>
+<tr>
+<td><strong>Theological guardrails</strong></td>
+<td>Are there guardrails against speculation and hallucination? If not, add them.</td>
+</tr>
+<tr>
+<td><strong>Output format</strong></td>
+<td>Is the output format something you can paste directly into your workflow? Adjust if not.</td>
+</tr>
+<tr>
+<td><strong>Project-specific terms</strong></td>
+<td>Does the prompt use your actual project's language — your key-term choices, your passage scope, your team's terminology?</td>
+</tr>
+</tbody>
+</table>
+<p>If a prompt passes all five checks, it is ready to use. If not, either steer the model to revise it or edit it yourself directly.</p>
+<hr />
+<h2 id="the-upgrade-loop-combining-meta-prompting-with-steering">The Upgrade Loop: Combining Meta Prompting with Steering</h2>
+<p>Meta prompting works well with the iteration loop from Chapter 3. Generate the prompt, then steer it into shape:</p>
+<blockquote>
+<p><strong>Turn 1:</strong> <em>"Write me a prompt for [task description]."</em></p>
+<p><strong>Turn 2:</strong> <em>"Good start. Now add a Chain of Thought reasoning structure with three explicit steps."</em></p>
+<p><strong>Turn 3:</strong> <em>"The persona is too generic. Change it to a consultant working with a shame-honour oral culture in South India."</em></p>
+<p><strong>Turn 4:</strong> <em>"Add a NEEDS VERIFICATION flag instruction and remove the final prose conclusion — output only the table."</em></p>
+</blockquote>
+<p>Four turns. A prompt that would have taken 20 minutes to write manually, built in under five — and grounded in your specific project context.</p>
+<hr />
+<p><em>Return to Appendix D: Prompt Template Library → for production-ready templates you can use immediately.</em><br />
+<em>Return to Chapter 2: Anatomy of a Great Prompt → for the building blocks that underpin everything here.</em></p>
+</div>
+    </main>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <!-- ── PRESENTATION MODE CONTROLS ───────────────────────── -->
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="../assets/script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>

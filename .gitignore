@@ -1,0 +1,36 @@
+# ── Tailwind standalone binary (downloaded separately, not committed) ─────────
+tailwindcss.exe
+tailwindcss
+
+# ── Old Reveal.js/LaTeX module build outputs (not part of release) ────────────
+modules/*/output/
+modules/002-*/
+modules/003-*/
+modules/005-*/
+modules/hb-*/
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+
+# ── OS noise ──────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+
+# Examples
+
+example/*
+MAI*.pdf
+*.aux
+*.log
+*.zip
+*.gz
+*.pdf
+*.bat
+*.exe
+
+lib/
+scripts/
+tracks/*
+archive/

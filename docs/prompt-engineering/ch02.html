@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ch 2 — Anatomy of a Prompt · Prompt Engineering</title>
+  <meta name="description" content="Prompt Engineering for Bible Translators · AILT 2026 AI Tools Workshop">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+</head>
+<body>
+
+  <!-- ── SITE NAV ──────────────────────────────────────────── -->
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="../" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="../" class="shell-nav-link">Home</a>
+        <a href="../prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="../handbook/" class="shell-nav-link">Handbook</a>
+        <a href="../about.html" class="shell-nav-link">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── PAGE LAYOUT ─────────────────────────────────────────────── -->
+  <div class="shell-page">
+    <main class="shell-main" id="main-content">
+      <!-- NAV -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">004 · Prompt Engineering</a>
+      <div class="nav-links">
+        <a href="ch01.html" class="nav-link">Ch 1</a>
+        <a href="ch02.html" class="nav-link active">Ch 2</a>
+        <a href="ch03.html" class="nav-link">Ch 3</a>
+        <a href="ch04.html" class="nav-link">Ch 4</a>
+        <a href="ch05.html" class="nav-link">Ch 5</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="chapter-hero">
+    <div class="container">
+      <div class="ch-eyebrow">
+        <span class="ch-num">Chapter 2</span>
+        <span class="ch-tag-label">Core Techniques</span>
+      </div>
+      <h1>Anatomy of a Great Prompt</h1>
+      <p class="hero-key-q">What are the building blocks of a prompt that consistently produces translation-grade output?</p>
+    </div>
+  </header>
+
+  <!-- PHASE BAR -->
+  <div class="phase-bar">
+    <div class="phase-inner">
+      <a class="phase-pip" data-c="1" data-section="c1" href="#c1"><div class="phase-dot">C1</div><span class="phase-name">Connection</span></a>
+      <a class="phase-pip" data-c="2" data-section="c2" href="#c2"><div class="phase-dot">C2</div><span class="phase-name">Content</span></a>
+      <a class="phase-pip" data-c="3" data-section="c3" href="#c3"><div class="phase-dot">C3</div><span class="phase-name">Challenge</span></a>
+      <a class="phase-pip" data-c="4" data-section="c4" href="#c4"><div class="phase-dot">C4</div><span class="phase-name">Change</span></a>
+      <a class="phase-pip" data-c="5" data-section="c5" href="#c5"><div class="phase-dot">C5</div><span class="phase-name">Closure</span></a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C1 · CONNECTION
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c1">
+      <div class="container">
+        <div class="section-badge badge-c1">C1 · Connection</div>
+        <h2 id="which-of-these-prompts-would-you-have-typed">Which of these prompts would you have typed?</h2>
+        <p class="section-lead">
+          Same task. Same AI. Same passage. Look at both prompts below — before you see what they produce.
+        </p>
+
+        <div class="prompt-block">
+          <div class="prompt-label weak">Prompt A</div>
+          <div class="prompt-display weak">Explain Mark 5.</div>
+        </div>
+
+        <div class="prompt-block">
+          <div class="prompt-label strong">Prompt B</div>
+          <div class="prompt-display strong">Act as an exegetical consultant. Summarize the cultural and economic significance of the pigs in Mark 5:1–20 for a translation team working in a region where pigs are highly prized wealth. Use plain English. Do not speculate beyond the text. Return 3 paragraphs, one on economy, one on cultural weight, one on translation implications. Maximum 80 words each.</div>
+        </div>
+
+        <div class="activity-box fade-up">
+          <div class="activity-header">
+            <span class="activity-icon">💬</span>
+            <h3 id="discuss-with-your-group">Discuss with your group</h3>
+          </div>
+          <ol>
+            <li>Be honest: which prompt is closer to what you would have typed last week?</li>
+            <li>What does Prompt A tell the AI that Prompt B does not? What is Prompt B saying that A skips?</li>
+            <li>Count the differences. How many distinct things does Prompt B specify?</li>
+          </ol>
+        </div>
+
+        <div class="callout info fade-up">
+          <span class="callout-icon">💡</span>
+          <div>Prompt B contains six distinct instructions. Each one does a specific job. Chapter 2 names all six and shows you exactly what each one contributes — so you can build them deliberately, not accidentally.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C2 · CONTENT
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c2">
+      <div class="container">
+        <div class="section-badge badge-c2">C2 · Content</div>
+        <h2 id="six-building-blocks">Six building blocks</h2>
+        <p class="section-lead">
+          Specificity is the single most important principle in prompting. Every technique below is a different way of being specific about what you need.
+        </p>
+
+        <!-- BB LEGEND -->
+        <div class="bb-legend" style="margin-bottom: 1.5rem; font-size: 0.78rem;">
+          <span>Building block colours used in prompt examples:</span>
+          <span class="bb-pill P">P Persona</span>
+          <span class="bb-pill CX">CX Context</span>
+          <span class="bb-pill G">G Guardrail</span>
+          <span class="bb-pill F">F Format</span>
+          <span class="bb-pill FS">FS Few-Shot</span>
+          <span class="bb-pill CT">CT Chain of Thought</span>
+        </div>
+
+        <!-- BB1: PERSONA -->
+        <details class="fade-up">
+          <summary>
+            <span style="display:inline-block; background: var(--ann-p-pill); color: #0f172a; font-size:0.7rem; font-weight:700; padding:0.15rem 0.5rem; border-radius:4px; margin-right: 0.5rem;">P</span>
+            Building Block 1 · Persona (Role Assignment)
+            <span class="summary-arrow">›</span>
+          </summary>
+          <div class="details-body">
+            <p><strong>What it does:</strong> Tells the model who to be for this task — setting the vocabulary, expertise level, default framing, and depth of response. Without a role, the model defaults to a generic helpful assistant aiming at a general audience.</p>
+            <p><strong>How to use it:</strong> Start with <em>"Act as a…"</em> or <em>"You are a…"</em> followed by a specific, relevant expert description.</p>
+            <p><strong>Common mistake:</strong> <em>"Act as an expert"</em> is too vague. <em>"Act as a biblical scholar specialised in Second Temple Judaism writing for a translation team in a shame-honour culture"</em> gives the model substantial, useful framing.</p>
+
+            <div class="prompt-block">
+              <div class="prompt-label weak">Weak (no persona)</div>
+              <div class="prompt-display weak">Identify naturalness issues in this draft of Mark 5:3–5.</div>
+            </div>
+            <div class="prompt-block">
+              <div class="prompt-label strong">Strong (with persona)</div>
+              <div class="prompt-display strong"><span class="P">Act as a mother-tongue speaker of [language name] hearing this passage for the first time as spoken narrative — not as written text.</span>
+
+Identify up to 3 phrases that would sound unnatural to an oral listener.</div>
+            </div>
+
+            <div style="margin-top: 1rem;">
+              <h4 style="margin-bottom: 0.5rem; font-size: 0.8rem;">By lane:</h4>
+              <div class="card-grid cols-3" style="margin-top: 0;">
+                <div class="card lane1"><strong style="font-size:0.8rem;">Lane 1</strong><p>"Act as a rural mother-tongue translator encountering this passage for the first time…"</p></div>
+                <div class="card lane2"><strong style="font-size:0.8rem;">Lane 2</strong><p>"Act as a senior translation consultant specialised in Biblical Greek exegesis…"</p></div>
+                <div class="card lane3"><strong style="font-size:0.8rem;">Lane 3</strong><p>"Act as a technical project manager writing a status update for a non-technical stakeholder…"</p></div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <!-- BB2: OUTPUT FORMAT -->
+        <details class="fade-up">
+          <summary>
+            <span style="display:inline-block; background: var(--ann-f-pill); color: #0f172a; font-size:0.7rem; font-weight:700; padding:0.15rem 0.5rem; border-radius:4px; margin-right: 0.5rem;">F</span>
+            Building Block 2 · Output Format
+            <span class="summary-arrow">›</span>
+          </summary>
+          <div class="details-body">
+            <p><strong>What it does:</strong> Tells the model how to structure the response — table, checklist, numbered list, prose, JSON. Left unspecified, the model defaults to flowing prose, which is often harder to use directly.</p>
+            <p><strong>Why it matters in BT work:</strong> You frequently need output that can be pasted directly into Paratext notes, an Excel sheet, or a checking report. Specifying format saves manual reformatting and makes output immediately actionable.</p>
+
+            <div class="table-wrap" style="margin-top:0.75rem;">
+              <table>
+                <thead><tr><th>Format instruction</th><th>When to use</th></tr></thead>
+                <tbody>
+                  <tr><td><code>"Return as a 3-column table: Verse | Issue | Suggestion"</code></td><td>Checking notes, issue logs</td></tr>
+                  <tr><td><code>"Provide a bulleted checklist with a checkbox for each action item"</code></td><td>Meeting follow-up, task lists</td></tr>
+                  <tr><td><code>"Number each point. No prose introduction or conclusion."</code></td><td>Quick analysis, structured review</td></tr>
+                  <tr><td><code>"Return one paragraph, 100 words maximum"</code></td><td>Executive summary, quick brief</td></tr>
+                  <tr><td><code>"Format as valid USFM. Output only the USFM — no explanation."</code></td><td>Paratext import, scripture entry</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <!-- BB3: GUARDRAILS -->
+        <details class="fade-up">
+          <summary>
+            <span style="display:inline-block; background: var(--ann-g-pill); color: #0f172a; font-size:0.7rem; font-weight:700; padding:0.15rem 0.5rem; border-radius:4px; margin-right: 0.5rem;">G</span>
+            Building Block 3 · Guardrails (Negative Constraints)
+            <span class="summary-arrow">›</span>
+          </summary>
+          <div class="details-body">
+            <p><strong>What it does:</strong> Tells the model what <em>not</em> to do. Guardrails are the safety fence that prevents speculation, hallucination, theological overreach, and inappropriate register. In Bible Translation, guardrails are not optional.</p>
+
+            <div style="margin-top: 0.875rem;">
+              <h4 style="margin-bottom: 0.5rem; font-size: 0.8rem;">Core guardrails for BT work:</h4>
+              <div class="step-list">
+                <li>
+                  <span class="step-num" style="background: var(--ann-g-pill); color: #0f172a;">T</span>
+                  <div class="step-body"><strong>Theological constraint</strong> "Do not speculate beyond the text. If you are uncertain about any interpretation, flag it as NEEDS VERIFICATION."</div>
+                </li>
+                <li>
+                  <span class="step-num" style="background: var(--ann-g-pill); color: #0f172a;">R</span>
+                  <div class="step-body"><strong>Reference constraint</strong> "Do not cite specific Louw-Nida codes, Greek dictionary entries, or scholar names. I will verify those independently."</div>
+                </li>
+                <li>
+                  <span class="step-num" style="background: var(--ann-g-pill); color: #0f172a;">Rg</span>
+                  <div class="step-body"><strong>Register constraint</strong> "Do not use theological jargon (e.g. 'eschatological', 'expiation'). Use plain English accessible to a primary-school reader."</div>
+                </li>
+              </div>
+            </div>
+
+            <div class="callout warn" style="margin-top: 0.875rem;">
+              <span class="callout-icon">🌡️</span>
+              <div><strong>Temperature in plain language:</strong> "Be precise and literal. Do not speculate or be creative. Give one definitive answer." — use this for all exegesis and checking work. Never use a "creative" instruction for accuracy-sensitive tasks.</div>
+            </div>
+          </div>
+        </details>
+
+        <!-- BB4: FEW-SHOT -->
+        <details class="fade-up">
+          <summary>
+            <span style="display:inline-block; background: var(--ann-fs-pill); color: #0f172a; font-size:0.7rem; font-weight:700; padding:0.15rem 0.5rem; border-radius:4px; margin-right: 0.5rem;">FS</span>
+            Building Block 4 · Few-Shot Prompting (Teaching by Example)
+            <span class="summary-arrow">›</span>
+          </summary>
+          <div class="details-body">
+            <p><strong>What it does:</strong> Instead of describing the style you want in abstract terms, you show the model one perfect example and ask it to follow that exact pattern. One well-chosen example communicates your team's style, vocabulary, and format more precisely than a paragraph of description.</p>
+            <p><strong>When to use it:</strong> When your team has an established style that differs from a generic template, or when zero-shot outputs are consistently missing something you cannot easily describe.</p>
+
+            <div class="prompt-block">
+              <div class="prompt-label weak">Zero-shot (no example)</div>
+              <div class="prompt-display weak">Write a checking question for Mark 5:3.</div>
+            </div>
+            <div class="prompt-block">
+              <div class="prompt-label strong">One-shot (with example)</div>
+              <div class="prompt-display strong"><span class="FS">Here is a good checking question for Mark 5:2: "Where did the possessed man come from when he met Jesus?"</span>
+
+Now write a checking question for Mark 5:3 following this exact pattern: one sentence, plain language, observable fact, no interpretation.</div>
+            </div>
+          </div>
+        </details>
+
+        <!-- BB5: CHAIN OF THOUGHT -->
+        <details class="fade-up">
+          <summary>
+            <span style="display:inline-block; background: var(--ann-ct-pill); color: #0f172a; font-size:0.7rem; font-weight:700; padding:0.15rem 0.5rem; border-radius:4px; margin-right: 0.5rem;">CT</span>
+            Building Block 5 · Chain of Thought
+            <span class="summary-arrow">›</span>
+          </summary>
+          <div class="details-body">
+            <p><strong>What it does:</strong> Instructs the model to map out its reasoning step-by-step before arriving at a final answer. This prevents premature conclusions, exposes assumptions at each stage, and gives you traceable reasoning you can audit and correct.</p>
+            <p><strong>Why it matters in BT:</strong> If the model skips straight to a recommendation, you cannot tell whether it understood all the relevant layers. If it reasons out loud, step by step, you can catch an error at Step 1 before it corrupts the final recommendation.</p>
+
+            <div class="prompt-block">
+              <div class="prompt-label weak">Without Chain of Thought</div>
+              <div class="prompt-display weak">What are some plausible ways of expressing "Legion" in Mark 5:9 in my translation?</div>
+            </div>
+            <div class="prompt-block">
+              <div class="prompt-label strong">With Chain of Thought</div>
+              <div class="prompt-display strong"><span class="CT">Work through this step by step before making a recommendation:
+
+Step 1 — What did "Legion" mean to a first-century Roman audience? (military scale, organised power, dread)
+
+Step 2 — What does the use of this specific word communicate about the nature and scale of this man's possession?
+
+Step 3 — What concept in [target language/culture] communicates "an overwhelming, innumerable, terrifying spiritual force"?
+
+Only after completing all three steps,</span> suggest 2–3 translation options with your reasoning for each.</div>
+            </div>
+
+            <div class="callout info" style="margin-top:0.875rem;">
+              <span class="callout-icon">🔍</span>
+              <div><strong>Lane 2 note:</strong> Chain of Thought is the most important technique for consultants and exegetes. It transforms the AI from an oracle delivering verdicts into a traceable research assistant whose reasoning can be audited, challenged, and corrected.</div>
+            </div>
+          </div>
+        </details>
+
+        <!-- BB6: CONTEXT -->
+        <details class="fade-up">
+          <summary>
+            <span style="display:inline-block; background: var(--ann-cx-pill); color: #0f172a; font-size:0.7rem; font-weight:700; padding:0.15rem 0.5rem; border-radius:4px; margin-right: 0.5rem;">CX</span>
+            Building Block 6 · Context (Situational Background)
+            <span class="summary-arrow">›</span>
+          </summary>
+          <div class="details-body">
+            <p><strong>What it does:</strong> Tells the model the situation you are in — who you are, what project this is for, what constraints apply, who will use the output. Situational context calibrates <em>how</em> the model reasons before it begins.</p>
+            <p><strong>A simple test:</strong> If you handed your prompt to a stranger with no other information, would they have enough to do the task well? If not, the missing information is your context.</p>
+
+            <div class="prompt-block">
+              <div class="prompt-label weak">Without context</div>
+              <div class="prompt-display weak">Act as a translation consultant. Review this back-translation of Mark 5:1–5 and identify naturalness issues.</div>
+            </div>
+            <div class="prompt-block">
+              <div class="prompt-label strong">With context</div>
+              <div class="prompt-display strong">Act as a translation consultant. <span class="CX">I am working in Tamil with a mother-tongue team in rural Tamil Nadu. We are at checking stage 2, preparing for a consultant check next week. Our community has a strong oral storytelling tradition — the translation should sound like a story told aloud, not a formal written document.</span>
+
+Review this back-translation of Mark 5:1–5 and identify any phrases that would sound stilted when read aloud.</div>
+            </div>
+          </div>
+        </details>
+
+        <!-- COMBINATION TABLE -->
+        <div style="margin-top: 2rem;" class="fade-up">
+          <h3 style="margin-bottom: 0.75rem;" id="which-building-blocks-for-which-task">Which building blocks for which task?</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Task type</th><th>Recommended building blocks</th></tr></thead>
+              <tbody>
+                <tr><td>Exegesis / key-term analysis</td><td><span class="bb-pill P" style="font-size:0.68rem;">P</span> <span class="bb-pill CX" style="font-size:0.68rem;">CX</span> <span class="bb-pill G" style="font-size:0.68rem;">G</span> <span class="bb-pill CT" style="font-size:0.68rem;">CT</span></td></tr>
+                <tr><td>Checking question generation</td><td><span class="bb-pill P" style="font-size:0.68rem;">P</span> <span class="bb-pill CX" style="font-size:0.68rem;">CX</span> <span class="bb-pill F" style="font-size:0.68rem;">F</span> <span class="bb-pill FS" style="font-size:0.68rem;">FS</span></td></tr>
+                <tr><td>Cultural background research</td><td><span class="bb-pill P" style="font-size:0.68rem;">P</span> <span class="bb-pill CX" style="font-size:0.68rem;">CX</span> <span class="bb-pill G" style="font-size:0.68rem;">G</span> <span class="bb-pill F" style="font-size:0.68rem;">F</span></td></tr>
+                <tr><td>Back-translation review</td><td><span class="bb-pill P" style="font-size:0.68rem;">P</span> <span class="bb-pill CX" style="font-size:0.68rem;">CX</span> <span class="bb-pill G" style="font-size:0.68rem;">G</span> <span class="bb-pill F" style="font-size:0.68rem;">F</span> <span class="bb-pill CT" style="font-size:0.68rem;">CT</span></td></tr>
+                <tr><td>Administrative summary</td><td><span class="bb-pill CX" style="font-size:0.68rem;">CX</span> <span class="bb-pill F" style="font-size:0.68rem;">F</span> <span class="bb-pill FS" style="font-size:0.68rem;">FS</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="minority-alert fade-up">
+          <span>🌐</span>
+          <div><strong>Minority language moment:</strong> Building blocks work for any language — but their effectiveness depends on how much training data exists. For low-resource languages, the Persona and Context blocks matter even more, because you must explicitly compensate for the model's thin knowledge of your language community. Never assume the AI knows your target cultural context. Say it.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C3 · CHALLENGE
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c3">
+      <div class="container">
+        <div class="section-badge badge-c3">C3 · Challenge</div>
+        <h2 id="repair-the-prompt">Repair the prompt</h2>
+        <p class="section-lead">
+          Three weak prompts. Before you see the strong version: discuss with your group what is missing, and what you would add.
+        </p>
+
+        <!-- CHALLENGE 1 -->
+        <div class="card fade-up" style="margin-bottom: 2rem;">
+          <h3 style="margin-bottom: 0.875rem;" id="repair-prompt-1-a-translators-task">Repair Prompt 1 — A Translator's Task</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.5rem;"><strong>Task:</strong> You want feedback on whether your draft of Mark 5:3–5 sounds natural for an oral audience.</p>
+
+          <div class="prompt-label weak">Weak prompt</div>
+          <div class="prompt-display weak">Check if this translation is natural. [draft pasted]</div>
+
+          <div class="activity-box" style="margin-top: 0.875rem;">
+            <div class="activity-header">
+              <span class="activity-icon">🛠️</span>
+              <h3 id="before-seeing-the-answer">Before seeing the answer</h3>
+            </div>
+            <p>What is this prompt missing? Which of the six building blocks would improve it? Sketch a better version together.</p>
+          </div>
+
+          <button class="reveal-btn" data-target="repair-1" data-open-text="Show strong prompt" data-close-text="Hide prompt">
+            <span class="reveal-arrow">▼</span>
+            <span class="btn-text">Show strong prompt</span>
+          </button>
+          <div class="hidden-reveal" id="repair-1">
+            <div class="prompt-label strong" style="margin-top:1rem;">Strong prompt</div>
+            <div class="prompt-display strong"><span class="P">Act as a mother-tongue speaker of [language name] hearing this passage for the first time as spoken narrative — not as written text.</span>
+
+Below is a draft rendering of Mark 5:3–5. [paste draft]
+
+<span class="CX">Our target audience are first-generation literate adults in rural [region]. The translation should sound like a story told aloud, not a formal written document.</span>
+
+Identify up to 3 phrases that would sound unnatural, awkward, or overly formal to an oral listener. For each phrase: quote it exactly, explain what sounds wrong, and suggest a more natural alternative.
+
+<span class="G">Do not change the meaning of any phrase — only adjust for naturalness. Flag any suggestion you are uncertain about.</span>
+
+<span class="F">Return as: Phrase | Problem | Suggested Alternative.</span></div>
+            <div class="bb-legend">
+              <span class="bb-pill P">P Persona</span>
+              <span class="bb-pill CX">CX Context</span>
+              <span class="bb-pill G">G Guardrail</span>
+              <span class="bb-pill F">F Format</span>
+            </div>
+            <div class="callout success" style="margin-top:0.75rem;">
+              <span class="callout-icon">✅</span>
+              <div><strong>What changed:</strong> The persona is an <em>oral listener</em>, not a written-language proofreader. The context anchors the target community. The guardrail prevents the AI from "improving" the meaning beyond what you asked. The format creates a directly usable table.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHALLENGE 2 -->
+        <div class="card fade-up" style="margin-bottom: 2rem;">
+          <h3 style="margin-bottom: 0.875rem;" id="repair-prompt-2-a-consultants-task">Repair Prompt 2 — A Consultant's Task</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.5rem;"><strong>Task:</strong> You want to identify key terms in Mark 5:1–20 that carry significant translation risk.</p>
+
+          <div class="prompt-label weak">Weak prompt</div>
+          <div class="prompt-display weak">What are the key terms in Mark 5 that might be hard to translate?</div>
+
+          <div class="activity-box" style="margin-top: 0.875rem;">
+            <div class="activity-header">
+              <span class="activity-icon">🛠️</span>
+              <h3 id="before-seeing-the-answer-1">Before seeing the answer</h3>
+            </div>
+            <p>How would the model define "hard to translate" on its own? What's missing? Which building blocks should be added?</p>
+          </div>
+
+          <button class="reveal-btn" data-target="repair-2" data-open-text="Show strong prompt" data-close-text="Hide prompt">
+            <span class="reveal-arrow">▼</span>
+            <span class="btn-text">Show strong prompt</span>
+          </button>
+          <div class="hidden-reveal" id="repair-2">
+            <div class="prompt-label strong" style="margin-top:1rem;">Strong prompt</div>
+            <div class="prompt-display strong"><span class="P">Act as a translation consultant with expertise in New Testament Greek semantics.</span>
+
+<span class="CX">I am conducting a key-term review of Mark 5:1–20 for a translation team working in a shame-honour culture in South Asia. We are at checking stage 2.</span>
+
+From the passage below, <span class="CT">work through the following steps:
+
+Step 1 — Identify all theologically significant terms: defined as words whose precise rendering will significantly affect doctrinal understanding.
+
+Step 2 — For each term: describe its semantic range in plain language. Do not fabricate Greek dictionary codes.
+
+Step 3 — For each term: identify the translation risk if rendered too narrowly vs too broadly.
+
+Step 4 — Suggest one checking question for each term that a translation team could use to verify the rendering.</span>
+
+[paste ESV text of Mark 5:1–20]
+
+<span class="G">Do not speculate. Flag uncertain items as NEEDS VERIFICATION.</span>
+
+<span class="F">Return as: Term | Semantic Range | Narrowing Risk | Broadening Risk | Checking Question.</span></div>
+            <div class="bb-legend">
+              <span class="bb-pill P">P Persona</span>
+              <span class="bb-pill CX">CX Context</span>
+              <span class="bb-pill CT">CT Chain of Thought</span>
+              <span class="bb-pill G">G Guardrail</span>
+              <span class="bb-pill F">F Format</span>
+            </div>
+            <div class="callout success" style="margin-top:0.75rem;">
+              <span class="callout-icon">✅</span>
+              <div><strong>What changed:</strong> Chain of Thought forces the model through four analytical layers. The checking-question column transforms the output into a directly usable tool — not just a report. Term + Risks + Checking Question = something you can act on immediately.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHALLENGE 3 — Cross-Lane -->
+        <div class="card fade-up" style="margin-bottom: 2rem;">
+          <div class="cross-lane-badge">👥 Cross-lane pair activity — find someone in a different lane</div>
+          <h3 style="margin-bottom: 0.875rem;" id="repair-prompt-3-a-leadership-task">Repair Prompt 3 — A Leadership Task</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.5rem;"><strong>Task:</strong> Convert this week's cluster meeting notes into a formal governance report for a senior executive.</p>
+
+          <div class="prompt-label weak">Weak prompt</div>
+          <div class="prompt-display weak">Summarise this meeting. [notes pasted]</div>
+
+          <div class="activity-box" style="margin-top: 0.875rem;">
+            <div class="activity-header">
+              <span class="activity-icon">🛠️</span>
+              <h3 id="build-this-one-together-across-lanes">Build this one together across lanes</h3>
+            </div>
+            <p>With your cross-lane partner: the Lane 3 person explains what a governance report looks like. The Lane 1 or 2 person helps design the guardrails and format. Build the strong prompt together.</p>
+          </div>
+
+          <button class="reveal-btn" data-target="repair-3" data-open-text="Show strong prompt" data-close-text="Hide prompt">
+            <span class="reveal-arrow">▼</span>
+            <span class="btn-text">Show strong prompt</span>
+          </button>
+          <div class="hidden-reveal" id="repair-3">
+            <div class="prompt-label strong" style="margin-top:1rem;">Strong prompt</div>
+            <div class="prompt-display strong"><span class="P">Act as a project manager writing a formal governance report for a non-technical executive audience.</span>
+
+<span class="FS">Here is an example of the report format we use for this project:
+"— Ben to send revised project timeline to all leads by Friday. Owner: Ben. Deadline: Friday 13 Mar."
+
+Using exactly this format (dash + action + Owner + Deadline),</span> extract and list the action items from the following meeting notes.
+
+[paste raw notes]
+
+<span class="G">Do not insert information not present in the notes. Do not use technical jargon.</span>
+
+<span class="F">Return in the same section structure as the example above: Action | Owner | Deadline | Status.</span></div>
+            <div class="bb-legend">
+              <span class="bb-pill P">P Persona</span>
+              <span class="bb-pill FS">FS Few-Shot</span>
+              <span class="bb-pill G">G Guardrail</span>
+              <span class="bb-pill F">F Format</span>
+            </div>
+            <div class="callout success" style="margin-top:0.75rem;">
+              <span class="callout-icon">✅</span>
+              <div><strong>What changed:</strong> Few-Shot learning replaces the need to describe the report format in abstract terms. One previous report entry communicates structure, vocabulary, and register more precisely than a paragraph of description.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C4 · CHANGE
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c4">
+      <div class="container">
+        <div class="section-badge badge-c4">C4 · Change</div>
+        <h2 id="write-your-own-strong-prompt">Write your own strong prompt</h2>
+        <p class="section-lead">
+          Choose a real task from your work this week. Apply the building blocks. Type it here — this is your take-away from this session.
+        </p>
+
+        <div class="lane-group fade-up">
+          <div class="lane-toggle">
+            <button class="lane-btn" data-lane="1">✍️ Translators</button>
+            <button class="lane-btn" data-lane="2">🔍 Consultants</button>
+            <button class="lane-btn" data-lane="3">⚙️ Tech &amp; Leadership</button>
+          </div>
+
+          <div class="lane-content" data-lane="1">
+            <div class="lane-header">
+              <span class="lane-head-icon">✍️</span>
+              <div class="lane-head-text">
+                <h4>Lane 1 · Translators &amp; Language Practitioners</h4>
+                <p>Think of a real FIA, drafting, or naturalness check task from your current project.</p>
+              </div>
+            </div>
+            <div class="commitment-box">
+              <div class="commitment-header"><span>✍️</span><h3 id="my-strong-prompt">My strong prompt</h3></div>
+              <p class="commitment-prompt-text">My task:</p>
+              <textarea class="commitment-input" placeholder="e.g. Get cultural background on the pigs in Mark 5 for a community where pigs represent wealth..." style="min-height: 60px;"></textarea>
+              <p class="commitment-prompt-text" style="margin-top: 0.875rem;">My strong prompt (include at least Persona + Guardrail + Format):</p>
+              <textarea class="commitment-input" placeholder="Act as a... / I am working on... / Do not... / Return as..."></textarea>
+              <p class="commitment-prompt-text" style="margin-top: 0.875rem;">Building blocks I used: <em>(circle or list them)</em></p>
+              <textarea class="commitment-input" style="min-height: 48px;" placeholder="e.g. Persona, Guardrail, Format, Context"></textarea>
+              <div class="commitment-actions"><button class="btn-print">🖨️ Print my prompt</button></div>
+            </div>
+          </div>
+
+          <div class="lane-content" data-lane="2">
+            <div class="lane-header">
+              <span class="lane-head-icon">🔍</span>
+              <div class="lane-head-text">
+                <h4>Lane 2 · Consultants &amp; Advisors</h4>
+                <p>Think of a real reviewing, checking, or training task from your current work.</p>
+              </div>
+            </div>
+            <div class="commitment-box">
+              <div class="commitment-header"><span>🔍</span><h3 id="my-strong-prompt-1">My strong prompt</h3></div>
+              <p class="commitment-prompt-text">My task:</p>
+              <textarea class="commitment-input" placeholder="e.g. Review a back-translation for implicit-information gaps in a passage with cultural complexity..." style="min-height: 60px;"></textarea>
+              <p class="commitment-prompt-text" style="margin-top: 0.875rem;">My strong prompt (include at least Persona + Chain of Thought + Guardrail):</p>
+              <textarea class="commitment-input" placeholder="Act as a... / Work through steps: Step 1... Step 2... / Do not... / Return as..."></textarea>
+              <p class="commitment-prompt-text" style="margin-top: 0.875rem;">Building blocks I used:</p>
+              <textarea class="commitment-input" style="min-height: 48px;" placeholder="e.g. Persona, Chain of Thought, Guardrail, Format"></textarea>
+              <div class="commitment-actions"><button class="btn-print">🖨️ Print my prompt</button></div>
+            </div>
+          </div>
+
+          <div class="lane-content" data-lane="3">
+            <div class="lane-header">
+              <span class="lane-head-icon">⚙️</span>
+              <div class="lane-head-text">
+                <h4>Lane 3 · Tech &amp; Leadership</h4>
+                <p>Think of a real reporting, planning, or governance task from your current role.</p>
+              </div>
+            </div>
+            <div class="commitment-box">
+              <div class="commitment-header"><span>⚙️</span><h3 id="my-strong-prompt-2">My strong prompt</h3></div>
+              <p class="commitment-prompt-text">My task:</p>
+              <textarea class="commitment-input" placeholder="e.g. Extract action items from cluster meeting notes into a governance report..." style="min-height: 60px;"></textarea>
+              <p class="commitment-prompt-text" style="margin-top: 0.875rem;">My strong prompt (include at least Persona + Format + Few-Shot if you have an example):</p>
+              <textarea class="commitment-input" placeholder="Act as a... / Here is an example: '...' / Return as: Action | Owner | Deadline..."></textarea>
+              <p class="commitment-prompt-text" style="margin-top: 0.875rem;">Building blocks I used:</p>
+              <textarea class="commitment-input" style="min-height: 48px;" placeholder="e.g. Persona, Few-Shot, Format, Guardrail"></textarea>
+              <div class="commitment-actions"><button class="btn-print">🖨️ Print my prompt</button></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         C5 · CLOSURE
+         ═══════════════════════════════════════════════════════ -->
+    <section class="c-section" id="c5">
+      <div class="container">
+        <div class="section-badge badge-c5">C5 · Closure</div>
+
+        <div class="big-quote fade-up">
+          <blockquote>
+            "Specificity is not pedantry. It is care for the work."
+          </blockquote>
+          <cite>Every vague prompt hands your defaults to a machine. Every specific prompt asserts your judgment.</cite>
+        </div>
+
+        <div class="callout success fade-up">
+          <span class="callout-icon">✅</span>
+          <div>
+            <strong>What you can now do:</strong> Name and apply all six building blocks. Build a prompt that a stranger could pick up and understand. Upgrade a weak prompt while your group watches. Chapter 3 answers the next question: why does a great prompt still sometimes fail?
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="chapter-footer-nav">
+    <div class="nav-row">
+      <a href="ch01.html" class="ch-nav-btn">← Ch 1: How LLMs Work</a>
+      <span class="ch-nav-spacer"></span>
+      <a href="ch03.html" class="ch-nav-btn primary">Ch 3: The Master Formula →</a>
+    </div>
+  </nav>
+
+  
+    </main>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <!-- ── PRESENTATION MODE CONTROLS ───────────────────────── -->
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="../assets/script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 2 — Anatomy of a Great Prompt</title>
+  <meta name="description" content="Prompt Engineering for Bible Translators · AILT 2026 AI Tools Workshop">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+</head>
+<body>
+
+  <!-- ── SITE NAV ──────────────────────────────────────────── -->
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="../" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="../" class="shell-nav-link">Home</a>
+        <a href="../prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="../handbook/" class="shell-nav-link">Handbook</a>
+        <a href="../about.html" class="shell-nav-link">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── PAGE LAYOUT ─────────────────────────────────────────────── -->
+  <div class="shell-page">
+    <main class="shell-main" id="main-content">
+      <div class="prose-content">
+<h1 id="chapter-2-anatomy-of-a-great-prompt">Chapter 2: Anatomy of a Great Prompt</h1>
+<blockquote>
+<p><strong>Session tag:</strong> Core Techniques<br />
+<strong>Key question:</strong> What are the building blocks of a prompt that consistently produces translation-grade output?</p>
+</blockquote>
+<hr />
+<h2 id="20-from-understanding-to-crafting">2.0 From Understanding to Crafting</h2>
+<p>Chapter 1 (section 1.3) maps all nine factors that shape what an LLM produces — from training data and fine-tuning purpose through to the four levers you control directly: model choice, system prompt, augmentation data, and your prompt. This chapter focuses on the last of those levers: <strong>how to construct the prompt itself</strong>.</p>
+<p>For augmentation data — supplying documents, glossaries, and project context to extend the model's knowledge for a specific task — see Chapter 3.</p>
+<hr />
+<h2 id="21-the-specificity-advantage">2.1 The Specificity Advantage</h2>
+<p>Of the four factors you control, how you construct your prompt has the highest immediate impact on output quality. The single most important principle in prompting is: <strong>specificity</strong>.</p>
+<p>Vague prompts produce generic outputs. Specific prompts produce usable outputs. The difference is not the quality of the AI — it is the quality of the instruction.</p>
+<table>
+<thead>
+<tr>
+<th>Prompt</th>
+<th>What you get</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>"Explain Mark 5"</em></td>
+<td>A Sunday-school summary aimed at a general reader</td>
+</tr>
+<tr>
+<td><em>"Act as an exegetical consultant. Summarize the cultural and economic significance of the pigs in Mark 5:1–20 for a translation team working in a region where pigs are highly prized wealth. Use plain English. Do not speculate beyond the text."</em></td>
+<td>A targeted, culturally-anchored, exegetically grounded summary ready to use in a translation session</td>
+</tr>
+</tbody>
+</table>
+<p>Every element of the strong prompt does specific work. The building blocks below explain exactly what each element contributes — and how to apply them across your own translation tasks.</p>
+<hr />
+<h2 id="22-building-block-1-persona-role-assignment">2.2 Building Block 1: Persona (Role Assignment)</h2>
+<p><strong>What it does:</strong> Tells the model <em>who to be</em> for this task. This sets the vocabulary, the expertise level, the default framing, and the depth of the response.</p>
+<p>Without a role, the model defaults to a generic helpful assistant aiming at a general audience. With a role, it draws from a specific domain of its training and calibrates the output accordingly.</p>
+<p><strong>How to use it:</strong> Start the prompt with <em>"Act as a…"</em> or <em>"You are a…"</em> followed by a specific, relevant expert description.</p>
+<h3 id="examples-by-lane">Examples by Lane</h3>
+<p><strong>Lane 1 — Translator</strong></p>
+<blockquote>
+<p><em>"Act as a rural mother-tongue translator encountering this passage for the first time. Read the following back-translation and identify three phrases that feel unnatural in spoken language."</em></p>
+</blockquote>
+<p><strong>Lane 2 — Consultant</strong></p>
+<blockquote>
+<p><em>"Act as a senior translation consultant specialised in Biblical Greek exegesis. Analyse the following draft rendering of Mark 5:9 for theological accuracy."</em></p>
+</blockquote>
+<p><strong>Lane 3 — Leadership / Support</strong></p>
+<blockquote>
+<p><em>"Act as a technical project manager writing a status update for a non-technical stakeholder. Summarise the following meeting notes."</em></p>
+</blockquote>
+<h3 id="common-mistake">Common mistake</h3>
+<p>Assigning a role that is too vague defeats the purpose. <em>"Act as an expert"</em> tells the model almost nothing. <em>"Act as a biblical scholar specialised in Second Temple Judaism writing for a translation team in a shame-honour culture"</em> gives the model substantial, useful framing.</p>
+<hr />
+<h2 id="23-building-block-2-output-format">2.3 Building Block 2: Output Format</h2>
+<p><strong>What it does:</strong> Tells the model <em>how to structure the response</em> — table, checklist, numbered list, prose paragraphs, JSON, markdown. Left unspecified, the model defaults to flowing prose, which is often harder to use directly.</p>
+<p><strong>Why it matters in BT work:</strong> You frequently need output that can be pasted directly into Paratext notes, an Excel sheet, a checking report, or a team communication. Specifying the format saves manual reformatting and makes the output immediately actionable.</p>
+<p><strong>How to use it:</strong> Add a format instruction toward the end of the prompt, after the task description.</p>
+<h3 id="format-examples">Format examples</h3>
+<table>
+<thead>
+<tr>
+<th>Format instruction</th>
+<th>When to use it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>"Return as a 3-column markdown table: Verse | Issue | Suggestion"</em></td>
+<td>Checking notes, issue logs</td>
+</tr>
+<tr>
+<td><em>"Provide a bulleted checklist with a checkbox for each action item"</em></td>
+<td>Meeting follow-up, task lists</td>
+</tr>
+<tr>
+<td><em>"Number each point. No prose introduction or conclusion."</em></td>
+<td>Quick analysis, structured review</td>
+</tr>
+<tr>
+<td><em>"Format as: Term — Definition — Translation Risk"</em></td>
+<td>Key-term analysis</td>
+</tr>
+<tr>
+<td><em>"Return one paragraph, 100 words maximum"</em></td>
+<td>Executive summary, quick brief</td>
+</tr>
+<tr>
+<td><em>"Format the following genealogy as valid USFM, using \lh, \li, \b markers. Output only the USFM — no explanation, no prose wrapper."</em></td>
+<td>Scripture data entry, Paratext import</td>
+</tr>
+</tbody>
+</table>
+<h3 id="lane-3-note">Lane 3 note</h3>
+<p>Lane 3 practitioners working with administrative data — meeting notes, project reports, rollout checklists — gain the most from format specification. A prompt that produces a markdown checklist table can be pasted into Notion, Word, or a project management tool with zero reformatting. Define the columns explicitly: <em>"Action | Owner | Deadline | Status."</em></p>
+<hr />
+<h2 id="24-building-block-3-guardrails-negative-constraints">2.4 Building Block 3: Guardrails (Negative Constraints)</h2>
+<p><strong>What it does:</strong> Tells the model what <em>not</em> to do. Guardrails are the safety fence that prevents the model from drifting into speculation, hallucination, theological overreach, or inappropriate register.</p>
+<p>In Bible Translation, guardrails are not optional. The model's default is to be helpful and complete — which means it will fill gaps with plausible-sounding content, speculate when uncertain, and elaborate beyond the evidence. Guardrails override these defaults explicitly.</p>
+<p><strong>How to use it:</strong> Add negative constraints ("Do not…") and uncertainty-flagging instructions ("If uncertain, flag it as NEEDS VERIFICATION rather than guessing").</p>
+<h3 id="core-guardrails-for-bt-work">Core guardrails for BT work</h3>
+<p><strong>Execution constraint:</strong></p>
+<blockquote>
+<p><em>"Do not paraphrase the source text. Quote it exactly as given."</em></p>
+</blockquote>
+<p><strong>Theological constraint (most important):</strong></p>
+<blockquote>
+<p><em>"Do not speculate beyond the text. If you are uncertain about any interpretation, flag it as NEEDS VERIFICATION rather than presenting it as established."</em></p>
+</blockquote>
+<p><strong>Tone constraint:</strong></p>
+<blockquote>
+<p><em>"Do not use theological jargon (e.g. 'eschatological', 'expiation', 'penal substitution'). Use plain English accessible to a primary-school reader."</em></p>
+</blockquote>
+<p><strong>Reference constraint (anti-hallucination):</strong></p>
+<blockquote>
+<p><em>"Do not cite specific Louw-Nida codes, Greek dictionary entries, or scholar names. I will verify those independently. Describe the semantic range in plain terms only."</em></p>
+</blockquote>
+<p><strong>Hallucination-reduction instruction:</strong></p>
+<blockquote>
+<p><em>"If you do not know something, say so. Do not fabricate an answer to fill the gap."</em></p>
+</blockquote>
+<h3 id="temperature-in-plain-language">Temperature in plain language</h3>
+<p>Most AI chat interfaces do not show a temperature slider, but you can achieve the same effect through word choice. The language you use in guardrails implicitly steers the model toward precision or creativity:</p>
+<ul>
+<li><strong>Cold (precise, literal):</strong> <em>"Be precise and literal. Do not speculate or be creative. Give one definitive answer."</em><br />
+  Use for: exegesis, back-translation review, checking questions, key-term analysis</li>
+<li><strong>Medium (fluent but accurate):</strong> No special instruction needed. Default behaviour.<br />
+  Use for: cultural background synthesis, structured summaries</li>
+<li><strong>Warm (creative, varied):</strong> <em>"Generate 3 creative variations. Be expressive and culturally vivid."</em><br />
+  Use for: community-engagement scripts, story illustrations, training materials</li>
+</ul>
+<p><strong>Critical point:</strong> Never run checking or exegesis work in a "warm" session. Warm language produces fluent output that drifts from the source. For accuracy-sensitive work, always include a cold guardrail: <em>"Be precise and literal. Do not speculate."</em></p>
+<hr />
+<h2 id="25-building-block-4-few-shot-prompting-teaching-by-example">2.5 Building Block 4: Few-Shot Prompting (Teaching by Example)</h2>
+<p><strong>What it does:</strong> Instead of describing the style or format you want in abstract terms, you show the model <em>one perfect example</em> and ask it to follow that exact pattern. The model learns your team's style, vocabulary, and format from the example instantly.</p>
+<p><strong>Why it matters:</strong> Writing a paragraph of instructions explaining your team's checking-question style, your project's tone, or your preferred report format is hard and often produces inconsistent results. One well-chosen example communicates all of that effortlessly.</p>
+<p><strong>How to use it:</strong> Provide the example first, labelled clearly, then give the new task.</p>
+<h3 id="example-lane-2-checking-questions">Example — Lane 2, checking questions</h3>
+<p><strong>Zero-shot (no example):</strong></p>
+<blockquote>
+<p><em>"Write a checking question for Mark 5:3."</em></p>
+</blockquote>
+<p>Result: inconsistent with your team's established style — may be too long, too short, too literal, or at the wrong reading level.</p>
+<p><strong>One-shot (with example):</strong></p>
+<blockquote>
+<p><em>"Here is a good checking question for Mark 5:2: 'Where did the possessed man come from when he met Jesus?' Now write a checking question for Mark 5:3 following this exact pattern — one sentence, plain language, observable fact, no interpretation."</em></p>
+</blockquote>
+<p>Result: style-consistent, vocabulary-consistent, team-ready.</p>
+<h3 id="example-lane-3-meeting-summary">Example — Lane 3, meeting summary</h3>
+<p><strong>Zero-shot:</strong></p>
+<blockquote>
+<p><em>"Summarise this meeting."</em></p>
+</blockquote>
+<p><strong>One-shot:</strong></p>
+<blockquote>
+<p><em>"Here is an example summary entry from last week: '— Ben to send revised project timeline to all leads by Friday. Owner: Ben. Deadline: Friday 13 Mar.' Using exactly this format (dash + action + Owner + Deadline), summarise the action items from the following meeting notes: [paste notes]"</em></p>
+</blockquote>
+<h3 id="when-to-use-few-shot">When to use few-shot</h3>
+<p>Use it whenever:
+- Your team has an established style or format that differs from a generic template
+- You have been dissatisfied with zero-shot outputs and cannot easily describe what is wrong
+- You want consistency across multiple outputs (e.g. checking questions for an entire chapter)</p>
+<p>One excellent example is usually enough. Two examples further clarify edge cases.</p>
+<hr />
+<h2 id="26-building-block-5-chain-of-thought-cot">2.6 Building Block 5: Chain of Thought (CoT)</h2>
+<p><strong>What it does:</strong> Instructs the model to map out its reasoning <em>step-by-step before arriving at a final answer</em>. This prevents premature conclusions, exposes the model's assumptions at each stage, and gives you traceable reasoning you can audit and correct.</p>
+<p><strong>Why it matters in BT:</strong> Translation decisions — especially key-term choices, rendering of culturally loaded words, and identification of implicit information — involve multiple layers of reasoning. If the model skips straight to a recommendation, you cannot tell whether it understood all the relevant layers. If it reasons out loud, step by step, you can catch an error at Step 1 before it corrupts the final recommendation.</p>
+<h3 id="case-study-rendering-legion-in-mark-59">Case study: Rendering "Legion" in Mark 5:9</h3>
+<p>The word "Legion" is a classic example of a term that requires layered reasoning before a translation recommendation can be trusted.</p>
+<p><strong>Without Chain of Thought:</strong></p>
+<blockquote>
+<p><em>"What are some plausible ways of expressing 'Legion' in Mark 5:9 in my translation?"</em></p>
+</blockquote>
+<p>The model produces a list of options with apparent confidence. You cannot tell whether it understood the Roman military connotation, the theological significance of scale, or the likely available equivalents in your target culture. The suggestions may be linguistically plausible but theologically shallow — and you have no way to evaluate them without seeing the reasoning behind them.</p>
+<p><strong>With Chain of Thought:</strong></p>
+<blockquote>
+<p><em>"Work through this step by step before making a recommendation:</em></p>
+<p><em>Step 1 — What did 'Legion' mean to a first-century Roman audience? (military scale, organized power, dread)</em></p>
+<p><em>Step 2 — What does the use of this specific word communicate about the nature and scale of this man's possession?</em></p>
+<p><em>Step 3 — What concept in [target language/culture] communicates 'an overwhelming, innumerable, terrifying spiritual force'?</em></p>
+<p><em>Only after completing all three steps, suggest 2–3 translation options with your reasoning for each."</em></p>
+</blockquote>
+<p>Now you can check the model's reasoning at each stage. If Step 1 is wrong — if the model treats "Legion" as simply meaning "many" rather than as a specific military term — you catch that before it corrupts the recommendation.</p>
+<p><strong>Lane 2 note:</strong> Chain of Thought is the most important technique for consultants and exegetes. It transforms the AI from an oracle delivering verdicts into a traceable research assistant whose reasoning can be audited, challenged, and corrected — which is exactly what a checking process requires.</p>
+<h3 id="how-to-use-it">How to use it</h3>
+<p>Add a step-by-step instruction before the final question:</p>
+<blockquote>
+<p><em>"Think step by step. First, [reasoning step 1]. Then, [reasoning step 2]. Finally, [conclusion or recommendation]."</em></p>
+</blockquote>
+<p>Or more simply:</p>
+<blockquote>
+<p><em>"Think step by step before answering. Show your reasoning at each stage."</em></p>
+</blockquote>
+<hr />
+<h2 id="27-building-block-6-context-situational-background">2.7 Building Block 6: Context (Situational Background)</h2>
+<p><strong>What it does:</strong> Tells the model <em>the situation you are in</em> — who you are, what project this is for, what constraints apply, who will use the output, and what success looks like. This is distinct from pasting source text into the conversation (that is external context, covered fully in Chapter 3). Situational context calibrates <em>how</em> the model reasons before it begins, not merely <em>what</em> it reasons about.</p>
+<p><strong>Why it matters:</strong> Without situational background, the model fills gaps with assumptions — it assumes a generic audience, a generic purpose, and generic constraints. Those assumptions are almost never correct for Bible Translation work. Situational context overrides the defaults explicitly before any reasoning begins.</p>
+<p><strong>A simple test:</strong> If you handed your prompt to a stranger with no other information, would they have enough to do the task well? If not, the missing information is your context.</p>
+<p><strong>How to use it:</strong> Add a background statement early in the prompt — after the Persona instruction, before the task itself.</p>
+<h3 id="what-to-include">What to include</h3>
+<table>
+<thead>
+<tr>
+<th>Information type</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Who you are</strong></td>
+<td><em>"I am a mother-tongue translator working in Tamil with a team of three."</em></td>
+</tr>
+<tr>
+<td><strong>The project</strong></td>
+<td><em>"We are in checking stage 2 of the Gospel of Mark."</em></td>
+</tr>
+<tr>
+<td><strong>The audience</strong></td>
+<td><em>"Our primary audience is first-generation literate adults in rural Tamil Nadu."</em></td>
+</tr>
+<tr>
+<td><strong>Purpose of output</strong></td>
+<td><em>"This response will be used in a team discussion, not published directly."</em></td>
+</tr>
+<tr>
+<td><strong>Key constraints</strong></td>
+<td><em>"We follow the UBS translation brief. Avoid theological register."</em></td>
+</tr>
+</tbody>
+</table>
+<h3 id="example-with-and-without-context">Example — with and without context</h3>
+<p><strong>Without context:</strong></p>
+<blockquote>
+<p><em>"Act as a translation consultant. Review this back-translation of Mark 5:1–5 and identify naturalness issues."</em></p>
+</blockquote>
+<p>The model reviews the text and returns feedback calibrated for a generic document. It does not know your language family, your community's oral register, or that you are preparing for a consultant check next week.</p>
+<p><strong>With context:</strong></p>
+<blockquote>
+<p><em>"Act as a translation consultant. I am working in Tamil with a mother-tongue team in rural Tamil Nadu. We are at checking stage 2, preparing for a consultant check next week. Our community has a strong oral storytelling tradition — the translation should sound like a story told aloud, not a formal written document.</em></p>
+<p><em>Review this back-translation of Mark 5:1–5 and identify any phrases that would sound stilted when read aloud."</em></p>
+</blockquote>
+<p>The same instruction, radically different output — the model now knows who it is serving, what matters, and what the standard of success is.</p>
+<h3 id="lane-note">Lane note</h3>
+<p><strong>Lane 1 (Translators):</strong> Include your language name, target community, and current project stage. Even one sentence of context sharpens the output significantly.</p>
+<p><strong>Lane 2 (Consultants):</strong> Include the type of check (naturalness, accuracy, key-term), the translation team's background language, and any issues carried forward from prior checking sessions.</p>
+<p><strong>Lane 3 (Leadership / Support):</strong> Include your organisation, your audience (church leaders, donors, partner organisations), and the purpose of the document you are producing.</p>
+<hr />
+<h2 id="28-combining-the-building-blocks">2.8 Combining the Building Blocks</h2>
+<p>You do not need all six building blocks in every prompt. The right combination depends on the task:</p>
+<table>
+<thead>
+<tr>
+<th>Task type</th>
+<th>Recommended building blocks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Exegesis / key-term analysis</td>
+<td>Persona + Context + Guardrails (cold) + Chain of Thought</td>
+</tr>
+<tr>
+<td>Checking question generation</td>
+<td>Persona + Context + Format + Few-Shot</td>
+</tr>
+<tr>
+<td>Cultural background research</td>
+<td>Persona + Context + Guardrails (cultural anchoring) + Format</td>
+</tr>
+<tr>
+<td>Back-translation review</td>
+<td>Persona + Context + Guardrails (theological) + Format + CoT</td>
+</tr>
+<tr>
+<td>Administrative summary</td>
+<td>Context + Format + Few-Shot</td>
+</tr>
+<tr>
+<td>Creative illustration</td>
+<td>Persona + Guardrails (warm) + Format</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note:</strong> Building Block 6 (Context) can be added to almost any prompt. The table above omits it only where the task is fully self-contained — e.g. a creative writing task where there is no project-specific constraint. When in doubt, add a sentence of situational background.</p>
+</blockquote>
+<h3 id="a-fully-assembled-example-prompt">A fully assembled example prompt</h3>
+<p><strong>Task:</strong> Lane 2 consultant needs a structured analysis of how "Legion" is rendered in a back-translation draft.</p>
+<blockquote>
+<p><em>"Act as a senior translation consultant. [Persona]</em></p>
+<p><em>I am working with a mother-tongue translation team in South India. We are at checking stage 2 of Mark and preparing for a consultant review next month. This response will be used in a team discussion session. [Context]</em></p>
+<p><em>Below is a back-translation of Mark 5:9 from our draft. [External context — paste back-translation here]</em></p>
+<p><em>Work through the following steps before making a recommendation: [Chain of Thought]</em>
+<em>Step 1 — What does the source text word 'Legion' communicate about scale, nature, and the emotional impact on a first-century reader?</em>
+<em>Step 2 — Does the back-translation rendering capture those elements? Identify any gaps.</em>
+<em>Step 3 — For each gap identified, suggest a specific correction or alternative.</em></p>
+<p><em>Do not speculate beyond the text. If you are uncertain about any claim, flag it as NEEDS VERIFICATION. [Guardrails]</em></p>
+<p><em>Return your response as: Finding | Evidence | Recommendation. [Format]"</em></p>
+</blockquote>
+<p>This prompt combines five building blocks into a single, coherent instruction that a consultant could use directly in a checking session.</p>
+<hr />
+<p><em>Continue to Chapter 3: The Master Formula →</em></p>
+</div>
+    </main>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <!-- ── PRESENTATION MODE CONTROLS ───────────────────────── -->
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="../assets/script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>

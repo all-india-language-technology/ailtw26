@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Engineering · AILT 2026</title>
+  <meta name="description" content="Prompt Engineering for Bible Translators · AILT 2026 AI Tools Workshop">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+</head>
+<body>
+
+  <!-- ── SITE NAV ──────────────────────────────────────────── -->
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="../" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="../" class="shell-nav-link">Home</a>
+        <a href="../prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="../handbook/" class="shell-nav-link">Handbook</a>
+        <a href="../about.html" class="shell-nav-link">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── PAGE LAYOUT ─────────────────────────────────────────────── -->
+  <div class="shell-page">
+    <main class="shell-main" id="main-content">
+      <!-- NAV -->
+  <nav class="site-nav" aria-label="Module navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">004 · Prompt Engineering</a>
+      <div class="nav-links">
+        <a href="ch01.html" class="nav-link">Ch 1</a>
+        <a href="ch02.html" class="nav-link">Ch 2</a>
+        <a href="ch03.html" class="nav-link">Ch 3</a>
+        <a href="ch04.html" class="nav-link">Ch 4</a>
+        <a href="ch05.html" class="nav-link">Ch 5</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="index-hero">
+    <div class="container">
+      <div class="workshop-badge">AILT 2026 · AI Tools Workshop</div>
+      <h1>Prompt Engineering</h1>
+      <p class="index-tagline">
+        Five sessions. Three lanes. One clear answer: how AI fits into your part of the Bible translation workflow — and how to use it well.
+      </p>
+      <div class="index-stats">
+        <div class="stat">
+          <span class="stat-num">5</span>
+          <span class="stat-label">Sessions</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">3</span>
+          <span class="stat-label">Audience Lanes</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">6</span>
+          <span class="stat-label">Prompting Techniques</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">6</span>
+          <span class="stat-label">Failure Modes to Know</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CHAPTER LIST -->
+  <main>
+    <div class="chapter-list">
+
+      <h2 id="course-chapters">Course Chapters</h2>
+
+      <a href="ch01.html" class="chapter-card fade-up">
+        <div class="ch-card-eyebrow">
+          <span class="ch-card-num">Chapter 1</span>
+          <span class="ch-card-session-tag">Foundations</span>
+        </div>
+        <h2 id="how-llms-work-and-why-it-matters-for-prompting">How LLMs Work — and Why It Matters for Prompting</h2>
+        <p class="key-q">Why does the exact wording of my prompt change the output so dramatically?</p>
+        <div class="ch-meta">
+          <span>The Scribe Analogy · 9 Factors · 6 Failure Modes</span>
+          <span class="ch-meta-arrow">→</span>
+        </div>
+      </a>
+
+      <a href="ch02.html" class="chapter-card fade-up">
+        <div class="ch-card-eyebrow">
+          <span class="ch-card-num">Chapter 2</span>
+          <span class="ch-card-session-tag">Core Techniques</span>
+        </div>
+        <h2 id="anatomy-of-a-great-prompt">Anatomy of a Great Prompt</h2>
+        <p class="key-q">What are the building blocks of a prompt that consistently produces translation-grade output?</p>
+        <div class="ch-meta">
+          <span>Persona · Format · Guardrails · Few-Shot · Chain of Thought · Context</span>
+          <span class="ch-meta-arrow">→</span>
+        </div>
+      </a>
+
+      <a href="ch03.html" class="chapter-card fade-up">
+        <div class="ch-card-eyebrow">
+          <span class="ch-card-num">Chapter 3</span>
+          <span class="ch-card-session-tag">Framework</span>
+        </div>
+        <h2 id="the-master-formula">The Master Formula</h2>
+        <p class="key-q">Beyond writing a good prompt, what else shapes the quality of AI output?</p>
+        <div class="ch-meta">
+          <span>Instruction · Materials · Tools · Additional Info · Iteration Loop</span>
+          <span class="ch-meta-arrow">→</span>
+        </div>
+      </a>
+
+      <a href="ch04.html" class="chapter-card fade-up">
+        <div class="ch-card-eyebrow">
+          <span class="ch-card-num">Chapter 4</span>
+          <span class="ch-card-session-tag">Advanced</span>
+        </div>
+        <h2 id="advanced-techniques-managing-the-context-window">Advanced Techniques — Managing the Context Window</h2>
+        <p class="key-q">How do I keep my AI sessions reliable when they grow long?</p>
+        <div class="ch-meta">
+          <span>Context Drift · Session Brief · System Prompts · Data Safety</span>
+          <span class="ch-meta-arrow">→</span>
+        </div>
+      </a>
+
+      <a href="ch05.html" class="chapter-card fade-up">
+        <div class="ch-card-eyebrow">
+          <span class="ch-card-num">Chapter 5</span>
+          <span class="ch-card-session-tag">Application</span>
+        </div>
+        <h2 id="prompting-by-lane">Prompting by Lane</h2>
+        <p class="key-q">How do I apply everything I've learned to my specific role and tasks?</p>
+        <div class="ch-meta">
+          <span>Translators · Consultants · Tech &amp; Leadership · Cross-Lane Exercises</span>
+          <span class="ch-meta-arrow">→</span>
+        </div>
+      </a>
+
+      <div class="appendix-note fade-up">
+        <h3 id="course-appendices">Course Appendices</h3>
+        <p style="font-size:0.875rem; color: var(--text-muted); margin-bottom: 0.9rem;">
+          The appendices are part of this course. Use them during the sessions, between sessions, and afterward as your working toolkit.
+        </p>
+        <div class="chapter-list">
+          <a href="../handbook/app-a.html" class="chapter-card fade-up">
+            <div class="ch-card-eyebrow">
+              <span class="ch-card-num">Appendix A</span>
+              <span class="ch-card-session-tag">Reference</span>
+            </div>
+            <h2 id="glossary">Glossary</h2>
+            <p class="key-q">What do these AI terms mean when people use them in training, demos, and documentation?</p>
+            <div class="ch-meta">
+              <span>Shared vocabulary for the whole course</span>
+              <span class="ch-meta-arrow">→</span>
+            </div>
+          </a>
+
+          <a href="../handbook/app-b.html" class="chapter-card fade-up">
+            <div class="ch-card-eyebrow">
+              <span class="ch-card-num">Appendix B</span>
+              <span class="ch-card-session-tag">Risk</span>
+            </div>
+            <h2 id="risk-reference">Risk Reference</h2>
+            <p class="key-q">What failure modes should I check for before I trust the output?</p>
+            <div class="ch-meta">
+              <span>Quick-check card for safer use</span>
+              <span class="ch-meta-arrow">→</span>
+            </div>
+          </a>
+
+          <a href="../handbook/app-c.html" class="chapter-card fade-up">
+            <div class="ch-card-eyebrow">
+              <span class="ch-card-num">Appendix C</span>
+              <span class="ch-card-session-tag">By Lane</span>
+            </div>
+            <h2 id="lane-reference-card">Lane Reference Card</h2>
+            <p class="key-q">How do the prompting patterns change by translation, consulting, and technical leadership roles?</p>
+            <div class="ch-meta">
+              <span>Role-based examples you can reuse fast</span>
+              <span class="ch-meta-arrow">→</span>
+            </div>
+          </a>
+
+          <a href="../handbook/app-d.html" class="chapter-card fade-up">
+            <div class="ch-card-eyebrow">
+              <span class="ch-card-num">Appendix D</span>
+              <span class="ch-card-session-tag">Templates</span>
+            </div>
+            <h2 id="prompt-template-library">Prompt Template Library</h2>
+            <p class="key-q">What prompts can I take straight into real work after the course?</p>
+            <div class="ch-meta">
+              <span>Ready-to-adapt prompts for common tasks</span>
+              <span class="ch-meta-arrow">→</span>
+            </div>
+          </a>
+
+          <a href="../handbook/app-e.html" class="chapter-card fade-up">
+            <div class="ch-card-eyebrow">
+              <span class="ch-card-num">Appendix E</span>
+              <span class="ch-card-session-tag">Advanced</span>
+            </div>
+            <h2 id="meta-prompting">Meta-Prompting</h2>
+            <p class="key-q">How do I get AI to help draft, refine, and improve my prompts without losing control?</p>
+            <div class="ch-meta">
+              <span>Prompt-the-prompt workflow</span>
+              <span class="ch-meta-arrow">→</span>
+            </div>
+          </a>
+
+          <a href="../handbook/app-f.html" class="chapter-card fade-up">
+            <div class="ch-card-eyebrow">
+              <span class="ch-card-num">Appendix F</span>
+              <span class="ch-card-session-tag">Background</span>
+            </div>
+            <h2 id="the-attention-paper">The Attention Paper</h2>
+            <p class="key-q">What is happening under the hood when the model attends to one part of the prompt and ignores another?</p>
+            <div class="ch-meta">
+              <span>Plain-English background for the curious</span>
+              <span class="ch-meta-arrow">→</span>
+            </div>
+          </a>
+
+          <a href="../handbook/app-g.html" class="chapter-card fade-up">
+            <div class="ch-card-eyebrow">
+              <span class="ch-card-num">Appendix G</span>
+              <span class="ch-card-session-tag">Extension</span>
+            </div>
+            <h2 id="beyond-the-basics">Beyond the Basics</h2>
+            <p class="key-q">Where do I go next once the core course workflow becomes normal practice?</p>
+            <div class="ch-meta">
+              <span>Next-step directions for deeper practice</span>
+              <span class="ch-meta-arrow">→</span>
+            </div>
+          </a>
+
+          <a href="../handbook/app-h.html" class="chapter-card fade-up">
+            <div class="ch-card-eyebrow">
+              <span class="ch-card-num">Appendix H</span>
+              <span class="ch-card-session-tag">Strategy</span>
+            </div>
+            <h2 id="llms-and-minority-languages">LLMs and Minority Languages</h2>
+            <p class="key-q">What does this technology mean for low-resource language communities and long-term BT strategy?</p>
+            <div class="ch-meta">
+              <span>Leadership and advocacy framing</span>
+              <span class="ch-meta-arrow">→</span>
+            </div>
+          </a>
+
+          <a href="../handbook/app-i.html" class="chapter-card fade-up">
+            <div class="ch-card-eyebrow">
+              <span class="ch-card-num">Appendix I</span>
+              <span class="ch-card-session-tag">Case Study</span>
+            </div>
+            <h2 id="how-this-was-made">How This Was Made</h2>
+            <p class="key-q">What does an actual AI-assisted production workflow look like in practice?</p>
+            <div class="ch-meta">
+              <span>Transparency note and worked example</span>
+              <span class="ch-meta-arrow">→</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- HOW TO USE THIS GUIDE -->
+      <div class="card fade-up" style="margin-top: 1.5rem; border-top: 4px solid var(--amber);">
+        <h3 style="margin-bottom: 0.75rem;" id="how-each-session-is-structured">How each session is structured</h3>
+        <div class="card-grid cols-2" style="margin-top: 0.5rem;">
+          <div style="display:flex; gap:0.75rem; align-items:flex-start;">
+            <span style="display:inline-block; width:28px; height:28px; border-radius:50%; background:var(--c1); color:white; font-size:0.7rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;">C1</span>
+            <div><strong style="display:block; font-size:0.85rem;">Connection</strong><span style="font-size:0.8rem; color:var(--text-muted);">An opening challenge or surprising moment — before any explanation</span></div>
+          </div>
+          <div style="display:flex; gap:0.75rem; align-items:flex-start;">
+            <span style="display:inline-block; width:28px; height:28px; border-radius:50%; background:var(--c2); color:white; font-size:0.7rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;">C2</span>
+            <div><strong style="display:block; font-size:0.85rem;">Content</strong><span style="font-size:0.8rem; color:var(--text-muted);">The core concept examined and demonstrated live</span></div>
+          </div>
+          <div style="display:flex; gap:0.75rem; align-items:flex-start;">
+            <span style="display:inline-block; width:28px; height:28px; border-radius:50%; background:var(--c3); color:white; font-size:0.7rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;">C3</span>
+            <div><strong style="display:block; font-size:0.85rem;">Challenge</strong><span style="font-size:0.8rem; color:var(--text-muted);">Active problem-solving — you wrestle with it before seeing the answer</span></div>
+          </div>
+          <div style="display:flex; gap:0.75rem; align-items:flex-start;">
+            <span style="display:inline-block; width:28px; height:28px; border-radius:50%; background:var(--c4); color:white; font-size:0.7rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;">C4</span>
+            <div><strong style="display:block; font-size:0.85rem;">Change</strong><span style="font-size:0.8rem; color:var(--text-muted);">Your personal commitment: one concrete thing you will do differently</span></div>
+          </div>
+          <div style="display:flex; gap:0.75rem; align-items:flex-start;">
+            <span style="display:inline-block; width:28px; height:28px; border-radius:50%; background:var(--c5); color:white; font-size:0.7rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;">C5</span>
+            <div><strong style="display:block; font-size:0.85rem;">Closure</strong><span style="font-size:0.8rem; color:var(--text-muted);">An attitude anchor — not a recap, but a reframe you take with you</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  
+    </main>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <!-- ── PRESENTATION MODE CONTROLS ───────────────────────── -->
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="../assets/script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>

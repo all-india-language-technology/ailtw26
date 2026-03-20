@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 1 — How LLMs Work — and Why It Matters for Prompting</title>
+  <meta name="description" content="Prompt Engineering for Bible Translators · AILT 2026 AI Tools Workshop">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+</head>
+<body>
+
+  <!-- ── SITE NAV ──────────────────────────────────────────── -->
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="../" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="../" class="shell-nav-link">Home</a>
+        <a href="../prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="../handbook/" class="shell-nav-link">Handbook</a>
+        <a href="../about.html" class="shell-nav-link">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── PAGE LAYOUT ─────────────────────────────────────────────── -->
+  <div class="shell-page">
+    <main class="shell-main" id="main-content">
+      <div class="prose-content">
+<h1 id="chapter-1-how-llms-work-and-why-it-matters-for-prompting">Chapter 1: How LLMs Work — and Why It Matters for Prompting</h1>
+<blockquote>
+<p><strong>Session tag:</strong> Foundations<br />
+<strong>Key question:</strong> Why does the exact wording of my prompt change the output so dramatically?</p>
+</blockquote>
+<hr />
+<p><strong>Terms used in this chapter</strong> — plain-language meanings before you encounter them in context:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>What it means in plain language</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LLM</strong> (Large Language Model) or <strong>Model</strong></td>
+<td>The type of AI behind ChatGPT, Claude, Gemini, and similar tools — a system trained on vast amounts of text that generates responses by predicting likely next words</td>
+</tr>
+<tr>
+<td><strong>Token</strong></td>
+<td>The unit the model counts: roughly one common word, or a fragment of a longer word. Punctuation marks each count as a separate token</td>
+</tr>
+<tr>
+<td><strong>Context window</strong></td>
+<td>Everything the AI can "see" at one time: your instructions, the conversation history, and anything you have pasted in</td>
+</tr>
+<tr>
+<td><strong>Training data</strong></td>
+<td>The text the model learned from before you started using it — determines its knowledge, vocabulary, and assumptions</td>
+</tr>
+<tr>
+<td><strong>Hallucination</strong></td>
+<td>When the model generates confident-sounding content that is factually invented</td>
+</tr>
+<tr>
+<td><strong>Knowledge cutoff</strong></td>
+<td>The fixed date beyond which the model has no information — events after that date are invisible to it</td>
+</tr>
+<tr>
+<td><strong>System prompt</strong></td>
+<td>Standing instructions loaded before a conversation begins, which shape every response in that session</td>
+</tr>
+<tr>
+<td><strong>Attention fade</strong></td>
+<td>The mechanism by which the model gives progressively less weight to older text — meaning instructions set at the start of a session gradually lose influence</td>
+</tr>
+<tr>
+<td><strong>Context loss</strong></td>
+<td>When older content (including your guardrails) silently drops out of the context window as a session grows</td>
+</tr>
+</tbody>
+</table>
+<p>Full definitions are in Appendix A (Glossary).</p>
+<hr />
+<h2 id="11-what-an-llm-actually-does">1.1 What an LLM Actually Does</h2>
+<p>A Large Language Model (LLM) — the technology behind ChatGPT, Claude, Gemini, and most AI tools you will encounter — does not <em>understand</em> text the way a human does. It <strong>predicts</strong> text. More precisely: given everything it has been shown so far (your prompt, the conversation history), it calculates which word is most statistically likely to come next, then the word after that, then the word after that — until it decides to stop.</p>
+<p>That is the whole mechanism. Pattern prediction, at extraordinary scale and speed.</p>
+<h3 id="the-scribe-analogy">The Scribe Analogy</h3>
+<p>Imagine a student who copied ten thousand Bible commentaries, lexicons, and theological journals by hand — but never once learned to <em>read</em>. They know, from sheer pattern repetition, exactly which words tend to follow which other words in scholarly theological writing. Ask them to complete the sentence <em>"The Lord is my…"</em> and they will write <em>"shepherd"</em> instantly and correctly — not because they understand Psalm 23, but because that word pair appeared in their copying millions of times.</p>
+<p>Ask that same student something rare — a question about a minority language, a newly discovered manuscript, a community practice that was never written down — and they will produce a fluent, confident-sounding completion that may be entirely fabricated. They are not lying. They simply complete patterns. Truth and plausibility feel identical to them.</p>
+<p>This is the machine you are prompting. Understanding this changes <em>everything</em> about how you write instructions to it.</p>
+<h3 id="word-embeddings-words-as-positions-in-space">Word Embeddings: Words as Positions in Space</h3>
+<p>LLMs convert words into lists of numbers and store those numbers as points in a vast multi-dimensional space — think of a three-dimensional map but with thousands of dimensions. (This conversion is what the term <em>word embedding</em> refers to: each word is "embedded" into the space as a unique numeric position.) Words that frequently appear together in similar contexts end up positioned near each other in that space. <em>Shepherd, flock, pasture</em> cluster together. <em>Lord, holy, temple</em> form a separate cluster. <em>Demon, unclean, spirit</em> gather in another neighborhood.</p>
+<p>When you type a prompt, the model geometrically navigates that space — finding the nearest, most statistically coherent next word at each step. It is pure geometry, not comprehension.</p>
+<p><strong>Implication for prompting:</strong> The vocabulary you use in your prompt pulls the model toward specific neighborhoods in that space. Ask for "an explanation" and you will get generic expository prose. Ask for "a consultant's analysis for a checking round" and you pull the model into a completely different cluster of likely outputs — more precise, more structured, more relevant.</p>
+<h3 id="tokens-what-the-model-actually-counts">Tokens: What the Model Actually Counts</h3>
+<p>The model does not process words — it processes <strong>tokens</strong>. A token is a chunk of text, typically a common word or part of a word. <em>The</em> = 1 token. <em>Legion</em> = 1 token. <a href="https://platform.openai.com/tokenizer"><em>Incomprehensible</em></a> = 4 tokens (<code>In</code> · <code>com</code> · <code>preh</code> · <code>ensible</code>). Every punctuation mark is its own token: a comma, a full stop, a quotation mark each count separately.</p>
+<p>This matters for two practical reasons:</p>
+<p><strong>1. Context window size is measured in tokens, not words or pages.</strong> The <strong>context window</strong> is the total amount of text the model can hold in its working memory at one time — everything it can "see" when generating a response, including your instructions, the conversation history, and any documents you have pasted in. A 128,000-token context window holds roughly 90,000–100,000 English words — approximately 350–400 pages of standard text. A 1 Million-token window holds around 700,000–750,000 words — roughly 2,500–3,000 pages. In practice, a long BT working session with pasted source text, back-translations, and AI session brief is unlikely to approach these limits. The practical risk is not raw capacity; it is <em>behavioural drift</em> — which is addressed in Chapter 4.</p>
+<p><strong>2. Non-Latin scripts tokenise less efficiently.</strong> Most models were trained predominantly on English text. Scripts like Tamil, Telugu, or Ethiopian Ge'ez may require 2–3 tokens per word rather than one. A session involving a full chapter pasted in a non-Latin script fills the context window significantly faster than the same content in English. If you are working with non-Latin source or draft text, be alert to this.</p>
+<p><strong>One practical implication that surprises many users:</strong> You do not need to say "please" or "thank you" when prompting an AI. Politeness costs tokens and adds no value — the model has no feelings to acknowledge. Keep prompts precise and purposeful.</p>
+<hr />
+<h2 id="12-why-prompting-is-not-obvious">1.2 Why Prompting Is Not Obvious</h2>
+<p>If LLMs simply predict patterns, why isn't prompting just a matter of asking clearly? Because the model has no idea who you are, what you already know, what you will do with the output, or what "good" looks like in your context. Left to its defaults, it aims for the <em>average</em> — the statistical center of who tends to ask questions like yours.</p>
+<p>For a Bible Translation practitioner, the average is not good enough. The average person asking about Mark 5 wants a Sunday-school summary. You need translation-grade exegetical analysis for a specific cultural audience in a specific output format for a specific use.</p>
+<p>Prompting is the act of replacing the model's dangerous defaults with your specific context and requirements. Every technique in this handbook is a different way of doing exactly that.</p>
+<hr />
+<h2 id="13-the-factors-that-shape-output">1.3 The Factors That Shape Output</h2>
+<p>The prediction mechanism in section 1.1 is just one part of the picture. What the model actually produces is shaped by nine distinct factors — only four of which are in your hands.</p>
+<h3 id="the-nine-factors">The nine factors</h3>
+<ul>
+<li><strong>Training data</strong> — the data (text, images, audio, code, and more) the model learned from, which determines its knowledge, vocabulary, and default assumptions</li>
+<li><strong>Fine-tuning purpose</strong> — the task the model was further trained to specialise in after its initial training; a model fine-tuned for customer service behaves differently from one fine-tuned for coding or instruction-following, even if both started from the same base model</li>
+<li><strong>Provider configuration</strong> — platform-level settings the tool provider applies before you open the interface; examples include content safety filters, default response length limits, which features are enabled (image generation, web search, file uploads), and acceptable-use policies</li>
+<li><strong>System prompt</strong> — standing instructions loaded before the conversation begins, either by the tool maker (defining the assistant's default persona, tone, and limits) or by you as the user (via a Claude Project, Custom GPT, or similar setup); shapes every response in the session and, depending on the platform, may or may not be visible to you</li>
+<li><strong>Knowledge cutoff</strong> — the date beyond which the model has no training data; different models have different cutoffs, and some tools (such as Perplexity or ChatGPT with web search enabled) can supplement this with live retrieval, but the base model's knowledge remains bounded regardless</li>
+<li><strong>Augmentation data</strong> — documents, databases, or project files you supply to extend the model's knowledge for a specific session (see Chapter 3)</li>
+<li><strong>Available tools</strong> — operations the model can perform: searching the web, reading files, running calculations, connecting to external systems via integrations</li>
+<li><strong>Model choice</strong> — which model or tool you select for the task; GPT-4o, Claude Sonnet, Gemini Pro, and others differ in reasoning ability, language coverage, knowledge depth, and cost, and matching the right model to the task is itself a prompting decision</li>
+<li><strong>Your prompt</strong> — the instruction you write</li>
+</ul>
+<p>Of these nine factors, <strong>four are directly in your hands</strong>: <em>the model</em> you choose, <em>a system prompt</em> you configure yourself, <em>the augmentation data</em> you choose to supply, and <em>the prompt</em> you write. You cannot change how the model was trained, when its knowledge ends, or how the provider has set up the platform. But you can select the tool best suited to your task, load standing instructions that persist across every session, decide what documents and context you bring in, and craft the prompt that directs the model to use all of it well. Together, these four levers give a practitioner far more control over output quality than most users realise.</p>
+<p>Chapter 2 covers how to construct the prompt itself — the lever with the highest immediate impact. Chapter 3 covers how to use augmentation data to extend the model's knowledge for a specific task.</p>
+<hr />
+<h2 id="14-the-risk-radar-six-failure-modes-every-bt-practitioner-must-know">1.4 The Risk Radar: Six Failure Modes Every BT Practitioner Must Know</h2>
+<p>These six failure modes are not hypothetical. Each has caused real problems in Bible Translation work. Know them before you trust any AI output.</p>
+<hr />
+<h3 id="failure-mode-1-hallucination-">Failure Mode 1: Hallucination 💥</h3>
+<p><strong>What it is:</strong> The model generates text that sounds authoritative but is factually invented — fake verse references, non-existent Louw-Nida domain codes, fabricated quotations from scholars, invented Greek glosses.</p>
+<p><strong>Why it happens:</strong> The model is optimizing for <em>plausibility</em>, not truth. When it encounters a question it cannot reliably answer, it does not say "I don't know." It completes the pattern of <em>what a confident answer to this kind of question looks like</em>, whether or not the content is real.</p>
+<p><strong>Why it is especially dangerous in BT:</strong> A hallucinated Louw-Nida code looks exactly like a real one. A fabricated scholarly citation looks authoritative. If you do not verify the reference independently, a false claim about the Greek text can enter your checking documentation and survive into publication.</p>
+<p><strong>Prompt that triggers it:</strong></p>
+<blockquote>
+<p><em>"What does Louw-Nida say about the Greek word akathartos in Mark 5:2?"</em></p>
+</blockquote>
+<p>The model may produce a precise-looking domain number and gloss that sounds ready to copy into your notes. Some details may be accurate. Some may be invented. The danger is that a fluent, scholarly answer does not show you which parts are verified and which parts still need checking.</p>
+<p><strong>Safer alternative:</strong></p>
+<blockquote>
+<p><em>"Explain the semantic range of the Greek word akathartos as used in Mark 5. Do not cite specific reference codes — I will verify those independently. If you are uncertain about any claim, say so explicitly."</em></p>
+</blockquote>
+<p><strong>The rule:</strong> Ask for reasoning and semantic explanation. Verify all specific references (codes, citations, verse counts, Greek forms) against primary sources.</p>
+<hr />
+<h3 id="failure-mode-2-knowledge-cutoff-">Failure Mode 2: Knowledge Cutoff 📅</h3>
+<p><strong>What it is:</strong> The model's training data ends at a fixed date — typically 12–18 months before you are using it. Events, publications, tool updates, and field decisions after that date simply do not exist for the model.</p>
+<p><strong>Why it matters in BT:</strong> New Paratext versions, updated UBS guidelines, recently completed surveys, your team's latest key-term decisions, changes to checking procedures — the model knows nothing of these. It will describe an older state of affairs as if it were current, with no indication that it is out of date.</p>
+<p><strong>Prompt that triggers it:</strong></p>
+<blockquote>
+<p><em>"What are the latest Paratext 9.5 features I should use for my checking workflow?"</em></p>
+</blockquote>
+<p>The model may confabulate features, or describe an older version accurately while presenting it as the current one.</p>
+<blockquote>
+<p><strong>Note:</strong> The original draft of this handbook wrote "Paratext 9.4" here — because that was the version in the model's training data at time of writing. The current version is 9.5. This is the failure mode in action.</p>
+</blockquote>
+<p><strong>Safer alternative:</strong></p>
+<blockquote>
+<p><em>"I am pasting the Paratext 9.5 release notes below. Based only on this content, summarise the checking features most relevant to a translation team working on a minority language project. [paste notes]"</em></p>
+</blockquote>
+<p><strong>The rule:</strong> For anything time-sensitive, supply the current document and instruct the model to reason <em>only from what you provide</em>.</p>
+<hr />
+<h3 id="failure-mode-3-bias-worldview-">Failure Mode 3: Bias &amp; Worldview 🧭</h3>
+<p><strong>What it is:</strong> The model was trained predominantly on Western, English-language internet text. Its default theological frame, cultural illustrations, and metaphors lean Western Protestant. It does not know this about itself.</p>
+<p><strong>Why it matters in BT:</strong> When you ask for a "culturally appropriate illustration," the model's default is the culture embedded in its training data — which may be entirely foreign to your target audience. Illustrations about debt, legal proceedings, or individual conscience may make no sense to a community organized around honour, shame, and kinship obligations.</p>
+<p><strong>Prompt that triggers it:</strong></p>
+<blockquote>
+<p><em>"Give me a culturally appropriate illustration of 'redemption' for my translation audience."</em></p>
+</blockquote>
+<p>Without knowing your audience, the model defaults to Western financial or legal metaphors.</p>
+<p><strong>Safer alternative:</strong></p>
+<blockquote>
+<p><em>"My target audience is a tribal community in the Nilgiri hills of South India where honour, shame, and kinship obligations are the primary social structures. Suggest 2–3 illustrations for 'redemption' that draw from that social world. Avoid legal or financial metaphors entirely."</em></p>
+</blockquote>
+<p><strong>The rule:</strong> Always anchor the cultural frame explicitly. Name the people group, the honour/shame dynamics, what is <em>not</em> familiar in your context. The model cannot correct for bias it does not know it has — you must supply the correction.</p>
+<p><strong>Additional note — low-resource languages:</strong> AI performance degrades significantly for languages with small digital footprints. If your target language has little or no presence in the training data, hallucination risk increases, grammatical suggestions become unreliable, and the model's translations should be treated as first-draft approximations only, not as authoritative renderings. Always have a mother-tongue speaker review any AI output in the target language.</p>
+<hr />
+<h3 id="failure-mode-4-math-counting-">Failure Mode 4: Math &amp; Counting 🔢</h3>
+<p><strong>What it is:</strong> LLMs process numbers as tokens, not values. They are statistically unreliable for arithmetic, syllable counts, verse tallying, word frequency analysis, and any task requiring precise numeric reasoning.</p>
+<p><strong>Why it matters in BT:</strong> A wrong verse count, a miscounted syllable in a poetic text, or a misreported key-term frequency can introduce errors into checking documentation that are hard to catch later.</p>
+<p><strong>Prompt that triggers it:</strong></p>
+<blockquote>
+<p><em>"How many times does the word 'spirit' appear in Mark 5:1–20? Count them for me."</em></p>
+</blockquote>
+<p>The model produces a number with full confidence. It is not actually counting. It is predicting what <em>a plausible word count response looks like</em> — which often resembles the real answer but is not reliably accurate.</p>
+<p><strong>The safer approach:</strong> Use Paratext's Find function, a spreadsheet, or any reliable counting tool for anything requiring an exact number. Then bring the AI back in to help you <em>interpret</em> the pattern — once you have the verified count.</p>
+<p><strong>The rule:</strong> Delegate counting and arithmetic to reliable tools. Delegate interpretation, synthesis, and explanation to the AI.</p>
+<hr />
+<h3 id="failure-mode-5-attention-fade-">Failure Mode 5: Attention Fade 🔍</h3>
+<p><strong>What it is:</strong> The Transformer architecture that underlies every modern LLM (introduced in the 2017 Google paper <em>"Attention Is All You Need"</em>) uses a mechanism called <strong>attention</strong> to decide how much weight to give to each part of the context when generating each new word. The architecture <em>can</em> connect any two tokens directly, regardless of distance — this was the breakthrough over earlier systems (see Appendix F). But through training on real-world text, models develop attention patterns that are recency-biased in practice: tokens that are close together tend to receive stronger mutual attention; tokens that are far apart tend to receive progressively weaker attention. This is a learned behavioural tendency, not a structural limitation of the architecture. The further your instructions are from the model's current position in the conversation, the less influence they have on its output — even while they are still technically within the context window.</p>
+<p><strong>Why it matters in BT:</strong> Guardrails and theological constraints are typically set at the top of a session. In a long checking round, those constraints may be competing for attention against dozens of exchanges about specific verses. By the time you reach verse 18, the instruction from verse 1 — <em>"do not speculate; flag uncertainty"</em> — has proportionally less influence than it did at the start. The model is not disobeying. It is attending to what is near.</p>
+<p><strong>How it shows up:</strong> Gradual loosening of constraints rather than sudden failure. Speculation increases incrementally. Flags appear less frequently. The persona shifts subtly toward a more generic register. It is harder to spot than context loss (FM6) precisely because there is no clear before-and-after moment.</p>
+<p><strong>The safer approach:</strong> Repeat key constraints at the start of a new task within a session. If you notice the model's behaviour drifting, a single reinforcing line is often enough: <em>"Reminder: flag all uncertain interpretations as NEEDS VERIFICATION and do not speculate beyond the text."</em> Better still, use a system prompt (see Chapter 4, §4.4) — system prompt instructions receive elevated attention on every turn, not just when they were written.</p>
+<p><strong>The rule:</strong> Treat important constraints as needing periodic reinforcement in long sessions, not just a one-time setting. See Appendix F for the attention mechanism explained in plain English.</p>
+<hr />
+<h3 id="failure-mode-6-context-loss-">Failure Mode 6: Context Loss 🌊</h3>
+<p><strong>What it is:</strong> Every AI conversation has a fixed "context window" — a maximum amount of text the model can hold in its working memory at one time. As a session grows longer, the oldest content is silently dropped to make room for new content. The model does not warn you. From its perspective, it simply does not have access to what has scrolled off. Attention fade (FM5) is the gradual precursor — instructions weaken with distance before they disappear entirely. Context loss is the terminal stage: the instruction is gone from the window completely.</p>
+<p><strong>The silent failure problem:</strong> This is what makes context loss distinctively dangerous. Hallucination can produce an obviously wrong answer. Knowledge cutoff can be spotted if you know the correct version. But context loss produces no signal at all. The model does not know its guardrails have disappeared — it cannot detect an absence. It continues with apparent confidence, operating under fewer constraints than you set, with no indication that anything has changed. The onus for detecting this falls entirely on the human.</p>
+<p><strong>Why it matters in BT:</strong> The guardrails you carefully set at the start of a session — <em>"do not speculate beyond the text," "flag any uncertain interpretations," "use plain language"</em> — are written first. They are therefore the first things to disappear as the session grows. After 40 or 50 exchanges, the AI may be operating with no knowledge of those constraints at all.</p>
+<p><strong>How it shows up:</strong> You notice the AI starting to speculate freely, adding theological commentary it was told not to, or changing its output format — mid-session, with no explanation.</p>
+<p><strong>Do modern tools address this?</strong> Some do, partially:
+- <strong>System prompts</strong> (Claude Projects, Custom GPTs) load standing instructions in a privileged position <em>outside</em> the conversation scroll, so they cannot be displaced by context fill. This is the strongest current defence.
+- <strong>Memory features</strong> (ChatGPT Memory, Notion AI) persist facts across sessions — but these are user-curated notes, not full guardrail sets. They reduce re-briefing effort but do not fully solve in-session drift.
+- <strong>RAG (Retrieval-Augmented Generation)</strong> environments can re-inject relevant standing context on each turn, keeping instructions fresh regardless of session length — but this requires a configured environment, not a standard chat interface.
+- <strong>Standard chat interfaces</strong> (free tiers of Claude, ChatGPT, Gemini) provide no protection. The window fills; the guardrails go. No warning is issued.</p>
+<p><strong>The rule:</strong> Keep sessions short and task-focused. Refresh key instructions mid-session before they fade or fall out. Use a system prompt for standing constraints wherever your tool supports it. See Chapter 4 for the four defences.</p>
+<hr />
+<h2 id="15-what-ai-does-well-seven-core-capabilities">1.5 What AI Does Well: Seven Core Capabilities</h2>
+<p>The failure modes in section 1.4 define the boundaries. Within those boundaries, AI is genuinely powerful for specific, well-defined tasks. This section maps those capabilities to your work — and introduces you to the habit of improving your prompts, which every chapter in this handbook will continue to develop.</p>
+<p>Each capability below is presented first from a <strong>Lane 1 (Translators &amp; Language Workers)</strong> perspective, then extended with examples for Lane 2 and Lane 3. For every capability, you will see two prompts: a weak version and a stronger version. The difference is the lesson.</p>
+<hr />
+<h3 id="capability-1-summarization">Capability 1: Summarization</h3>
+<p><strong>What it means:</strong> Condensing a large volume of text into a shorter, focused form — retaining what matters, discarding what does not.</p>
+<p><strong>Where it helps Lane 1:</strong> Background research for FIA; making a lengthy commentary or cultural study usable in a drafting session without reading the whole thing.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✗ Weak</td>
+<td><em>"Summarise this article about the Decapolis for me."</em></td>
+</tr>
+<tr>
+<td>✓ Stronger</td>
+<td><em>"Summarise the following article about the Decapolis region. Focus only on information relevant to a translator preparing to draft Mark 5:1–20. Ignore Roman administrative history. Use plain English. Maximum 150 words. [paste article]"</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>What improved:</strong> Added a purpose (FIA preparation), a scope filter (relevant to this passage), a negative constraint (ignore Roman admin), a tone rule (plain English), and a length limit. The model now knows not just <em>what</em> to summarise, but <em>why</em>, <em>for whom</em>, and <em>what not to include</em>.</p>
+<p><strong>Lane 2 extension:</strong> Summarise the key disagreements in a set of commentaries on a difficult verse, and flag where they agree and where they diverge — for use in a checking discussion.</p>
+<p><strong>Lane 3 extension:</strong> Summarise a 30-page project report into a one-page executive brief, preserving only decisions made and actions required.</p>
+<hr />
+<h3 id="capability-2-comparison">Capability 2: Comparison</h3>
+<p><strong>What it means:</strong> Placing two or more items side by side and identifying meaningful differences, similarities, and gaps.</p>
+<p><strong>Where it helps Lane 1:</strong> Comparing a draft rendering against a reference translation to surface meaning gaps before a checking round.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✗ Weak</td>
+<td><em>"Compare these two versions of Mark 5:6 and tell me if there are differences."</em></td>
+</tr>
+<tr>
+<td>✓ Stronger</td>
+<td><em>"Compare Version A and Version B of Mark 5:6 below. Analyse them across these five dimensions and return a table: (1) Points of agreement — what both versions render the same way; (2) Points of disagreement — where they differ and what the difference is; (3) Actions — how each version renders what the man does; (4) Participant references — how each version refers to the man and to Jesus (titles, pronouns, names); (5) Sequence and timeline — whether the order of events is preserved or shifted. Do not guess at translator intent. Flag any dimension where you are uncertain. [paste Version A and Version B]"</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>What improved:</strong> Replaced a narrow 3-point comparison with a structured 5-dimension framework covering agreement, disagreement, action, participant reference, and sequence. The table format makes the output directly usable in a checking discussion. Naming dimensions explicitly prevents the model from cherry-picking surface differences and missing structural ones.</p>
+<p><strong>Lane 2 extension:</strong> Compare three back-translations of the same verse and label each difference as: theological content / implicit information / naturalness / style choice.</p>
+<p><strong>Lane 3 extension:</strong> Compare two project plans submitted by different teams and identify gaps in scope, timeline, or resourcing.</p>
+<hr />
+<h3 id="capability-3-data-extraction">Capability 3: Data Extraction</h3>
+<p><strong>What it means:</strong> Pulling specific pieces of information out of unstructured text — emails, meeting notes, reports — and organising them into a usable format.</p>
+<p><strong>Where it helps Lane 1:</strong> Extracting all occurrences of a key term from a pasted passage for review; pulling action items from workshop notes.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✗ Weak</td>
+<td><em>"Find all the divine title terms in this passage."</em></td>
+</tr>
+<tr>
+<td>✓ Stronger</td>
+<td><em>"From the pasted Greek interlinear text of Mark 5:1–20 below, extract every term that could be rendered as a divine or supernatural title in translation. For each: quote the original term, note the verse, and give its plain-language semantic range. Do not assign a rendering — only extract and describe. [paste text]"</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>What improved:</strong> Defined "divine title terms" operationally. Told the model to extract only, not recommend. Added a format expectation (term / verse / semantic range). The guardrail — <em>only extract and describe</em> — prevents the model from rushing to a rendering decision before the team is ready.</p>
+<p><strong>Lane 2 extension:</strong> Extract every place in a set of checking notes where an issue was flagged as unresolved, and return them as a prioritised action list.</p>
+<p><strong>Lane 3 extension:</strong> Extract all budget figures from a set of pasted meeting minutes and organise them by project line item.</p>
+<hr />
+<h3 id="capability-4-classification-and-tagging">Capability 4: Classification and Tagging</h3>
+<p><strong>What it means:</strong> Sorting items into defined categories — labelling each item against a fixed taxonomy you supply.</p>
+<p><strong>Where it helps Lane 1:</strong> Tagging discourse features across a passage (narrative / dialogue / aside / reported speech); sorting naturalistic checking issues by type.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✗ Weak</td>
+<td><em>"Label the types of speech in Mark 5:1–20."</em></td>
+</tr>
+<tr>
+<td>✓ Stronger</td>
+<td>*"Read Mark 5:1–20 (pasted below) and label each verse unit with its discourse function. Use only these four categories: NARRATIVE (third-person description of events), DIALOGUE (direct speech), ASIDE (explanatory comment), REPORTED-SPEECH (speech about speech). If a verse unit could fit two categories, choose the dominant one and note the ambiguity. Return as: Verses</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What improved:</strong> Supplied a closed taxonomy. Forced a single label per unit to prevent hedging. Asked for brief reasoning so the output can be checked. Without a defined category list, the model invents its own — which is inconsistent and hard to use.</p>
+<p><strong>Lane 2 extension:</strong> Tag every issue in a checking report as: exegetical / lexical / naturalness / cultural / formatting. Use consistently across all passages so patterns can be identified.</p>
+<p><strong>Lane 3 extension:</strong> Classify a list of training requests by urgency (immediate need / next cycle / long-term) and by delivery mode (in-person / self-directed / tool-embedded).</p>
+<hr />
+<h3 id="capability-5-re-expressing">Capability 5: Re-expressing</h3>
+<p><strong>What it means:</strong> Taking existing content and rendering it in a different register, format, reading level, or style — without changing the underlying meaning.</p>
+<p><strong>Where it helps Lane 1:</strong> Naturalness work; adjusting a passage from written register to oral/spoken register; adapting a script for different age groups or literacy levels.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✗ Weak</td>
+<td><em>"Make this verse sound more natural for our community."</em></td>
+</tr>
+<tr>
+<td>✓ Stronger</td>
+<td><em>"Re-express the following draft of Mark 5:15 in a spoken, conversational register appropriate for a primary-school reading level. The current draft sounds like written formal prose. Do not change the meaning or add any interpretation. Flag any phrase where you are uncertain whether the meaning is preserved. [paste draft]"</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>What improved:</strong> Defined the target register (spoken, conversational), the target reading level (primary school), the constraint (no meaning change), and the error-flagging rule. Without these, "more natural" is interpreted against the model's training default — which may be Western, written, or academic.</p>
+<p><strong>Lane 2 extension:</strong> Re-express a consultant's technical checking note into plain language a mother-tongue translator can act on without a linguistics background.</p>
+<p><strong>Lane 3 extension:</strong> Re-express a technical project update into a donor-friendly summary paragraph with no jargon.</p>
+<hr />
+<h3 id="capability-6-question-generation">Capability 6: Question Generation</h3>
+<p><strong>What it means:</strong> Producing checking questions, comprehension questions, or reflection questions from source material — calibrated to a specific purpose and audience.</p>
+<p><strong>Where it helps Lane 1:</strong> Generating comprehension questions for community testing of a draft; producing self-check questions for a translation team review session.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✗ Weak</td>
+<td><em>"Write some checking questions for Mark 5."</em></td>
+</tr>
+<tr>
+<td>✓ Stronger</td>
+<td><em>"Write 5 checking questions for Mark 5:1–20 for use in a community comprehension check with oral communicators. Each question must: test observable meaning only (not feeling or interpretation); be answerable from the passage alone; use simple, spoken language; be one sentence. Here is an example of a good question for this passage: 'Where did the man with the evil spirits live?' Write 5 more questions following this exact pattern."</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>What improved:</strong> Gave a quantity (5), a purpose (community comprehension check), an audience (oral communicators), and four explicit criteria. Added a one-shot example (see Building Block 4, Chapter 2) to lock in style consistency. The result is checking-round ready.</p>
+<p><strong>Lane 2 extension:</strong> Generate a set of key-term checking questions for a consultant to use with a team — questions that surface whether the community understood the semantic weight of a critical term.</p>
+<p><strong>Lane 3 extension:</strong> Generate a set of reflection questions for a post-project review workshop, based on the project's stated objectives.</p>
+<hr />
+<h3 id="capability-7-drafting-from-a-specification">Capability 7: Drafting from a Specification</h3>
+<p><strong>What it means:</strong> Creating new content — a document, a report, a script, a plan — from a structured brief you provide. Distinct from re-expressing (which transforms existing content): drafting starts from a spec.</p>
+<p><strong>Where it helps Lane 1:</strong> Scripting a storyboard from a passage outline; drafting a simple oral introduction for a recording session; creating a team briefing document from a passage summary.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✗ Weak</td>
+<td><em>"Write a script for a story recording of Mark 5."</em></td>
+</tr>
+<tr>
+<td>✓ Stronger</td>
+<td><em>"Write a storyboard script for Mark 5:1–20 for a local artist creating 6 illustrated panels. For each panel provide: the scene location, the key characters present, the main action visible in the frame, and one short caption (10 words maximum) in plain language. Base the script only on the text — do not add theological interpretation to the captions. Panels should cover: arrival at the shore / encounter with the man / the dialogue with Legion / the pigs / the healing / the sending. [paste the passage for reference]"</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>What improved:</strong> Gave a panel count (6), a deliverable for each panel (location / characters / action / caption), a caption constraint (10 words), a content guardrail (no theological interpretation), and a coverage outline (6 key scenes). The model now has a complete specification and cannot misunderstand what is needed.</p>
+<p><strong>Lane 2 extension:</strong> Draft a checking report summary from structured notes — including decisions made, issues still open, and recommended follow-up actions.</p>
+<p><strong>Lane 3 extension:</strong> Draft a tool rollout plan from a brief describing the team size, hardware constraints, connectivity, and training objectives.</p>
+<hr />
+<h3 id="connecting-capabilities-to-prompting">Connecting Capabilities to Prompting</h3>
+<p>These seven capabilities are not separate modes — they are what a well-constructed prompt <em>directs the model to do</em>. The building blocks in Chapter 2 are the mechanism; the capabilities are what you are aiming at:</p>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Key building blocks that unlock it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Summarization</td>
+<td>Persona, Guardrails (scope filter), Format</td>
+</tr>
+<tr>
+<td>Comparison</td>
+<td>Persona, defined comparison dimensions, Format</td>
+</tr>
+<tr>
+<td>Data extraction</td>
+<td>Guardrails (extract only, do not recommend), Format</td>
+</tr>
+<tr>
+<td>Classification</td>
+<td>Closed taxonomy in the prompt, Format</td>
+</tr>
+<tr>
+<td>Re-expressing</td>
+<td>Target register/audience in Guardrails, Guardrail (no meaning change)</td>
+</tr>
+<tr>
+<td>Question generation</td>
+<td>Few-Shot (one example), explicit criteria, Format</td>
+</tr>
+<tr>
+<td>Drafting from spec</td>
+<td>Format (detailed specification), Guardrails</td>
+</tr>
+</tbody>
+</table>
+<p>Every chapter from here builds the prompting skills that give you reliable control over these capabilities.</p>
+<hr />
+<h2 id="16-the-informed-pilot-posture">1.6 The Informed Pilot Posture</h2>
+<p>Everything in this handbook builds toward one operating posture: the <strong>Informed Pilot</strong>.</p>
+<p>A pilot does not sit passively while the autopilot flies. They set the parameters, monitor the outputs, intervene when something is wrong, and remain accountable for the flight. They use instruments — they do not guess. They understand what the autopilot can and cannot do.</p>
+<p>That is exactly how a BT practitioner should work with AI:</p>
+<ul>
+<li><strong>Attitude:</strong> Curious and critical. You are not awed by fluent output. You test it.</li>
+<li><strong>Skills:</strong> You know how to give precise instructions, how to steer when the output drifts, how to recognize a hallucination.</li>
+<li><strong>Knowledge:</strong> You understand the failure modes, the context window, the data the model does and does not have.</li>
+</ul>
+<p>The chapters that follow build each of these. The Risk Radar you have just read is not a reason to distrust AI — it is the foundation of using it competently.</p>
+<hr />
+<p><em>Continue to Chapter 2: Anatomy of a Great Prompt →</em></p>
+</div>
+    </main>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <!-- ── PRESENTATION MODE CONTROLS ───────────────────────── -->
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="../assets/script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>
