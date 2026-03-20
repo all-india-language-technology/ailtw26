@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>__TITLE__</title>
+  <meta name="description" content="Prompt Engineering for Bible Translators · AILT 2026 AI Tools Workshop">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="__ASSETS__style.css">
+  <link rel="icon" type="image/svg+xml" href="__ASSETS__favicon.svg">
+</head>
+<body>
+
+  <!-- ── SITE NAV ──────────────────────────────────────────── -->
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="__ROOT__" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="__ROOT__" class="shell-nav-link">Home</a>
+        <a href="__ROOT__prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="__ROOT__handbook/" class="shell-nav-link">Handbook</a>
+        <a href="__ROOT__about.html" class="shell-nav-link">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── PAGE LAYOUT ─────────────────────────────────────────────── -->
+  <div class="shell-page">
+    <main class="shell-main" id="main-content">
+      __CONTENT__
+    </main>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <!-- ── PRESENTATION MODE CONTROLS ───────────────────────── -->
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="__ASSETS__script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>

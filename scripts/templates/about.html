@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us · Prompt Engineering for Bible Translators</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body>
+
+  <nav class="shell-nav" aria-label="Site navigation">
+    <div class="shell-nav-inner">
+      <a href="./" class="shell-brand">Prompt Engineering for Bible Translators · AILT &rsaquo; AI Tools Track</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="shell-nav-links" id="nav-links">
+        <a href="./" class="shell-nav-link">Home</a>
+        <a href="prompt-engineering/" class="shell-nav-link">Course</a>
+        <a href="#" class="shell-nav-link" id="nav-present">Presentation</a>
+        <a href="handbook/" class="shell-nav-link">Handbook</a>
+        <a href="about.html" class="shell-nav-link active">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── SCROLL PROGRESS ──────────────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <div class="shell-page">
+    <main class="shell-main" id="main-content">
+      <div class="prose-content">
+
+        <div class="handbook-hero">
+          <div class="hh-inner">
+            <div class="hh-eyebrow">AILT 2026 · AI Tools Track</div>
+            <h1>About This Course</h1>
+          </div>
+        </div>
+
+        <h2>What is this?</h2>
+        <p>
+          This site contains the course materials for <strong>Prompt Engineering for Bible Translators</strong>,
+          prepared for the AILT 2026 AI Tools Track workshop.
+        </p>
+        <p>
+          The course is built around the <strong>LtL (Learning to Learn) framework</strong> — a
+          learner-centred adult education approach emphasising dialogue, problem solving, and
+          attitude/skill/knowledge (ASK) transformation. Each session follows the five-C structure:
+          Connection, Content, Challenge, Change, Closure.
+        </p>
+
+        <h2>Audience</h2>
+        <p>
+          Participants include translators, translation consultants, language technology staff,
+          exegetes, project facilitators, literacy workers, and organisational leadership.
+          The three-lane content design reflects this range: content is differentiated for
+          <strong>Translators</strong>, <strong>Consultants &amp; Reviewers</strong>, and
+          <strong>Technology &amp; Leadership</strong>.
+        </p>
+
+        <h2>How to use the site</h2>
+        <ul>
+          <li><strong>Course</strong> — five interactive session pages. Use these during a workshop session or for self-study.</li>
+          <li><strong>Presentation mode</strong> — click "Presentation" in the nav (or press F11 for full-screen) to use any course page as a projector display. Arrow keys advance sections.</li>
+          <li><strong>Handbook</strong> — the full AI Tools Handbook for deeper reading and reference.</li>
+        </ul>
+
+        <h2>Source &amp; licensing</h2>
+        <p>
+          All source files (Markdown, HTML, CSS, JS) are publicly available in the GitHub repository.
+          Content is available for use in Bible translation training contexts.
+        </p>
+
+      </div>
+    </main>
+  </div>
+
+  <footer class="shell-footer">
+    <div class="shell-footer-inner">
+      <p>Prompt Engineering for Bible Translators &mdash; AILT 2026 AI Tools Workshop</p>
+      <p class="shell-footer-sub">Content available for use in Bible translation training contexts.</p>
+    </div>
+  </footer>
+
+  <div class="slide-controls" id="slide-controls" aria-hidden="true">
+    <button class="slide-btn" id="prev-btn">&#9664; Prev</button>
+    <span class="slide-progress" id="slide-progress">1 / 1</span>
+    <button class="slide-btn" id="next-btn">Next &#9654;</button>
+    <button class="slide-btn slide-exit" id="exit-btn">&#10005; Exit</button>
+  </div>
+
+  <script src="assets/script.js"></script>
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+</body>
+</html>

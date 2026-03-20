@@ -1,0 +1,125 @@
+\documentclass[11pt,a4paper]{article}
+
+%% ── Engine & fonts ───────────────────────────────────────────────────────
+\usepackage{fontspec}
+\setmainfont{Calibri}[Ligatures=TeX]
+\setsansfont{Calibri}[Ligatures=TeX]
+
+%% ── Page geometry ────────────────────────────────────────────────────────
+\usepackage[
+  a4paper,
+  top=22mm, bottom=26mm,
+  left=24mm, right=22mm,
+  headheight=14pt,
+]{geometry}
+
+%% ── Colours (print-friendly: light tinted boxes, dark text) ─────────────
+\usepackage[dvipsnames,svgnames,table]{xcolor}
+\definecolor{brandblue}{HTML}{0369a1}   % dark sky blue — readable on white
+\definecolor{violet}{HTML}{6d28d9}      % dark violet
+\definecolor{emerald}{HTML}{059669}     % dark emerald
+\definecolor{amber}{HTML}{b45309}       % dark amber — readable on white
+\definecolor{textprimary}{HTML}{0f172a} % near-black body text
+\definecolor{textsecondary}{HTML}{475569} % dark slate — readable on white
+\definecolor{calloutborder}{HTML}{0ea5e9}
+\definecolor{calloutbg}{HTML}{eff8ff}   % very light sky tint
+\definecolor{warnbg}{HTML}{fffbeb}      % very light amber tint
+\definecolor{warnborder}{HTML}{d97706}
+\definecolor{successbg}{HTML}{f0fdf4}   % very light green tint
+\definecolor{successborder}{HTML}{059669}
+\definecolor{dangerbg}{HTML}{fff1f2}    % very light red tint
+\definecolor{dangerborder}{HTML}{dc2626}
+
+%% ── Typography ───────────────────────────────────────────────────────────
+\usepackage{microtype}
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+
+%% ── Tables ───────────────────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{tabularx}
+\renewcommand{\arraystretch}{1.3}
+
+%% ── Lists ────────────────────────────────────────────────────────────────
+\usepackage{enumitem}
+\setlist{noitemsep, topsep=4pt, leftmargin=*}
+
+%% ── Custom boxes ─────────────────────────────────────────────────────────
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+%% info callout
+\newenvironment{infobox}[1]{%
+  \begin{tcolorbox}[enhanced,breakable,
+    colback=calloutbg,colframe=calloutborder,
+    leftrule=4pt,toprule=0.4pt,bottomrule=0.4pt,rightrule=0.4pt,
+    arc=4pt,left=8pt,right=8pt,top=6pt,bottom=6pt,
+    title={\small\bfseries\color{brandblue}#1},
+    attach boxed title to top left={yshift=-2mm,xshift=6mm},
+    boxed title style={colback=calloutbg,colframe=calloutborder,arc=3pt,left=3pt,right=3pt}]
+}{%
+  \end{tcolorbox}\medskip}
+
+%% warn callout
+\newenvironment{warnbox}[1]{%
+  \begin{tcolorbox}[enhanced,breakable,
+    colback=warnbg,colframe=warnborder,
+    leftrule=4pt,toprule=0.4pt,bottomrule=0.4pt,rightrule=0.4pt,
+    arc=4pt,left=8pt,right=8pt,top=6pt,bottom=6pt,
+    title={\small\bfseries\color{amber}#1},
+    attach boxed title to top left={yshift=-2mm,xshift=6mm},
+    boxed title style={colback=warnbg,colframe=warnborder,arc=3pt,left=3pt,right=3pt}]
+}{%
+  \end{tcolorbox}\medskip}
+
+%% success callout
+\newenvironment{successbox}[1]{%
+  \begin{tcolorbox}[enhanced,breakable,
+    colback=successbg,colframe=successborder,
+    leftrule=4pt,toprule=0.4pt,bottomrule=0.4pt,rightrule=0.4pt,
+    arc=4pt,left=8pt,right=8pt,top=6pt,bottom=6pt,
+    title={\small\bfseries\color{emerald}#1},
+    attach boxed title to top left={yshift=-2mm,xshift=6mm},
+    boxed title style={colback=successbg,colframe=successborder,arc=3pt,left=3pt,right=3pt}]
+}{%
+  \end{tcolorbox}\medskip}
+
+%% danger callout
+\newenvironment{dangerbox}[1]{%
+  \begin{tcolorbox}[enhanced,breakable,
+    colback=dangerbg,colframe=dangerborder,
+    leftrule=4pt,toprule=0.4pt,bottomrule=0.4pt,rightrule=0.4pt,
+    arc=4pt,left=8pt,right=8pt,top=6pt,bottom=6pt,
+    title={\small\bfseries\color{dangerborder}#1},
+    attach boxed title to top left={yshift=-2mm,xshift=6mm},
+    boxed title style={colback=dangerbg,colframe=dangerborder,arc=3pt,left=3pt,right=3pt}]
+}{%
+  \end{tcolorbox}\medskip}
+
+%% timing row (used in facilitator guide)
+\newcommand{\timerow}[2]{%
+  \noindent
+  \textcolor{amber}{\textbf{#1}}\quad{\color{textsecondary}#2}\par\smallskip}
+
+%% ── Section/heading formatting ────────────────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries\color{brandblue}}{\thesection}{1em}{}[\vspace{2pt}{\color{calloutborder}\hrule}\vspace{4pt}]
+\titleformat{\subsection}{\normalsize\bfseries\color{textprimary}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\itshape\color{textsecondary}}{\thesubsubsection}{1em}{}
+\colorlet{textprimary}{black!85}
+
+%% ── Running headers / footer ─────────────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{textsecondary}\leftmark}
+\fancyhead[R]{\small\color{textsecondary}AILT 2026}
+\fancyfoot[C]{\small\color{textsecondary}\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+%% ── Hyperlinks ────────────────────────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=brandblue,urlcolor=brandblue}
+
+%% ── Pandoc shim ──────────────────────────────────────────────────────────
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}

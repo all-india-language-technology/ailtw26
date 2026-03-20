@@ -29,8 +29,6 @@ MAI*.pdf
 *.pdf
 *.bat
 *.exe
-
+tracks/
 lib/
-scripts/
-tracks/*
 archive/
